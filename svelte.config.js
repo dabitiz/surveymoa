@@ -6,7 +6,7 @@ const config = {
 	kit: {
 		adapter: adapter()
 	},
-	preprocess: vitePreprocess()
+	preprocess: vitePreprocess()  //for tailwind
 };
 
 export default config;
