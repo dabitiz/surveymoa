@@ -1,17 +1,23 @@
 <script>
-	import { supabase } from "@/lib/supabase_client";
+	import { PUBLIC_CLIENT_URL } from "$env/static/public";
 
 	import apple_login_png from "@/lib/img/login/apple_login.png";
 	import kakao_login_png from "@/lib/img/login/kakao_login.png";
 	import phone_login_png from "@/lib/img/login/phone_login.png";
 
+	export let data;
+	const { supabase } = data;
+
 	/**
 	 * supabase oauth 로그인
-	 * @param {import("@supabase/supabase-js").Provider} platform
+	 * @param {import("@supabase/supabase-js").Provider} provider
 	 */
-	const supabase_oauth_login = async (platform) => {
+	const supabase_oauth_login = async (provider) => {
 		await supabase.auth.signInWithOAuth({
-			provider: platform
+			provider,
+			options: {
+				redirectTo: `${PUBLIC_CLIENT_URL}/auth/callback`
+			}
 		});
 	};
 
