@@ -6,7 +6,10 @@
 	import phone_login_png from "@/lib/img/login/phone_login.png";
 
 	export let data;
-	const { supabase } = data;
+
+	let { supabase } = data;
+
+	$: ({ supabase } = data);
 
 	/**
 	 * supabase oauth 로그인
