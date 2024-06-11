@@ -1,0 +1,6 @@
+const PUBLIC_SUPABASE_URL = "https://glamuiwujgrlmauesueb.supabase.co";
+const PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdsYW11aXd1amdybG1hdWVzdWViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY4ODEyNzQsImV4cCI6MjAzMjQ1NzI3NH0.Y2qTDDRmim-XaH1ELjCpOoV_n0w34-OFP2ZUKtFk0_c";
+export {
+  PUBLIC_SUPABASE_URL as P,
+  PUBLIC_SUPABASE_ANON_KEY as a
+};

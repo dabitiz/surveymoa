@@ -12,7 +12,7 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/adapter-netlify": "^4.2.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "^8.56.0",
@@ -34,6 +34,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@capacitor/android": "^6.0.0",
+		"@capacitor/cli": "^6.0.0",
+		"@capacitor/core": "^6.0.0",
+		"@capacitor/ios": "^6.0.0",
 		"@supabase/ssr": "^0.3.0",
 		"@supabase/supabase-js": "^2.43.4"
 	}
