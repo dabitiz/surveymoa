@@ -1,3 +1,5 @@
+export const prerender = true;
+
 import { redirect } from "@sveltejs/kit";
 
 export const load = async ({ url, locals: { supabase, safe_get_session } }) => {
@@ -5,7 +7,7 @@ export const load = async ({ url, locals: { supabase, safe_get_session } }) => {
 
 	if (session) {
 		const { data: profile } = await supabase
-			.from("profiles")
+			.from("profile")
 			.select(`username`)
 			.eq("id", session.user.id)
 			.single();

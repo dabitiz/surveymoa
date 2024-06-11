@@ -32,7 +32,7 @@
 	};
 </script>
 
-<div class="flex h-screen flex-col justify-end">
+<div class="flex h-full flex-col justify-end">
 	<div class="mt-10 flex h-full flex-col items-center justify-center">
 		<div class="mt-6 h-40 w-40 bg-gray-400" aria-label="앱 로고"></div>
 
