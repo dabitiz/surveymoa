@@ -4,9 +4,8 @@ const load = async ({ locals: { supabase, safe_get_session } }) => {
   if (!session) {
     redirect(303, "/");
   }
-  console.log("나는 너무 슬퍼서 눈물이 나올것만 같아요");
-  const { data: profile } = await supabase.from("profiles").select(`username, avatar_url`).eq("id", session.user.id).single();
-  return { session, profile };
+  const { data: profiles } = await supabase.from("profiles").select(`username, avatar_url`).eq("id", session.user.id).single();
+  return { session, profiles };
 };
 const actions = {
   update: async ({ request, locals: { supabase, safe_get_session } }) => {
@@ -15,7 +14,7 @@ const actions = {
     const username = formData.get("username");
     const avatarUrl = formData.get("avatarUrl");
     const { session } = await safe_get_session();
-    const { error } = await supabase.from("profiles").upsert({
+    const { error } = await supabase.from("profile").upsert({
       id: session?.user.id,
       username,
       avatar_url: avatarUrl,
