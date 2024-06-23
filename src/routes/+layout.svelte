@@ -2,6 +2,7 @@
 	import "../app.css";
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
+	import { PUBLIC_ENV } from "$env/static/public";
 
 	export let data;
 
@@ -20,4 +21,16 @@
 	});
 </script>
 
+{#if PUBLIC_ENV === "local"}
+	<div class="h-[47px]" />
+{/if}
 <slot />
+{#if PUBLIC_ENV === "local"}
+	<div class="h-[34px]" />
+
+	<img
+		class="absolute left-0 top-0 z-[-1] h-full w-full object-cover opacity-30"
+		src={"src/lib/design_reference/1.png"}
+		alt="디자인 참조 이미지"
+	/>
+{/if}
