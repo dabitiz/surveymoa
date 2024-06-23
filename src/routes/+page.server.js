@@ -6,13 +6,13 @@ export const load = async ({ url, locals: { supabase, safe_get_session } }) => {
 	const { session } = await safe_get_session();
 
 	if (session) {
-		const { data: profile } = await supabase
-			.from("profile")
+		const { data: profiles } = await supabase
+			.from("profiles")
 			.select(`username`)
 			.eq("id", session.user.id)
 			.single();
 
-		if (profile.username) {
+		if (profiles.username) {
 			redirect(303, "/home");
 		} else {
 			redirect(303, "/setting");

@@ -1,4 +1,5 @@
 <script>
+	import { Device } from "@capacitor/device";
 	import { PUBLIC_CLIENT_URL } from "$env/static/public";
 
 	import apple_login_png from "@/lib/img/login/apple_login.png";
@@ -16,12 +17,20 @@
 	 * @param {import("@supabase/supabase-js").Provider} provider
 	 */
 	const supabase_oauth_login = async (provider) => {
-		await supabase.auth.signInWithOAuth({
-			provider,
-			options: {
-				redirectTo: `${PUBLIC_CLIENT_URL}/auth/callback`
-			}
-		});
+		const info = await Device.getInfo();
+
+		if (info.platform === "web") {
+			await supabase.auth.signInWithOAuth({
+				provider,
+				options: {
+					redirectTo: `${PUBLIC_CLIENT_URL}/auth/callback`
+				}
+			});
+		} else {
+			Kakao.Auth.authorize({
+				redirectUri: `${PUBLIC_CLIENT_URL}/auth/callback`
+			});
+		}
 	};
 
 	/**
