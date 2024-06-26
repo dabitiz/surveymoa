@@ -1,5 +1,5 @@
-<header>
-	<div class="mb-5 flex h-[52px] w-full items-center justify-between">
+<nav>
+	<div class="flex h-[52px] w-full items-center justify-between">
 		<div class="pl-4">
 			<slot name="left" />
 		</div>
@@ -12,4 +12,11 @@
 			<slot name="right" />
 		</div>
 	</div>
-</header>
+</nav>
+
+<style>
+	nav {
+		padding-top: env(safe-area-inset-top);
+		padding-top: constant(safe-area-inset-top);
+	}
+</style>

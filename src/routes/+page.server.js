@@ -5,6 +5,8 @@ import { redirect } from "@sveltejs/kit";
 export const load = async ({ url, locals: { supabase, safe_get_session } }) => {
 	const { session } = await safe_get_session();
 
+	redirect(303, "/home");
+
 	if (session) {
 		const { data: profiles } = await supabase
 			.from("profiles")

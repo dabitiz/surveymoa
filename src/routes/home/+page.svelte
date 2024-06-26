@@ -2,103 +2,19 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 
+	import colors from "$lib/js/colors";
+
 	import Header from "@/lib/components/ui/Header/+page.svelte";
-	import { onMount } from "svelte";
+	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";
+	import Carousel from "@/lib/components/ui/Carousel/+page.svelte";
+
+	import available_research_png from "@/lib/img/pages/home/available_research.png";
+	import star_rating_png from "@/lib/img/pages/home/star_rating.png";
+	import commissioned_research_png from "@/lib/img/pages/home/commissioned_research.png";
 
 	export let data;
 
 	let { supabase } = data;
-
-	let page_count = 0;
-	let back_modal = false;
-	let user_info = {
-		phone: "",
-		nickname: "",
-		gender: "",
-		year_of_birth: 2000
-	};
-
-	const ref = {
-		user_info_obj: {
-			nickname: "",
-			gender: "",
-			year_of_birth: 2000
-		}
-	};
-
-	/**
-	 * 출생연도 리스트 생성
-	 */
-	const make_year_of_birth_list = () => {
-		let now_year = String(new Date().getFullYear());
-		let year_arr = [];
-
-		for (let i = Number(now_year); i >= 1950; i--) {
-			year_arr.push({ label: `${i}년`, value: i });
-		}
-
-		return year_arr;
-	};
-
-	/**
-	 *  닉네임 중복여부 확인
-	 */
-	const check_nickname_duplicate = async (nickname) => {
-		const { data: users } = await supabase
-			.from("users")
-			.select("nickname")
-			.eq("nickname", nickname);
-
-		return users.length > 0;
-	};
-
-	/**
-	 * 초기 세팅
-	 */
-	const initial_setting = async (user_info_obj) => {
-		if (await check_nickname_duplicate(user_info_obj.nickname)) {
-			// toasts.add({
-			// 	title: "중복된 닉네임입니다.",
-			// 	description: "",
-			// 	duration: 3000, // 0 or negative to avoid auto-remove
-			// 	placement: "bottom-center",
-			// 	type: "error",
-			// 	theme: "dark",
-			// 	showProgress: true
-			// });
-			return;
-		}
-
-		const { error } = await supabase.from("users").insert([user_info_obj]);
-
-		if (!error) {
-			goto("/home");
-		}
-	};
-
-	/**
-	 * 완성 후 시작 버튼 disabled
-	 * : 유저가 모든 값을 입력했는지 확인하고 disabled를 풀어준다.
-	 */
-	const is_complete_disabled = () => {
-		// for (let key in ref.user_info_obj) {
-		// 	if (ref.user_info_obj[key] === "") {
-		// 		return true;
-		// 	}
-		// }
-		// return false;
-	};
-
-	/**
-	 * 회원가입 다음페이지 이동
-	 */
-	const go_next = () => {
-		if (ref.page_count === 4) {
-			ref.regi_modal = true;
-		} else {
-			ref.page_count += 1;
-		}
-	};
 </script>
 
 <svelte:head>
@@ -106,60 +22,167 @@
 	<meta name="description" content="수수료는 낮게, 보상은 크게 : 설문모아" />
 </svelte:head>
 
-<Header>
-	<span slot="left">
-		<h1 class="text-xl font-bold">설문모아</h1>
-	</span>
-	<span slot="right">
-		<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path
-				d="M8.74512 18.6668C8.74512 16.8259 10.202 15.3335 11.9991 15.3335V15.3335C13.7962 15.3335 15.253 16.8259 15.253 18.6668V18.6668C15.253 20.5078 13.7962 22.0002 11.9991 22.0002V22.0002C10.202 22.0002 8.74512 20.5078 8.74512 18.6668V18.6668Z"
-				fill="#797E8A"
+<div class="flex h-screen flex-col bg-gray-200">
+	<Header>
+		<div slot="left">
+			<h1 class="text-xl font-bold text-gray-800">설문모아</h1>
+		</div>
+		<div slot="right">
+			<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M8.74512 18.6668C8.74512 16.8259 10.202 15.3335 11.9991 15.3335V15.3335C13.7962 15.3335 15.253 16.8259 15.253 18.6668V18.6668C15.253 20.5078 13.7962 22.0002 11.9991 22.0002V22.0002C10.202 22.0002 8.74512 20.5078 8.74512 18.6668V18.6668Z"
+					fill="#797E8A"
+				/>
+				<path
+					d="M4.76893 9.40743C4.76893 5.31642 8.00638 2 12 2C15.9936 2 19.231 5.31642 19.231 9.40743V10.5288C19.231 12.2126 19.7267 13.8728 20.6385 15.2738C21.5762 16.7146 20.5823 18.6667 18.8919 18.6667H5.10815C3.41773 18.6667 2.42383 16.7146 3.3615 15.2738C4.27324 13.8728 4.76893 12.2126 4.76893 10.5288V9.40743Z"
+					fill="#797E8A"
+				/>
+				<circle cx="17.5" cy="4.5" r="3.5" fill={colors.error} />
+			</svg>
+		</div>
+	</Header>
+
+	<main class="flex-1 overflow-y-scroll pb-[105px]">
+		<Carousel />
+
+		<div class="relative z-[0] mx-4 mt-5 h-[188px] overflow-hidden rounded-[14px] bg-white">
+			<div class=" w-full pl-6 opacity-70">
+				<div class=" pt-[22px]">
+					<p class="text-sm text-gray-900">설문조사</p>
+					<p class="mt-1 text-lg font-bold">20개 참여가능</p>
+				</div>
+
+				<div class="mt-10">
+					<p class="text-sm text-gray-900">
+						<span class="mr-3">
+							<svg
+								class="mr-1 inline-block"
+								width="12"
+								height="14"
+								viewBox="0 0 12 14"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M5.78149 0V3.86316L5.78149 3.89138V3.89138C5.78145 4.11127 5.7814 4.32496 5.8051 4.50121C5.83182 4.69991 5.8969 4.92665 6.08524 5.11498C6.27357 5.30331 6.5003 5.3684 6.699 5.39511C6.87525 5.41881 7.08895 5.41877 7.30883 5.41873H7.30884L7.33705 5.41872H11.2V9.8C11.2 11.7799 11.2 12.7698 10.5849 13.3849C9.96985 14 8.9799 14 7 14H4.2C2.2201 14 1.23015 14 0.615076 13.3849C0 12.7698 0 11.7799 0 9.8V4.2C0 2.2201 0 1.23015 0.615076 0.615076C1.23015 0 2.2201 0 4.2 0H5.78149ZM6.81853 0.000590456V3.86316C6.81853 4.12226 6.81963 4.26441 6.83289 4.36303L6.83341 4.36681L6.83718 4.36732C6.9358 4.38058 7.07796 4.38168 7.33705 4.38168H11.1994C11.1967 3.98727 11.1812 3.75593 11.0934 3.54414C10.9869 3.28686 10.7845 3.08454 10.3799 2.6799L8.5201 0.820101C8.11546 0.415459 7.91314 0.213137 7.65586 0.106569C7.4441 0.0188574 7.21281 0.00333683 6.81853 0.000590456Z"
+									fill="#D6D9DF"
+								/>
+								<path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M3.62695 7.69967C3.62695 7.4133 3.86465 7.18115 4.15785 7.18115L8.45815 7.18115C8.75136 7.18115 8.98905 7.4133 8.98905 7.69967C8.98905 7.98604 8.75136 8.21819 8.45815 8.21819L4.15785 8.21819C3.86465 8.21819 3.62695 7.98604 3.62695 7.69967Z"
+									fill="white"
+								/>
+								<path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M3.62695 10.5C3.62695 10.2136 3.86465 9.98145 4.15785 9.98145L7.02472 9.98145C7.31793 9.98145 7.55562 10.2136 7.55562 10.5C7.55562 10.7863 7.31793 11.0185 7.02472 11.0185L4.15785 11.0185C3.86465 11.0185 3.62695 10.7863 3.62695 10.5Z"
+									fill="white"
+								/>
+							</svg>설문조사</span
+						><span class="font-semibold">18개</span>
+					</p>
+
+					<p class="text-sm text-gray-900">
+						<span class="mr-6">
+							<svg
+								class="mr-1 inline-block"
+								width="12"
+								height="14"
+								viewBox="0 0 12 14"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M5.78149 0V3.86316L5.78149 3.89138V3.89138C5.78145 4.11127 5.7814 4.32496 5.8051 4.50121C5.83182 4.69991 5.8969 4.92665 6.08524 5.11498C6.27357 5.30331 6.5003 5.3684 6.699 5.39511C6.87525 5.41881 7.08895 5.41877 7.30883 5.41873H7.30884L7.33705 5.41872H11.2V9.8C11.2 11.7799 11.2 12.7698 10.5849 13.3849C9.96985 14 8.9799 14 7 14H4.2C2.2201 14 1.23015 14 0.615076 13.3849C0 12.7698 0 11.7799 0 9.8V4.2C0 2.2201 0 1.23015 0.615076 0.615076C1.23015 0 2.2201 0 4.2 0H5.78149ZM6.81853 0.000590456V3.86316C6.81853 4.12226 6.81963 4.26441 6.83289 4.36303L6.83341 4.36681L6.83718 4.36732C6.9358 4.38058 7.07796 4.38168 7.33705 4.38168H11.1994C11.1967 3.98727 11.1812 3.75593 11.0934 3.54414C10.9869 3.28686 10.7845 3.08454 10.3799 2.6799L8.5201 0.820101C8.11546 0.415459 7.91314 0.213137 7.65586 0.106569C7.4441 0.0188574 7.21281 0.00333683 6.81853 0.000590456Z"
+									fill="#D6D9DF"
+								/>
+								<path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M3.62695 7.69967C3.62695 7.4133 3.86465 7.18115 4.15785 7.18115L8.45815 7.18115C8.75136 7.18115 8.98905 7.4133 8.98905 7.69967C8.98905 7.98604 8.75136 8.21819 8.45815 8.21819L4.15785 8.21819C3.86465 8.21819 3.62695 7.98604 3.62695 7.69967Z"
+									fill="white"
+								/>
+								<path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M3.62695 10.5C3.62695 10.2136 3.86465 9.98145 4.15785 9.98145L7.02472 9.98145C7.31793 9.98145 7.55562 10.2136 7.55562 10.5C7.55562 10.7863 7.31793 11.0185 7.02472 11.0185L4.15785 11.0185C3.86465 11.0185 3.62695 10.7863 3.62695 10.5Z"
+									fill="white"
+								/>
+							</svg>인터뷰</span
+						><span class="font-semibold">18개</span>
+					</p>
+				</div>
+			</div>
+
+			<img
+				class=" absolute bottom-0 right-[-40px] z-[-1] h-[129px] w-[258px] object-contain"
+				src={available_research_png}
+				alt="available_research_png"
 			/>
-			<path
-				d="M4.76893 9.40743C4.76893 5.31642 8.00638 2 12 2C15.9936 2 19.231 5.31642 19.231 9.40743V10.5288C19.231 12.2126 19.7267 13.8728 20.6385 15.2738C21.5762 16.7146 20.5823 18.6667 18.8919 18.6667H5.10815C3.41773 18.6667 2.42383 16.7146 3.3615 15.2738C4.27324 13.8728 4.76893 12.2126 4.76893 10.5288V9.40743Z"
-				fill="#797E8A"
-			/>
-		</svg>
-	</span>
-</Header>
+		</div>
 
-<main>
-	<div>캐러셀</div>
-</main>
-<!-- <nav class="mb-4 flex h-[60px] w-full items-center justify-between border-b border-gray-300">
-	<div class="flex-1 pl-5 text-left">
-		<svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path
-				d="M8 1L1 8L8 15"
-				stroke="#101118"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			/>
-		</svg>
-	</div>
-	<div class="flex-1 text-center font-semibold">회원가입</div>
-	<div class="flex-1 pr-5 text-right"></div>
-</nav> -->
+		<div class="mx-4 mt-4 flex items-center justify-center">
+			<div
+				class="flex h-[81px] w-full items-center justify-between rounded-[14px] bg-gradient-to-r from-blue-500 to-sky-500 px-7"
+			>
+				<p class="font-bold text-white">설문모아 포인트</p>
+				<p class="flex items-center text-xl font-bold text-white">
+					<span>1000 P</span>
 
-<!-- <Header_title_left /> -->
-<!-- 
-<img
-	class="absolute left-0 top-0 z-[-1] h-full w-full object-cover opacity-50"
-	src={"src/lib/img.png"}
-	alt="디자인 참조 이미지"
-/>
+					<svg
+						class="ml-2 inline-block"
+						width="9"
+						height="16"
+						viewBox="0 0 9 16"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							d="M1 15L8 8L1 1"
+							stroke="white"
+							stroke-opacity="0.54"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
+					</svg>
+				</p>
+			</div>
+		</div>
 
-<button
-	class="btn btn-primary"
-	on:click={async () => {
-		const { data, error } = await supabase.from("countries").select();
+		<div class="mx-4 mt-4 flex items-center justify-center gap-4">
+			<div class=" flex h-[150px] w-[164px] flex-col rounded-[14px] bg-white">
+				<div class="ml-[24px] mt-[24px]">
+					<p class="text-gray-900">별점</p>
+					<p class=" text-lg font-bold">5.0</p>
+				</div>
+				<img
+					src={star_rating_png}
+					alt="star_rating_png"
+					class="mr-[22px] h-[47px] w-[47px] self-end"
+				/>
+			</div>
 
-		console.log("Data", data);
-	}}>가져오거라</button
->
+			<div class="flex h-[150px] w-[164px] flex-col rounded-[14px] bg-white">
+				<div class="ml-[24px] mt-[24px]">
+					<p class="text-gray-900">의뢰한 조사</p>
+					<p class=" text-lg font-bold">0개</p>
+				</div>
+				<img
+					src={commissioned_research_png}
+					alt="commissioned_research_png"
+					class="mr-[22px] h-[65px] w-[56px] self-end"
+				/>
+			</div>
+		</div>
 
-<button class="btn btn-primary" on:click={() => goto("/account")}
-	>이건 다른 페이지로 이동하는 슬픈 자기소개서</button
-> -->
+		<div class="h-9"></div>
+	</main>
+
+	<Bottom_nav />
+</div>
