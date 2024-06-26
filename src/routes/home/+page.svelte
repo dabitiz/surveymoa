@@ -6,7 +6,7 @@
 
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";
-	import Carousel from "@/lib/components/ui/Carousel/+page.svelte";
+	import Banner from "@/lib/components/Banner/+page.svelte";
 
 	import available_research_png from "@/lib/img/pages/home/available_research.png";
 	import star_rating_png from "@/lib/img/pages/home/star_rating.png";
@@ -43,7 +43,7 @@
 	</Header>
 
 	<main class="flex-1 overflow-y-scroll pb-[105px]">
-		<Carousel />
+		<Banner />
 
 		<div class="relative z-[0] mx-4 mt-5 h-[188px] overflow-hidden rounded-[14px] bg-white">
 			<div class=" w-full pl-6 opacity-70">
