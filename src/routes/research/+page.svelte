@@ -4,9 +4,13 @@
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";
 
+	import Modal from "@/lib/components/ui/Modal/+page.svelte";
+
 	export let data;
 
 	let { supabase } = data;
+
+	let isModalOpen = false;
 </script>
 
 <svelte:head>
@@ -99,7 +103,40 @@
 				</div>
 			</article>
 		</div>
-	</main>
 
-	<Bottom_nav />
+		<button
+			class="btn"
+			on:click={() => {
+				isModalOpen = true;
+			}}>open modal</button
+		>
+
+		<Modal bind:is_modal_open={isModalOpen} modal_position="bottom">
+			<h3 class="font-bold">현재 직업을 선택해 주세요</h3>
+			<div
+				class="mt-[23px] flex items-center rounded-lg border border-primary bg-[#e9f0ff] py-4 pl-5"
+			>
+				<button
+					class="mr-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary font-bold text-white"
+				>
+					<div class="h-2 w-2 rounded-full bg-white"></div>
+				</button>
+
+				<p>학생</p>
+			</div>
+
+			<div class="mt-[8px] flex items-center rounded-lg bg-gray-50 py-4 pl-5">
+				<button
+					class="mr-3 flex h-5 w-5 items-center justify-center rounded-full bg-gray-700 font-bold text-white"
+				>
+					<div class="h-4 w-4 rounded-full bg-white"></div>
+				</button>
+
+				<p>주부</p>
+			</div>
+			<button class="btn btn-primary mt-[46px] w-full rounded-xl text-white">다음</button>
+		</Modal>
+
+		<Bottom_nav />
+	</main>
 </div>

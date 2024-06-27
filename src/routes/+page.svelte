@@ -46,7 +46,7 @@
 	<meta name="description" content="수수료는 낮게, 보상은 크게 : 설문모아" />
 </svelte:head>
 
-<main class="flex h-screen flex-col justify-end">
+<main class="pt-safe pb-safe flex h-screen flex-col justify-end">
 	<div class="mt-10 flex h-full flex-col items-center justify-center">
 		<div class="mt-6 h-40 w-40 bg-gray-400" aria-label="앱 로고"></div>
 
@@ -68,12 +68,3 @@
 		</button>
 	</div>
 </main>
-
-<style>
-	main {
-		padding-top: env(safe-area-inset-top);
-		padding-top: constant(safe-area-inset-top);
-		padding-bottom: env(safe-area-inset-bottom);
-		padding-bottom: constant(safe-area-inset-bottom);
-	}
-</style>
