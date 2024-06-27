@@ -46,7 +46,7 @@
 		<p
 			class={`text-[0.625rem] ${$page.url.pathname === "/research" ? "text-gray-950" : "text-gray-500"}`}
 		>
-			설문조사
+			리서치
 		</p>
 	</button>
 

@@ -21,11 +21,13 @@
 	});
 </script>
 
-<slot />
+<div class="h-screen">
+	<slot />
+</div>
 
 {#if PUBLIC_ENV === "local"}
 	<!-- <img
-		class="absolute left-0 top-0 z-[-1] h-full w-full object-cover opacity-50"
+		class="absolute left-0 top-0 z-[20] h-[717px] w-full object-cover opacity-50"
 		src={"src/lib/design_reference/1.png"}
 		alt="디자인 참조 이미지"
 	/> -->

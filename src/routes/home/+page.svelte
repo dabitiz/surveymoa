@@ -22,7 +22,7 @@
 	<meta name="description" content="수수료는 낮게, 보상은 크게 : 설문모아" />
 </svelte:head>
 
-<div class="flex h-screen flex-col bg-gray-200">
+<div class="flex h-full flex-col bg-gray-200">
 	<Header>
 		<div slot="left">
 			<h1 class="text-xl font-bold text-gray-800">설문모아</h1>
@@ -42,13 +42,13 @@
 		</div>
 	</Header>
 
-	<main class="flex-1 overflow-y-scroll pb-[105px]">
+	<main class="flex-1 overflow-y-scroll pb-[150px]">
 		<Banner />
 
 		<div class="relative z-[0] mx-4 mt-5 h-[188px] overflow-hidden rounded-[14px] bg-white">
 			<div class=" w-full pl-6 opacity-70">
 				<div class=" pt-[22px]">
-					<p class="text-sm text-gray-900">설문조사</p>
+					<p class="text-sm text-gray-900">리서치</p>
 					<p class="mt-1 text-lg font-bold">20개 참여가능</p>
 				</div>
 
@@ -85,7 +85,7 @@
 						><span class="font-semibold">18개</span>
 					</p>
 
-					<p class="text-sm text-gray-900">
+					<p class="mt-1.5 text-sm text-gray-900">
 						<span class="mr-6">
 							<svg
 								class="mr-1 inline-block"
@@ -156,32 +156,30 @@
 		</div>
 
 		<div class="mx-4 mt-4 flex items-center justify-center gap-4">
-			<div class=" flex h-[150px] w-[164px] flex-col rounded-[14px] bg-white">
+			<div class="relative h-[150px] w-full rounded-[14px] bg-white md:h-60">
 				<div class="ml-[24px] mt-[24px]">
 					<p class="text-gray-900">별점</p>
-					<p class=" text-lg font-bold">5.0</p>
+					<p class=" mt-2 text-lg font-bold">5.0</p>
 				</div>
 				<img
 					src={star_rating_png}
 					alt="star_rating_png"
-					class="mr-[22px] h-[47px] w-[47px] self-end"
+					class="absolute bottom-[28px] right-[22px] h-[46px] w-[47px]"
 				/>
 			</div>
 
-			<div class="flex h-[150px] w-[164px] flex-col rounded-[14px] bg-white">
+			<div class="relative h-[150px] w-full rounded-[14px] bg-white md:h-60">
 				<div class="ml-[24px] mt-[24px]">
 					<p class="text-gray-900">의뢰한 조사</p>
-					<p class=" text-lg font-bold">0개</p>
+					<p class=" mt-2 text-lg font-bold">0개</p>
 				</div>
 				<img
 					src={commissioned_research_png}
 					alt="commissioned_research_png"
-					class="mr-[22px] h-[65px] w-[56px] self-end"
+					class="absolute bottom-[19px] right-[20px] h-[65px] w-[56px]"
 				/>
 			</div>
 		</div>
-
-		<div class="h-9"></div>
 	</main>
 
 	<Bottom_nav />
