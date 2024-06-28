@@ -104,6 +104,36 @@
 			</article>
 		</div>
 
+		<div class="mt-5 px-5">
+			<article class=" flex h-[153px] rounded-[14px] bg-white p-5">
+				<img
+					class="mr-5 h-[102px] w-[102px] flex-shrink-0 rounded-xl object-cover"
+					alt=""
+					src="https://images.unsplash.com/photo-1719150016704-270c5a0deee4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8"
+				/>
+				<div class="flex flex-1 flex-col">
+					<div class="flex">
+						<div class="mr-[6px] rounded-sm bg-gray-200 px-[8px] py-[5px]">
+							<p class="text-xs text-gray-950">설문조사</p>
+						</div>
+						<div class="rounded-sm bg-gray-200 px-[8px] py-[5px]">
+							<p class="text-xs text-gray-950">5분</p>
+						</div>
+					</div>
+
+					<p class="mt-2 line-clamp-2 h-9 text-sm">
+						두피반영구 (두피미세생소요법 SMP)에 대한 실태조사입니다 그렇습니다 반갑습니다
+					</p>
+
+					<p class="mt-2 font-bold text-primary">1000원</p>
+
+					<div class="mt-1.5 h-1 w-full rounded-full bg-gray-300 dark:bg-gray-300">
+						<div class="h-1 rounded-full bg-primary" style={`width: ${30}%`} />
+					</div>
+				</div>
+			</article>
+		</div>
+
 		<button
 			class="btn"
 			on:click={() => {
