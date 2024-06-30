@@ -140,9 +140,3 @@
 		/>
 	</div>
 </div>
-
-<img
-	class="absolute left-0 top-0 z-[-1] h-full w-full object-cover opacity-50"
-	src={"src/lib/design_reference.png"}
-	alt="디자인 참조 이미지"
-/>

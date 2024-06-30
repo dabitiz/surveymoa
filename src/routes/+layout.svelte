@@ -1,34 +1,40 @@
 <script>
 	import "../app.css";
+
+	import { Device } from "@capacitor/device";
+	import { page } from "$app/stores";
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
-	import { PUBLIC_ENV } from "$env/static/public";
 
 	export let data;
-
 	let { supabase, session } = data;
 
 	$: ({ supabase, session } = data);
 
-	onMount(() => {
+	let device;
+
+	onMount(async () => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate("supabase:auth");
 			}
 		});
 
+		device = await Device.getInfo();
+
 		return () => data.subscription.unsubscribe();
 	});
 </script>
 
-<div class="h-screen">
-	<slot />
+<div class="overflow-y-scroll bg-gray-200">
+	<div
+		class={`m-auto h-screen bg-white  ${
+			(device?.platform !== "web" && device?.operating_system !== ("windows" || "mac")) ||
+			$page.url.pathname.startsWith("/admin")
+				? ""
+				: "md:w-1/2"
+		}`}
+	>
+		<slot />
+	</div>
 </div>
-
-{#if PUBLIC_ENV === "local"}
-	<!-- <img
-		class="absolute left-0 top-0 z-[20] h-[717px] w-full object-cover opacity-50"
-		src={"src/lib/design_reference/1.png"}
-		alt="디자인 참조 이미지"
-	/> -->
-{/if}
