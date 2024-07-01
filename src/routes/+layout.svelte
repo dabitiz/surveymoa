@@ -26,15 +26,17 @@
 	});
 </script>
 
-<div class="overflow-y-scroll bg-gray-200">
+<div class="bg-gray-200">
 	<div
-		class={`m-auto h-screen bg-white  ${
+		class={`mx-auto ${
 			(device?.platform !== "web" && device?.operating_system !== ("windows" || "mac")) ||
 			$page.url.pathname.startsWith("/admin")
 				? ""
 				: "md:w-1/2"
 		}`}
 	>
-		<slot />
+		<div class="min-h-screen bg-white">
+			<slot />
+		</div>
 	</div>
 </div>

@@ -7,6 +7,7 @@
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";
 	import Banner from "@/lib/components/Banner/+page.svelte";
+	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
 	import available_research_png from "@/lib/img/pages/home/available_research.png";
 	import star_rating_png from "@/lib/img/pages/home/star_rating.png";
@@ -14,35 +15,28 @@
 
 	export let data;
 
+	const TITLE = "설문모아";
+
 	let { supabase } = data;
 </script>
 
 <svelte:head>
-	<title>설문모아</title>
-	<meta name="description" content="수수료는 낮게, 보상은 크게 : 설문모아" />
+	<title>{TITLE}</title>
+	<meta name="description" content={`수수료는 낮게, 보상은 크게 : ${TITLE}`} />
 </svelte:head>
 
-<div class="flex h-full flex-col bg-gray-200">
-	<Header>
-		<div slot="left">
-			<h1 class="text-xl font-bold text-gray-800">설문모아</h1>
-		</div>
-		<div slot="right">
+<div class=" min-h-screen bg-gray-200">
+	<Header nav_class="bg-gray-200">
+		<h1 slot="left" class="text-xl font-bold text-gray-800">{TITLE}</h1>
+		<button slot="right" on:click={() => alert("준비중입니다.")} class="flex items-center">
 			<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path
-					d="M8.74512 18.6668C8.74512 16.8259 10.202 15.3335 11.9991 15.3335V15.3335C13.7962 15.3335 15.253 16.8259 15.253 18.6668V18.6668C15.253 20.5078 13.7962 22.0002 11.9991 22.0002V22.0002C10.202 22.0002 8.74512 20.5078 8.74512 18.6668V18.6668Z"
-					fill="#797E8A"
-				/>
-				<path
-					d="M4.76893 9.40743C4.76893 5.31642 8.00638 2 12 2C15.9936 2 19.231 5.31642 19.231 9.40743V10.5288C19.231 12.2126 19.7267 13.8728 20.6385 15.2738C21.5762 16.7146 20.5823 18.6667 18.8919 18.6667H5.10815C3.41773 18.6667 2.42383 16.7146 3.3615 15.2738C4.27324 13.8728 4.76893 12.2126 4.76893 10.5288V9.40743Z"
-					fill="#797E8A"
-				/>
+				<Icon name="alarm" />
 				<circle cx="17.5" cy="4.5" r="3.5" fill={colors.error} />
 			</svg>
-		</div>
+		</button>
 	</Header>
 
-	<main class="flex-1 overflow-y-scroll pb-[150px]">
+	<main>
 		<Banner />
 
 		<div class="relative z-[0] mx-4 mt-5 h-[188px] overflow-hidden rounded-[14px] bg-white">
@@ -156,7 +150,7 @@
 		</div>
 
 		<div class="mx-4 mt-4 flex items-center justify-center gap-4">
-			<div class="relative h-[150px] w-full rounded-[14px] bg-white md:h-60">
+			<div class="relative h-[150px] w-full rounded-[14px] bg-white">
 				<div class="ml-[24px] mt-[24px]">
 					<p class="text-gray-900">별점</p>
 					<p class=" mt-2 text-lg font-bold">5.0</p>
@@ -168,7 +162,7 @@
 				/>
 			</div>
 
-			<div class="relative h-[150px] w-full rounded-[14px] bg-white md:h-60">
+			<div class="relative h-[150px] w-full rounded-[14px] bg-white">
 				<div class="ml-[24px] mt-[24px]">
 					<p class="text-gray-900">의뢰한 조사</p>
 					<p class=" mt-2 text-lg font-bold">0개</p>

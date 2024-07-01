@@ -6,7 +6,7 @@
 </script>
 
 <nav
-	class="pb-safe fixed bottom-0 flex h-[calc(53px+env(safe-area-inset-bottom))] w-full items-center justify-evenly border-t border-gray-300 bg-white"
+	class="btm-nav fixed bottom-0 flex h-[calc(53px+env(safe-area-inset-bottom))] w-screen items-center justify-evenly border-t border-gray-300 bg-white"
 >
 	<button on:click={() => goto("/home")}>
 		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
