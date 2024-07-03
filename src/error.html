@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style>
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+			html,
+			body,
+			div,
+			span,
+			applet,
+			object,
+			iframe,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			p,
+			blockquote,
+			pre,
+			a,
+			abbr,
+			acronym,
+			address,
+			big,
+			cite,
+			code,
+			del,
+			dfn,
+			em,
+			img,
+			ins,
+			kbd,
+			q,
+			s,
+			samp,
+			small,
+			strike,
+			strong,
+			sub,
+			sup,
+			tt,
+			var,
+			b,
+			u,
+			i,
+			center,
+			dl,
+			dt,
+			dd,
+			ol,
+			ul,
+			li,
+			fieldset,
+			form,
+			label,
+			legend,
+			table,
+			caption,
+			tbody,
+			tfoot,
+			thead,
+			tr,
+			th,
+			td,
+			article,
+			aside,
+			canvas,
+			details,
+			embed,
+			figure,
+			figcaption,
+			footer,
+			header,
+			hgroup,
+			menu,
+			nav,
+			output,
+			ruby,
+			section,
+			summary,
+			time,
+			mark,
+			audio,
+			video {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				font-size: 100%;
+				font: inherit;
+				vertical-align: baseline;
+			}
+			/* HTML5 display-role reset for older browsers */
+			article,
+			aside,
+			details,
+			figcaption,
+			figure,
+			footer,
+			header,
+			hgroup,
+			menu,
+			nav,
+			section {
+				display: block;
+			}
+			body {
+				line-height: 1;
+			}
+			ol,
+			ul {
+				list-style: none;
+			}
+			blockquote,
+			q {
+				quotes: none;
+			}
+			blockquote:before,
+			blockquote:after,
+			q:before,
+			q:after {
+				content: "";
+				content: none;
+			}
+			table {
+				border-collapse: collapse;
+				border-spacing: 0;
+			}
+		</style>
+
+		<style>
+			main {
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.circle {
+				height: 82px;
+				width: 82px;
+				background-color: red;
+				border-radius: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			h1 {
+				margin-top: 27px;
+				color: #237bf8;
+				font-size: 30px;
+				font-weight: 900;
+				font-size: 30px;
+			}
+			h2 {
+				margin-top: 16px;
+				margin-bottom: 0;
+				font-weight: 600;
+				font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<span class="circle">
+				<svg
+					width="10"
+					height="42"
+					viewBox="0 0 10 42"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						fill-rule="evenodd"
+						clip-rule="evenodd"
+						d="M5.00039 0.5C7.26476 0.5 9.10039 2.33563 9.10039 4.6V25.1C9.10039 27.3644 7.26476 29.2 5.00039 29.2C2.73602 29.2 0.900391 27.3644 0.900391 25.1V4.6C0.900391 2.33563 2.73602 0.5 5.00039 0.5Z"
+						fill="white"
+					/>
+					<path
+						d="M5.00039 41.4998C7.26476 41.4998 9.10039 39.6642 9.10039 37.3998C9.10039 35.1354 7.26476 33.2998 5.00039 33.2998C2.73602 33.2998 0.900391 35.1354 0.900391 37.3998C0.900391 39.6642 2.73602 41.4998 5.00039 41.4998Z"
+						fill="white"
+					/>
+				</svg>
+			</span>
+
+			<h1>코드오류 %sveltekit.status%</h1>
+
+			<h2>%sveltekit.error.message%</h2>
+			<div
+				class="mt-2 text-center text-sm text-gray-900"
+				style="margin-top: 8px; text-align: center; font-size: 14px; color: gray"
+			>
+				<p>동일한 문제가 지속적으로 발생하는 경우</p>
+				<p>고객센터로 문의해주시기 바랍니다.</p>
+			</div>
+		</main>
+	</body>
+</html>
