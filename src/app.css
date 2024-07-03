@@ -38,3 +38,6 @@ main{
 	padding-bottom: constant(safe-area-inset-bottom);
 }
 
+.btn:disabled {
+	@apply bg-gray-200 text-gray-900
+}

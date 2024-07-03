@@ -1,5 +1,6 @@
 <script>
 	import "../app.css";
+	import { SvelteToast } from "@zerodevx/svelte-toast";
 
 	import { Device } from "@capacitor/device";
 	import { page } from "$app/stores";
@@ -40,3 +41,23 @@
 		</div>
 	</div>
 </div>
+
+<div class="wrap">
+	<SvelteToast options={{ intro: { y: -64 }, dismissable: false, duration: 4000 }} />
+</div>
+
+<style>
+	.wrap {
+		--toastContainerTop: auto;
+		--toastContainerBottom: 4.5rem;
+		--toastContainerRight: 0;
+		--toastContainerLeft: 0;
+		--toastWidth: 21rem;
+		--toastMargin: 0.25rem auto;
+		--toastMinHeight: 3.125rem;
+		--toastPadding: 0 0.6rem;
+		--toastBarHeight: 0;
+		--toastBorderRadius: 0.5rem;
+		font-size: 0.875rem;
+	}
+</style>
