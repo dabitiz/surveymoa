@@ -19,7 +19,7 @@ export const handle = async ({ event, resolve }) => {
 			data: { session }
 		} = await event.locals.supabase.auth.getSession();
 		if (!session) {
-			return { session: null, user: null };
+			return { session: null };
 		}
 
 		const {
@@ -28,14 +28,14 @@ export const handle = async ({ event, resolve }) => {
 		} = await event.locals.supabase.auth.getUser();
 		if (error) {
 			// JWT validation has failed
-			return { session: null, user: null };
+			return { session: null };
 		}
 
 		//세션 사용시 에러 메시지를 제거.
 		//https://github.com/supabase/auth-js/issues/873
 		delete session.user;
 
-		return { session: Object.assign({}, session, { user }), user };
+		return { session: Object.assign({}, session, { user }) };
 	};
 
 	return resolve(event, {
