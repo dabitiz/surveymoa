@@ -1,16 +1,27 @@
 <script>
+	const TITLE = "회원 정보 설정";
+
 	import { goto } from "$app/navigation";
+
+	import { show_toast } from "@/lib/js/common.js";
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Modal from "@/lib/components/ui/Modal/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
 	export let data;
 
-	const TITLE = "회원 정보 설정";
-
-	let { supabase } = data;
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
 
 	let logout_modal = false;
+
+	const logout = async () => {
+		if (session) {
+			await supabase.auth.signOut({ scope: "local" });
+			goto("/");
+			show_toast("success", "로그아웃 되었습니다.");
+		}
+	};
 </script>
 
 <svelte:head>
@@ -67,17 +78,19 @@
 	</div>
 
 	<Modal bind:is_modal_open={logout_modal} modal_position="center">
-		<h3 class="font-bold">로그아웃 하시겠습니까?</h3>
+		<div class="p-5">
+			<h3 class="text-lg font-semibold">로그아웃 하시겠어요?</h3>
 
-		<div class="mt-12 flex gap-2">
-			<button
-				class="btn flex-1 border-gray-300 bg-gray-300"
-				on:click={() => {
-					logout_modal = false;
-				}}>취소</button
-			>
+			<div class="mt-12 flex gap-2">
+				<button
+					class="btn flex-1 border-gray-300 bg-gray-300"
+					on:click={() => {
+						logout_modal = false;
+					}}>취소</button
+				>
 
-			<button on:click={async () => {}} class="btn btn-error flex-1 text-white">확인</button>
+				<button on:click={logout} class="btn btn-primary flex-1 text-white">로그아웃</button>
+			</div>
 		</div>
 	</Modal>
 </main>

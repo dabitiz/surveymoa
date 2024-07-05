@@ -8,6 +8,7 @@
 
 	import Profiles_api from "@/lib/api/profiles_api.js";
 	import { update_profiles_store } from "@/lib/store/profiles_store";
+	import { loading } from "@/lib/store/global_store";
 
 	export let data;
 	let { supabase, session } = data;
@@ -79,6 +80,12 @@
 		</div>
 	</div>
 </div>
+
+{#if $loading}
+	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+		<div class="h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-primary"></div>
+	</div>
+{/if}
 
 <div class="wrap">
 	<SvelteToast options={{ intro: { y: -64 }, dismissable: false, duration: 4000 }} />

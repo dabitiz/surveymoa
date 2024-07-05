@@ -1,7 +1,17 @@
 <script>
+	const TITLE = "프로필 정보 수정";
+
 	import Profiles_api from "@/lib/api/profiles_api.js";
 	import Avatar_api from "@/lib/api/avatar_api.js";
-	import { error_handling, show_toast } from "@/lib/js/common.js";
+	import {
+		avatar_url,
+		username,
+		gender,
+		year_of_birth,
+		update_profiles_store
+	} from "$lib/store/profiles_store.js";
+	import { update_global_store } from "@/lib/store/global_store";
+	import { show_toast } from "@/lib/js/common.js";
 
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
@@ -9,56 +19,53 @@
 
 	export let data;
 
-	let { supabase, session, profiles } = data;
+	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
 	const profiles_api = new Profiles_api(supabase, session);
 	const avatar_api = new Avatar_api(supabase, session);
 
-	const TITLE = "프로필 정보 수정";
+	$: new_username = $username;
 
-	let loading = false;
+	const modify_avatar_url = async (event) => {
+		update_global_store("loading", true);
+		try {
+			const selected_img = event.target.files[0];
+			selected_img.uri = URL.createObjectURL(selected_img);
 
-	let avatar_url = profiles.avatar_url;
-	let year_of_birth = profiles.year_of_birth;
-	let gender = profiles.gender;
-	let username = profiles.username;
+			const file_ext = selected_img.name.split(".").pop();
+			const file_path = `${session.user.id}/${Date.now()}.${file_ext}`;
 
-	const modify_avatar_url = error_handling(async (event) => {
-		loading = true;
-		const selected_img = event.target.files[0];
-		selected_img.uri = URL.createObjectURL(selected_img);
+			await avatar_api.upload_avatar_url(file_path, selected_img);
+			const img_url = `https://glamuiwujgrlmauesueb.supabase.co/storage/v1/object/public/avatar/${file_path}`;
 
-		const file_ext = selected_img.name.split(".").pop();
-		const file_path = `${session.user.id}/${Date.now()}.${file_ext}`;
+			await profiles_api.upsert_avatar_url(img_url);
+			update_profiles_store("avatar_url", selected_img.uri);
 
-		await avatar_api.upload_avatar_url(file_path, selected_img);
-		const img_url = `https://glamuiwujgrlmauesueb.supabase.co/storage/v1/object/public/avatar/${file_path}`;
-		await profiles_api.upsert_avatar_url(img_url);
-
-		avatar_url = selected_img;
-
-		show_toast("success", "수정이 완료되었습니다.");
-		loading = false;
-	});
-
-	const save_username = error_handling(async () => {
-		loading = true;
-		const duplicate_username = await profiles_api.check_duplicate_username(username);
-
-		if (duplicate_username.length > 0) {
-			show_toast("error", "중복된 닉네임입니다.");
-			return;
+			show_toast("success", "수정이 완료되었습니다.");
+		} finally {
+			update_global_store("loading", false);
 		}
+	};
 
-		await profiles_api.upsert_username(username);
+	const save_username = async () => {
+		update_global_store("loading", true);
+		try {
+			const duplicate_username = await profiles_api.check_duplicate_username(new_username);
 
-		profiles = await profiles_api.get_profile_info();
-		username = profiles.username;
+			if (duplicate_username.length > 0) {
+				show_toast("error", "중복된 닉네임입니다.");
+				return;
+			}
 
-		show_toast("success", "수정이 완료되었습니다.");
-		loading = false;
-	});
+			await profiles_api.upsert_username(new_username);
+			update_profiles_store("username", new_username);
+
+			show_toast("success", "수정이 완료되었습니다.");
+		} finally {
+			update_global_store("loading", false);
+		}
+	};
 </script>
 
 <svelte:head>
@@ -86,13 +93,10 @@
 			/>
 			<div class="avatar relative">
 				<div class="w-20 rounded-full">
-					{#if avatar_url === null}
+					{#if $avatar_url === null}
 						<img src={user_profile_png} alt="user_profile_png" />
-					{:else if typeof avatar_url === "object"}
-						<!-- 이미지 수정시 -->
-						<img src={avatar_url.uri} alt="user_profile_png" />
 					{:else}
-						<img src={avatar_url} alt="user_profile_png" />
+						<img src={$avatar_url} alt="user_profile_png" />
 					{/if}
 				</div>
 
@@ -117,11 +121,11 @@
 	<div class="mt-6 flex flex-col border-b-8 px-5 pb-6">
 		<div>
 			<p class="font-semibold">생년월일</p>
-			<p class="mt-4">{year_of_birth}</p>
+			<p class="mt-4">{$year_of_birth}</p>
 		</div>
 		<div class="mt-4">
 			<p class="font-semibold">성별</p>
-			<p class="mt-4">{gender === "male" ? "남자" : "여자"}</p>
+			<p class="mt-4">{$gender === "male" ? "남자" : "여자"}</p>
 		</div>
 	</div>
 
@@ -130,14 +134,14 @@
 		<label class="relative mt-4">
 			<input
 				maxlength="8"
-				bind:value={username}
+				bind:value={new_username}
 				type="text"
 				class="w-full rounded-none border-b border-gray-300 pb-6 outline-none focus:border-primary"
 				placeholder="닉네임"
 			/>
 			<button
 				on:click={() => {
-					username = "";
+					new_username = "";
 				}}
 				class="absolute right-2 top-3 -translate-y-1/2 transform text-gray-400 hover:text-gray-600"
 			>
@@ -169,14 +173,8 @@
 	<div class="pb-safe fixed bottom-3.5 left-0 right-0 mx-4 flex justify-center">
 		<button
 			class="btn btn-primary w-full text-white md:w-1/2"
-			disabled={username === "" || username === profiles.username}
+			disabled={new_username === "" || new_username === $username}
 			on:click={save_username}>수정 완료</button
 		>
 	</div>
-
-	{#if loading}
-		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-			<div class="h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-primary"></div>
-		</div>
-	{/if}
 </main>

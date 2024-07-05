@@ -8,11 +8,10 @@ export default class Profiles_api {
 		const { data, error } = await this.supabase
 			.from("profiles")
 			.select(`username, avatar_url, gender, year_of_birth, rating`)
-			.eq("id", this.session.user.id)
-			.single();
+			.eq("id", this.session.user.id);
 
 		if (error) throw new Error(`Failed to get_profile: ${error.message}`);
-		return data;
+		return data[0] || [];
 	}
 
 	/**
@@ -26,7 +25,7 @@ export default class Profiles_api {
 			.eq("username", new_username);
 
 		if (error) throw new Error(`Failed to check_duplicate_username: ${error.message}`);
-		return data;
+		return data || [];
 	}
 
 	async upsert_avatar_url(img_url) {

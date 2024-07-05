@@ -6,6 +6,10 @@
 	import kakao_login_png from "@/lib/img/pages/login/kakao_login.png";
 	import phone_login_png from "@/lib/img/pages/login/phone_login.png";
 
+	export let data;
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
+
 	/**
 	 * supabase oauth 로그인
 	 * @param {import("@supabase/supabase-js").Provider} provider
