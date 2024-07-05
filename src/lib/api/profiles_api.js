@@ -7,7 +7,7 @@ export default class Profiles_api {
 	async get_profile_info() {
 		const { data, error } = await this.supabase
 			.from("profiles")
-			.select(`avatar_url, year_of_birth, gender, username`)
+			.select(`username, avatar_url, gender, year_of_birth, rating`)
 			.eq("id", this.session.user.id)
 			.single();
 

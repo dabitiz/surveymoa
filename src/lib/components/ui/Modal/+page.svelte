@@ -4,8 +4,8 @@
 </script>
 
 {#if modal_position === "center"}
-	<dialog class="modal" class:modal-open={is_modal_open}>
-		<div class="modal-box">
+	<dialog class=" modal" class:modal-open={is_modal_open}>
+		<div class="modal-box md:w-1/2">
 			<slot />
 		</div>
 		<form method="dialog" class="modal-backdrop">

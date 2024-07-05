@@ -41,3 +41,8 @@ main{
 .btn:disabled {
 	@apply bg-gray-200 text-gray-900
 }
+
+.md-w-half {
+  @apply md:w-1/2;
+}
+

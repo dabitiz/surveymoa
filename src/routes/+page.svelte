@@ -6,12 +6,6 @@
 	import kakao_login_png from "@/lib/img/pages/login/kakao_login.png";
 	import phone_login_png from "@/lib/img/pages/login/phone_login.png";
 
-	export let data;
-
-	let { supabase } = data;
-
-	$: ({ supabase } = data);
-
 	/**
 	 * supabase oauth 로그인
 	 * @param {import("@supabase/supabase-js").Provider} provider
@@ -42,7 +36,7 @@
 </script>
 
 <svelte:head>
-	<title>설문모아 | 로그인</title>
+	<title>설문모아</title>
 	<meta name="description" content="수수료는 낮게, 보상은 크게 : 설문모아" />
 </svelte:head>
 
