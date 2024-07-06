@@ -1,7 +1,10 @@
 <script>
 	import { Device } from "@capacitor/device";
-	import { PUBLIC_CLIENT_URL } from "$env/static/public";
+	import { onMount } from "svelte";
+	import { goto } from "$app/navigation";
 
+	import { PUBLIC_CLIENT_URL } from "$env/static/public";
+	import Profiles_api from "@/lib/api/profiles_api.js";
 	import apple_login_png from "@/lib/img/pages/login/apple_login.png";
 	import kakao_login_png from "@/lib/img/pages/login/kakao_login.png";
 	import phone_login_png from "@/lib/img/pages/login/phone_login.png";
@@ -9,6 +12,7 @@
 	export let data;
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
+	const profiles_api = new Profiles_api(supabase, session);
 
 	/**
 	 * supabase oauth 로그인
@@ -28,6 +32,25 @@
 			Kakao.Auth.authorize({
 				redirectUri: `${PUBLIC_CLIENT_URL}/auth/callback`
 			});
+		}
+	};
+
+	onMount(() => {
+		if (session) {
+			auto_login();
+		}
+	});
+
+	/**
+	 * 자동 로그인
+	 */
+	const auto_login = async () => {
+		const profiles = await profiles_api.get_profile_info();
+
+		if (profiles.username) {
+			goto("/home");
+		} else {
+			goto("/setting");
 		}
 	};
 
