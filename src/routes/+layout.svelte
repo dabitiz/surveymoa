@@ -12,6 +12,7 @@
 
 	export let data;
 	let { supabase, session } = data;
+
 	$: ({ supabase, session } = data);
 
 	const profiles_api = new Profiles_api(supabase, session);
