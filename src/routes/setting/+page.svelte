@@ -118,7 +118,7 @@
 			<span class="label-text text-base">휴대폰 번호</span>
 		</label>
 		<input
-			type="number"
+			type="text"
 			placeholder="닉네임을 입력해주세요"
 			class="input input-bordered h-[52px] w-full border-gray-300 focus:border-primary focus:outline-none"
 			for="phone_num"
