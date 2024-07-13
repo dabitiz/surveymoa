@@ -5,9 +5,9 @@
 
 	import { PUBLIC_CLIENT_URL } from "$env/static/public";
 	import Profiles_api from "@/lib/api/profiles_api.js";
-	import apple_login_png from "@/lib/img/pages/login/apple_login.png";
-	import kakao_login_png from "@/lib/img/pages/login/kakao_login.png";
-	import phone_login_png from "@/lib/img/pages/login/phone_login.png";
+	import apple_login_png from "@/lib/img/partials/login/apple_login.png";
+	import kakao_login_png from "@/lib/img/partials/login/kakao_login.png";
+	import phone_login_png from "@/lib/img/partials/login/phone_login.png";
 
 	export let data;
 	let { supabase, session } = data;
@@ -36,6 +36,7 @@
 	};
 
 	onMount(() => {
+		goto("/home");
 		if (session) {
 			auto_login();
 		}

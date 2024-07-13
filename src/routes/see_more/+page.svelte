@@ -1,4 +1,6 @@
 <script>
+	import { goto } from "$app/navigation";
+
 	import colors from "$lib/js/colors";
 
 	import Header from "@/lib/components/ui/Header/+page.svelte";
@@ -16,10 +18,10 @@
 <Header>
 	<h1 class="text-xl font-bold text-gray-950" slot="left">{TITLE}</h1>
 
-	<button slot="right" on:click={() => alert("준비중입니다.")} class="flex items-center">
+	<button slot="right" on:click={() => goto("/alarm")} class="flex items-center">
 		<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<Icon name="alarm" />
-			<circle cx="17.5" cy="4.5" r="3.5" fill={colors.error} />
+			<!-- <circle cx="17.5" cy="4.5" r="3.5" fill={colors.error} /> -->
 		</svg>
 	</button>
 </Header>

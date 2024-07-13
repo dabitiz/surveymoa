@@ -2,7 +2,7 @@
 	const TITLE = "프로필 정보 수정";
 
 	import Profiles_api from "@/lib/api/profiles_api.js";
-	import Avatar_api from "@/lib/api/avatar_api.js";
+	import Bucket_avatar_api from "@/lib/api/bucket_avatar_api.js";
 	import {
 		avatar_url,
 		username,
@@ -15,7 +15,7 @@
 
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
-	import user_profile_png from "@/lib/img/user_profile.png";
+	import user_profile_png from "@/lib/img/common/user/profile.png";
 
 	export let data;
 
@@ -23,7 +23,7 @@
 	$: ({ supabase, session } = data);
 
 	const profiles_api = new Profiles_api(supabase, session);
-	const avatar_api = new Avatar_api(supabase, session);
+	const bucket_avatar_api = new Bucket_avatar_api(supabase, session);
 
 	$: new_username = $username;
 
@@ -36,7 +36,7 @@
 			const file_ext = selected_img.name.split(".").pop();
 			const file_path = `${session.user.id}/${Date.now()}.${file_ext}`;
 
-			await avatar_api.upload_avatar_url(file_path, selected_img);
+			await bucket_avatar_api.upload_avatar_url(file_path, selected_img);
 			const img_url = `https://glamuiwujgrlmauesueb.supabase.co/storage/v1/object/public/avatar/${file_path}`;
 
 			await profiles_api.upsert_avatar_url(img_url);
@@ -75,7 +75,7 @@
 
 <Header>
 	<button slot="left" class="flex items-center" on:click={() => history.back()}>
-		<Icon name="back" />
+		<Icon name="left_arrow" />
 	</button>
 	<h1 slot="center" class="font-semibold">{TITLE}</h1>
 </Header>

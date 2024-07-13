@@ -3,7 +3,7 @@
 	import { SvelteToast } from "@zerodevx/svelte-toast";
 	import { Device } from "@capacitor/device";
 	import { page } from "$app/stores";
-	import { invalidate } from "$app/navigation";
+	import { goto, invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
 
 	import Profiles_api from "@/lib/api/profiles_api.js";
@@ -29,7 +29,8 @@
 		window.addEventListener("unhandledrejection", handle_unhandled_rejection);
 
 		if (session) {
-			await update_profiles_info();
+			const profiles = await profiles_api.get_profile_info();
+			await update_profiles_info(profiles);
 		}
 		device = await Device.getInfo();
 
@@ -40,9 +41,7 @@
 		};
 	});
 
-	const update_profiles_info = async () => {
-		const profiles = await profiles_api.get_profile_info();
-
+	const update_profiles_info = async (profiles) => {
 		update_profiles_store("username", profiles.username);
 		update_profiles_store("avatar_url", profiles.avatar_url);
 		update_profiles_store("gender", profiles.gender);

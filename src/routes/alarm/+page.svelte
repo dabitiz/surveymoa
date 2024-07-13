@@ -1,7 +1,5 @@
 <script>
-	import { goto } from "$app/navigation";
-
-	const TITLE = "의뢰한 조사";
+	const TITLE = "알람";
 
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
@@ -13,7 +11,7 @@
 </svelte:head>
 
 <Header>
-	<button slot="left" class="flex items-center" on:click={() => goto("/see_more")}>
+	<button slot="left" class="flex items-center" on:click={() => history.back()}>
 		<Icon name="left_arrow" />
 	</button>
 	<h1 slot="center" class="font-semibold">{TITLE}</h1>

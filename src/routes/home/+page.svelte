@@ -9,9 +9,9 @@
 	import Banner from "@/lib/components/Banner/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
-	import available_research_png from "@/lib/img/pages/home/available_research.png";
-	import star_rating_png from "@/lib/img/pages/home/star_rating.png";
-	import commissioned_research_png from "@/lib/img/pages/home/commissioned_research.png";
+	import available_research_png from "@/lib/img/partials/home/available_research.png";
+	import star_rating_png from "@/lib/img/partials/home/star_rating.png";
+	import commissioned_research_png from "@/lib/img/partials/home/commissioned_research.png";
 
 	export let data;
 
@@ -28,10 +28,10 @@
 <div class=" min-h-screen bg-gray-200">
 	<Header nav_class="bg-gray-200">
 		<h1 slot="left" class="text-xl font-bold text-gray-800">{TITLE}</h1>
-		<button slot="right" on:click={() => alert("준비중입니다.")} class="flex items-center">
+		<button slot="right" on:click={() => goto("/alarm")} class="flex items-center">
 			<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<Icon name="alarm" />
-				<circle cx="17.5" cy="4.5" r="3.5" fill={colors.error} />
+				<!-- <circle cx="17.5" cy="4.5" r="3.5" fill={colors.error} /> -->
 			</svg>
 		</button>
 	</Header>

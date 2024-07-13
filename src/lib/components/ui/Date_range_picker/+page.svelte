@@ -313,7 +313,7 @@
 								? 'text-blue-500'
 								: ''}
 								{is_before_today(date)
-							? 'cursor-not-allowed text-gray-300'
+							? 'cursor-not-allowed !text-gray-300'
 							: is_selected(date) &&
 								  date.getDate() === start_date?.getDate() &&
 								  date.getMonth() === start_date?.getMonth()
@@ -324,7 +324,7 @@
 									? 'rounded-r-full bg-primary !text-white'
 									: is_selected(date)
 										? 'bg-primary bg-opacity-10'
-										: 'hover:bg-gray-100'} "
+										: 'hover:bg-gray-200'} "
 						disabled={is_before_today(date)}
 					>
 						{date.getDate()}
@@ -346,7 +346,7 @@
 				<button
 					class="h-11 rounded text-sm {selected_month === index
 						? 'bg-blue-500 text-white'
-						: 'bg-gray-50 hover:bg-gray-100'}"
+						: 'bg-gray-50 hover:bg-gray-200'}"
 					on:click={() => select_month(index)}
 				>
 					{month}
@@ -359,7 +359,7 @@
 				<button
 					class="h-11 rounded {selected_year === selected_year - 6 + i
 						? 'bg-blue-500 text-white'
-						: 'bg-gray-50 hover:bg-gray-100'}"
+						: 'bg-gray-50 hover:bg-gray-200'}"
 					on:click={() => select_year(selected_year - 6 + i)}
 				>
 					{selected_year - 6 + i}

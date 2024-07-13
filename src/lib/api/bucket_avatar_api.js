@@ -1,4 +1,4 @@
-export default class Avatar_api {
+export default class Bucket_avatar_api {
 	constructor(supabase, session) {
 		this.supabase = supabase;
 		this.session = session;

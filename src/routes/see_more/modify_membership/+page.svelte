@@ -31,7 +31,7 @@
 
 <Header>
 	<button slot="left" class="flex items-center" on:click={() => history.back()}>
-		<Icon name="back" />
+		<Icon name="left_arrow" />
 	</button>
 	<h1 slot="center" class="font-semibold">{TITLE}</h1>
 </Header>
