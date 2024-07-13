@@ -3,7 +3,7 @@
 </script>
 
 <main class="pt-safe flex h-screen flex-col items-center justify-center">
-	<span class={`flex h-20 w-20 items-center justify-center rounded-full bg-error`}>
+	<span class={`flex h-20 w-20 items-center justify-center rounded-full bg-error drop-shadow-lg`}>
 		<svg width="10" height="42" viewBox="0 0 10 42" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				fill-rule="evenodd"
