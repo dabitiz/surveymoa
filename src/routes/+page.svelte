@@ -36,7 +36,7 @@
 	};
 
 	onMount(() => {
-		goto("/home");
+		// goto("/home");
 		if (session) {
 			auto_login();
 		}
