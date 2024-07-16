@@ -14,6 +14,17 @@ export default class Research_api {
 		return data[0] ?? [];
 	}
 
+	async select_preverification_research() {
+		const { data, error } = await this.supabase.from("research").select(`
+    id,
+    title,
+    preverification_research(category, questions)
+  `);
+
+		if (error) throw new Error(`Failed to select_preverification_research: ${error.message}`);
+		return data ?? [];
+	}
+
 	async select_research__research_payment_info() {
 		const { data, error } = await this.supabase.from("research").select(
 			`id,
@@ -36,7 +47,6 @@ export default class Research_api {
 
 		if (error)
 			throw new Error(`Failed to select_research__research_payment_info: ${error.message}`);
-
 		return data ?? [];
 	}
 

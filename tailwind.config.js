@@ -28,6 +28,7 @@ export default {
 		themes: [
 			{
 				light: {
+					...require("daisyui/src/theming/themes")["light"],
 					primary: colors.primary,
 					secondary: colors.secondary,
 					success: colors.success,
