@@ -117,7 +117,7 @@
 
 		<button class="dropdown mr-5 mt-5 flex h-5 w-5 items-center justify-center self-start">
 			<details class="dropdown dropdown-end">
-				<summary class="btn border-none shadow-none"
+				<summary class="btn border-none bg-white shadow-none"
 					><svg
 						width="3"
 						height="15"

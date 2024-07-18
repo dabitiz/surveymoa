@@ -18,13 +18,9 @@
 		max_age,
 		gender,
 		expected_time,
+		price,
 		amount,
 		payment_method;
-
-	/**
-	 *결제 방법도 db에 추가하는게 좋을듯
-	 * @param date
-	 */
 
 	const format_date = (date) => {
 		return `${date?.getFullYear() - 2000}. ${("0" + (date.getMonth() + 1)).slice(-2)}. ${("0" + date.getDate()).slice(-2)}`;
@@ -75,7 +71,7 @@
 		</p>
 	</div>
 
-	<p class="mt-3.5 font-semibold">{title}</p>
+	<p class="mt-3.5 line-clamp-2 font-semibold">{title}</p>
 
 	<div class="mt-4 flex">
 		{#if images.length > 0}
@@ -100,7 +96,7 @@
 				<p class="font-semibold text-gray-800">모집 정보</p>
 			</div>
 			<div class="flex flex-col justify-between">
-				<p class="text-base font-bold text-primary">{comma(expected_time * 100)}원</p>
+				<p class="text-base font-bold text-primary">{comma(price)}원</p>
 				<p>{expected_time}분</p>
 				<p>D - {calculate_d_day(end_date)}</p>
 				<p>

@@ -13,6 +13,12 @@ export default class Research_api {
 		if (error) throw new Error(`Failed to insert_research: ${error.message}`);
 		return data[0] ?? [];
 	}
+	async select_research(params) {
+		const { data, error } = await this.supabase.from("research").select(params);
+
+		if (error) throw new Error(`Failed to select_research: ${error.message}`);
+		return data ?? [];
+	}
 
 	async select_preverification_research() {
 		const { data, error } = await this.supabase.from("research").select(`
@@ -30,6 +36,7 @@ export default class Research_api {
 			`id,
       created_at, 
       category,
+			images,
       form_link, 
       title, 
       explanation, 

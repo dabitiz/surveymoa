@@ -1,6 +1,5 @@
 <script>
 	import { goto } from "$app/navigation";
-	import colors from "$lib/js/colors";
 
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";

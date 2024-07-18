@@ -25,7 +25,7 @@
 	<meta name="description" content={`수수료는 낮게, 보상은 크게 : ${TITLE}`} />
 </svelte:head>
 
-<div class=" min-h-screen bg-gray-200">
+<div class="min-h-screen bg-gray-200">
 	<Header nav_class="bg-gray-200">
 		<h1 slot="left" class="text-xl font-bold text-gray-800">{TITLE}</h1>
 		<button slot="right" on:click={() => goto("/alarm")} class="flex items-center">

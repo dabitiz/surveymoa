@@ -56,7 +56,7 @@
 					cellStyle: { backgroundColor: colors.gray[200] },
 					cellEditor: "agSelectCellEditor",
 					cellEditorParams: {
-						values: ["대기", "취소", "승인"]
+						values: ["결제대기", "결제완료", "결제취소"]
 					},
 					onCellValueChanged: change_research_status
 				},

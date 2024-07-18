@@ -20,6 +20,17 @@ export const uncomma = (num) => {
 };
 
 /**
+ *  날짜 형시 포맷
+ * @param {Date|string} get_date
+ * @return {string} 'YYYY. MM. DD'
+ */
+export const format_date = (get_date) => {
+	const date = new Date(get_date);
+
+	return `${date?.getFullYear() - 2000}. ${("0" + (date.getMonth() + 1)).slice(-2)}. ${("0" + date.getDate()).slice(-2)}`;
+};
+
+/**
  * toast popup 출력
  * @param {text} type - (success, warning)
  * @param {text} message
@@ -31,6 +42,77 @@ export const show_toast = (type, message) => {
 			props: { type: type, message: message }
 		}
 	});
+};
+
+/**
+ * 문장 클립보드 카피
+ * @param {string} text - copy할 문장
+ */
+export const copy_to_clipboard = (text) => {
+	if (navigator.clipboard && navigator.clipboard.writeText) {
+		// Modern browsers
+		navigator.clipboard
+			.writeText(text)
+			.then(() => {
+				show_toast("success", "계좌번호가 클립보드에 복사되었습니다.");
+			})
+			.catch((err) => {
+				console.error("클립보드 복사 실패:", err);
+				fall_back_copy_text_to_clipboard(text);
+			});
+	} else {
+		// Fallback for older browsers
+		fall_back_copy_text_to_clipboard(text);
+	}
+};
+
+const fall_back_copy_text_to_clipboard = (text) => {
+	const textArea = document.createElement("textarea");
+	textArea.value = text;
+
+	// Avoid scrolling to bottom
+	textArea.style.top = "0";
+	textArea.style.left = "0";
+	textArea.style.position = "fixed";
+
+	document.body.appendChild(textArea);
+	textArea.focus();
+	textArea.select();
+
+	try {
+		const successful = document.execCommand("copy");
+		const msg = successful ? "성공" : "실패";
+		console.log("Fallback: 클립보드 복사 " + msg);
+		show_toast("success", "계좌번호가 클립보드에 복사되었습니다.");
+	} catch (err) {
+		console.error("Fallback: 클립보드 복사 실패", err);
+	}
+
+	document.body.removeChild(textArea);
+};
+
+/**
+ * 오늘 날짜로부터 d-day 구하기
+ * @param {date} end_date : 끝나는 날짜
+ */
+export const calculate_d_day = (end_date) => {
+	const today = new Date();
+	const comparison_date = new Date(end_date);
+
+	today.setHours(0, 0, 0, 0); //시간 차이 제거
+	comparison_date.setHours(0, 0, 0, 0); ////시간 차이 제거
+
+	// 두 날짜의 차이(밀리초 단위)를 구함
+	let difference_millie_seconds = comparison_date - today;
+
+	// 밀리초 단위의 차이를 일(day) 단위로 변환
+	let difference_in_days = difference_millie_seconds / (1000 * 60 * 60 * 24);
+
+	if (difference_in_days < 0) {
+		return "마감";
+	}
+
+	return difference_in_days;
 };
 
 /**
