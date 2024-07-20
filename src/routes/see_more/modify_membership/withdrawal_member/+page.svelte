@@ -49,8 +49,6 @@
 	</div>
 
 	<div class="pb-safe fixed bottom-3.5 left-0 right-0 mx-4 flex justify-center">
-		<button class="btn btn-primary w-full text-white md:w-1/2" on:click={withdrawal_account}
-			>회원 탈퇴</button
-		>
+		<button class="btn w-full md:w-1/2" on:click={withdrawal_account}>회원 탈퇴</button>
 	</div>
 </main>

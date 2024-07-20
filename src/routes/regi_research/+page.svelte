@@ -35,7 +35,7 @@
 		recruitment_num: 50,
 		min_age: 1,
 		max_age: 70,
-		gender: "all",
+		gender: "모두",
 		expected_time: 5,
 		remarks: "",
 		contact: "",

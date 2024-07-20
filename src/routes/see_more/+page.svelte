@@ -135,6 +135,6 @@
 			<span>카카오톡 문의</span>
 		</p>
 	</div>
-
-	<Bottom_nav />
 </main>
+
+<Bottom_nav />

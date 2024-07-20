@@ -116,6 +116,32 @@ export const calculate_d_day = (end_date) => {
 };
 
 /**
+ * 생년월일 기준 만 나이 계산
+ * @param {} birth_date
+ * @returns {number} age
+ */
+export const calculate_age = (get_birth_date) => {
+	const birth_date = new Date(get_birth_date);
+	const current_date = new Date();
+
+	const birth_year = birth_date.getFullYear();
+	const birth_month = birth_date.getMonth();
+	const birth_day = birth_date.getDate();
+
+	const current_year = current_date.getFullYear();
+	const current_month = current_date.getMonth();
+	const current_day = current_date.getDate();
+
+	let age = current_year - birth_year;
+
+	if (current_month < birth_month || (current_month === birth_month && current_day < birth_day)) {
+		age--;
+	}
+
+	return age;
+};
+
+/**
  * 에러 처리 함수
  * @param {function} fn - 에러 핸들링할 함수
  * @returns {function}

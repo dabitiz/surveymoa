@@ -64,7 +64,7 @@
 <div class="mx-4 mt-6">
 	<p class="font-semibold">조사 정보</p>
 	<div class="mt-4 flex items-center justify-between">
-		<Chip name={category === "research" ? "설문조사" : ""} />
+		<Chip name={category} />
 
 		<p class="text-sm text-gray-900">
 			{format_date(start_date)} ~ {format_date(end_date)}
@@ -82,7 +82,7 @@
 			/>
 		{:else}
 			<img
-				src={category === "research" ? research_category_png : etc_category_png}
+				src={category === "설문조사" ? research_category_png : etc_category_png}
 				alt={category}
 				class="mr-5 h-20 w-20 flex-shrink-0 rounded-xl object-cover"
 			/>
@@ -101,7 +101,7 @@
 				<p>D - {calculate_d_day(end_date)}</p>
 				<p>
 					{min_age} ~ {max_age}세 성별
-					{gender === "all" ? "모두" : gender === "male" ? "남자" : "여자"},
+					{gender},
 
 					{recruitment_num}명
 				</p>

@@ -82,9 +82,7 @@
 				{ headerName: "최대연령", field: "max_age" },
 				{
 					headerName: "성별",
-					field: "gender",
-					valueFormatter: (params) =>
-						params.value === "all" ? "모두" : params.value === "male" ? "남자" : "여자"
+					field: "gender"
 				},
 				{ headerName: "예상 소요시간", field: "expected_time" },
 				{ headerName: "참고사항", field: "remarks" }

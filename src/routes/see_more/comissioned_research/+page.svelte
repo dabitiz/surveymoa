@@ -6,7 +6,6 @@
 	import { comma, format_date } from "@/lib/js/common";
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
-	import Account from "@/lib/components/Account/+page.svelte";
 	import research_category_png from "@/lib/img/common/research_category/research_category.png";
 	import etc_category_png from "@/lib/img/common/research_category/etc_category.png";
 
@@ -19,7 +18,7 @@
 	<meta name="description" content={TITLE} />
 </svelte:head>
 
-<div class=" min-h-screen bg-gray-200">
+<div class="min-h-screen bg-gray-200">
 	<Header>
 		<button slot="left" class="flex items-center" on:click={() => goto("/see_more")}>
 			<Icon name="left_arrow" />
@@ -40,7 +39,7 @@
 						{format_date(research.start_date)} ~ {format_date(research.end_date)}
 					</p>
 
-					<div class="mt-1.5 flex">
+					<a href={`/research_info/${research.id}`} class="mt-1.5 flex">
 						{#if research.images.length > 0}
 							<img
 								src={research.images[0].uri}
@@ -49,7 +48,7 @@
 							/>
 						{:else}
 							<img
-								src={research.category === "research" ? research_category_png : etc_category_png}
+								src={research.category === "설문조사" ? research_category_png : etc_category_png}
 								alt={research.category}
 								class="mr-5 h-[88px] w-[88px] flex-shrink-0 rounded-xl object-cover"
 							/>
@@ -83,7 +82,7 @@
 								</p>
 							</div>
 						</div>
-					</div>
+					</a>
 
 					<div class="mt-3.5 flex border">
 						<a

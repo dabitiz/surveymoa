@@ -39,6 +39,28 @@ export const set_supabase = async ({ event, resolve }) => {
 		return { session: Object.assign({}, session, { user }) };
 	};
 
+	event.locals.safe_get_profiles = async () => {
+		const {
+			data: { user },
+			get_user_error
+		} = await event.locals.supabase.auth.getUser();
+		if (get_user_error) {
+			return { profiles: null };
+		}
+
+		const { data, error } = await event.locals.supabase
+			.from("profiles")
+			.select(`id, username, gender, year_of_birth, rating, point`)
+			.eq("id", user.id)
+			.single();
+
+		if (error) {
+			return { profiles: null };
+		}
+
+		return { profiles: data };
+	};
+
 	return resolve(event, {
 		filterSerializedResponseHeaders(name) {
 			return name === "content-range" || name === "x-supabase-api-version";

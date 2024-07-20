@@ -1,23 +1,27 @@
 <script>
+	const TITLE = "설문모아";
+
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-
-	import colors from "$lib/js/colors";
 
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";
 	import Banner from "@/lib/components/Banner/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
+	import guide_png from "@/lib/img/common/banner/guide.png";
+	import leave_opinion_png from "@/lib/img/common/banner/leave_opinion.png";
 	import available_research_png from "@/lib/img/partials/home/available_research.png";
 	import star_rating_png from "@/lib/img/partials/home/star_rating.png";
 	import commissioned_research_png from "@/lib/img/partials/home/commissioned_research.png";
 
 	export let data;
-
-	const TITLE = "설문모아";
-
 	let { supabase } = data;
+
+	let images = [
+		{ title: "guide", src: guide_png, url: "/guide" },
+		{ title: "leave_opinion", src: leave_opinion_png, url: "/guide" }
+	];
 </script>
 
 <svelte:head>
@@ -37,7 +41,9 @@
 	</Header>
 
 	<main>
-		<Banner />
+		<section class="flex flex-col items-center">
+			<Banner {images} />
+		</section>
 
 		<div class="relative z-[0] mx-4 mt-5 h-[188px] overflow-hidden rounded-[14px] bg-white">
 			<div class=" w-full pl-6 opacity-70">
@@ -175,6 +181,6 @@
 			</div>
 		</div>
 	</main>
-
-	<Bottom_nav />
 </div>
+
+<Bottom_nav />

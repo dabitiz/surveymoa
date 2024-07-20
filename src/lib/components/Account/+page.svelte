@@ -26,7 +26,10 @@
 	import 씨티은행 from "@/lib/img/common/banks/씨티은행.png";
 	import 산업은행 from "@/lib/img/common/banks/산업은행.png";
 
-	export let supabase, session, account;
+	export let supabase,
+		session,
+		account,
+		is_modify_enabled = true;
 	const account_user_api = new Account_user_api(supabase, session);
 
 	let bank_name = account?.bank_name;
@@ -115,26 +118,28 @@
 			<p class="mt-2 text-sm">{account.account_num}</p>
 		</div>
 
-		<button class="dropdown mr-5 mt-5 flex h-5 w-5 items-center justify-center self-start">
-			<details class="dropdown dropdown-end">
-				<summary class="btn border-none bg-white shadow-none"
-					><svg
-						width="3"
-						height="15"
-						viewBox="0 0 3 15"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<rect width="3" height="3" rx="1.5" fill="#9CA0A9" />
-						<rect y="6" width="3" height="3" rx="1.5" fill="#9CA0A9" />
-						<rect y="12" width="3" height="3" rx="1.5" fill="#9CA0A9" />
-					</svg>
-				</summary>
-				<ul class="menu dropdown-content z-[1] w-52 max-w-max rounded-box bg-base-100 p-2 shadow">
-					<li><button on:click={() => (is_bank_name_modal = true)}>계좌 수정하기</button></li>
-				</ul>
-			</details>
-		</button>
+		{#if is_modify_enabled}
+			<button class="dropdown mr-5 mt-5 flex h-5 w-5 items-center justify-center self-start">
+				<details class="dropdown dropdown-end">
+					<summary class="btn border-none bg-white shadow-none"
+						><svg
+							width="3"
+							height="15"
+							viewBox="0 0 3 15"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<rect width="3" height="3" rx="1.5" fill="#9CA0A9" />
+							<rect y="6" width="3" height="3" rx="1.5" fill="#9CA0A9" />
+							<rect y="12" width="3" height="3" rx="1.5" fill="#9CA0A9" />
+						</svg>
+					</summary>
+					<ul class="menu dropdown-content z-[1] w-52 max-w-max rounded-box bg-base-100 p-2 shadow">
+						<li><button on:click={() => (is_bank_name_modal = true)}>계좌 수정하기</button></li>
+					</ul>
+				</details>
+			</button>
+		{/if}
 	</div>
 {:else}
 	<button

@@ -125,7 +125,7 @@
 		</div>
 		<div class="mt-4">
 			<p class="font-semibold">성별</p>
-			<p class="mt-4">{$gender === "male" ? "남자" : "여자"}</p>
+			<p class="mt-4">{$gender}</p>
 		</div>
 	</div>
 

@@ -1,19 +1,147 @@
 <script>
+	const TITLE = "리서치";
+
+	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
 
+	import { comma, calculate_age } from "@/lib/js/common.js";
+	import { gender, year_of_birth } from "$lib/store/profiles_store.js";
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
-
-	import Modal from "@/lib/components/ui/Modal/+page.svelte";
+	import Chip from "@/lib/components/ui/Chip/+page.svelte";
+	import research_category_png from "@/lib/img/common/research_category/research_category.png";
+	import etc_category_png from "@/lib/img/common/research_category/etc_category.png";
 
 	export let data;
 
-	const TITLE = "리서치";
+	let { supabase, session, available_research } = data;
+	$: ({ supabase, session } = data);
 
-	let { supabase } = data;
+	let available_researches = [];
+	let selected_category = "전체";
+	let last_research_id = "";
+	let is_infinite_loading = false;
 
-	let isModalOpen = false;
+	onMount(() => {
+		available_researches = filtering_research(available_research);
+
+		console.log("available_researches", available_researches);
+
+		last_research_id = available_researches[available_researches.length - 1]?.id || "";
+		infinite_scroll();
+	});
+
+	/**
+	 * 설문조사 필터링
+	 * 1. 참여한 적 있는지
+	 * 2. 스크리닝 질문 통과 했는지
+	 * @param researches
+	 */
+	const filtering_research = (researches) => {
+		return researches.filter((item) => {
+			return (
+				!item.participant_research.some((research) => research.users_id === session.user_id) &&
+				!item.screening_user.some(
+					(users) => users.users_id === session.user_id && users.status === false
+				)
+			);
+		});
+	};
+
+	/**
+	 * 무한스크롤 함수
+	 */
+	const infinite_scroll = () => {
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (available_researches.length >= 10 && entry.isIntersecting) {
+					is_infinite_loading = true;
+					setTimeout(() => {
+						load_more_data();
+					}, 1500);
+				}
+			});
+		});
+
+		const target = document.getElementById("infinite_scroll");
+		observer.observe(target);
+	};
+
+	/**
+	 * 무한스크롤 데이터 더 가져오기
+	 */
+	const load_more_data = async () => {
+		const available_research = await select_available_research_filtering(
+			selected_category,
+			last_research_id,
+			$gender,
+			calculate_age($year_of_birth)
+		);
+		is_infinite_loading = false;
+
+		//더 불러올 값이 있을때만 조회
+		if (available_research.length !== 0) {
+			available_researches = filtering_research([...available_researches, ...available_research]);
+
+			last_research_id = available_research[available_research.length - 1]?.id || "";
+		}
+	};
+
+	/**
+	 * 카테고리 설문조사들 조회
+	 */
+	const change_category = async (category) => {
+		selected_category = category;
+
+		available_researches = filtering_research(
+			await select_available_research_filtering(
+				category,
+				"",
+				$gender,
+				calculate_age($year_of_birth)
+			)
+		);
+		last_research_id = available_researches[available_researches.length - 1]?.id || "";
+	};
+
+	const select_available_research_filtering = async (category, last_research_id, gender, age) => {
+		let query = supabase
+			.from("available_research")
+			.select(
+				`id, 
+        title, 
+        category, 
+        images,
+        title,
+        participant_num,
+        recruitment_num,
+        expected_time,
+        price,
+        screening_research(id, questions),
+        screening_user(user_id, status),
+        participant_research(user_id)`
+			)
+			.order("id", { ascending: false })
+			.lte("min_age", age)
+			.gte("max_age", age)
+			.limit(10);
+
+		if (category !== "전체") {
+			query = query.eq("category", category);
+		}
+		if (last_research_id !== "") {
+			query = query.lt("id", last_research_id);
+		}
+		gender === "남자"
+			? (query = query.neq("gender", "여자"))
+			: (query = query.neq("gender", "남자"));
+
+		const { data, error } = await query;
+
+		if (error) throw new Error(`Failed to select_available_research_filtering: ${error.message}`);
+		return data ?? [];
+	};
 </script>
 
 <svelte:head>
@@ -35,7 +163,14 @@
 	<main>
 		<div class="mt-5 flex flex-wrap gap-4 px-5">
 			<label class="inline-flex items-center">
-				<input type="radio" name="options" value="all" class="peer hidden" checked />
+				<input
+					on:click={() => change_category("전체")}
+					type="radio"
+					name="options"
+					value="전체"
+					class="peer hidden"
+					checked
+				/>
 				<span
 					class="cursor-pointer rounded-full bg-gray-200 px-[14px] py-2 text-sm font-semibold text-gray-700 transition-colors duration-200 peer-checked:bg-gray-950 peer-checked:text-white"
 				>
@@ -43,7 +178,13 @@
 				</span>
 			</label>
 			<label class="inline-flex items-center">
-				<input type="radio" name="options" value="active" class="peer hidden" />
+				<input
+					on:click={() => change_category("설문조사")}
+					type="radio"
+					name="options"
+					value="설문조사"
+					class="peer hidden"
+				/>
 				<span
 					class="cursor-pointer rounded-full bg-gray-200 px-[14px] py-2 text-sm font-semibold text-gray-700 transition-colors duration-200 peer-checked:bg-gray-950 peer-checked:text-white"
 				>
@@ -51,7 +192,13 @@
 				</span>
 			</label>
 			<label class="inline-flex items-center">
-				<input type="radio" name="options" value="inactive" class="peer hidden" />
+				<input
+					on:click={() => change_category("인터뷰")}
+					type="radio"
+					name="options"
+					value="인터뷰"
+					class="peer hidden"
+				/>
 				<span
 					class="cursor-pointer rounded-full bg-gray-200 px-[14px] py-2 text-sm font-semibold text-gray-700 transition-colors duration-200 peer-checked:bg-gray-950 peer-checked:text-white"
 				>
@@ -59,7 +206,13 @@
 				</span>
 			</label>
 			<label class="inline-flex items-center">
-				<input type="radio" name="options" value="inactive" class="peer hidden" />
+				<input
+					on:click={() => change_category("기타")}
+					type="radio"
+					name="options"
+					value="기타"
+					class="peer hidden"
+				/>
 				<span
 					class="cursor-pointer rounded-full bg-gray-200 px-[14px] py-2 text-sm font-semibold text-gray-700 transition-colors duration-200 peer-checked:bg-gray-950 peer-checked:text-white"
 				>
@@ -68,64 +221,65 @@
 			</label>
 		</div>
 
-		<div class="mt-5 px-5">
-			<article class=" flex h-[153px] rounded-[14px] bg-white p-5">
-				<img
-					class="mr-5 h-[102px] w-[102px] flex-shrink-0 rounded-xl object-cover"
-					alt=""
-					src="https://images.unsplash.com/photo-1719150016704-270c5a0deee4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8"
-				/>
-				<div class="flex flex-1 flex-col">
-					<div class="flex">
-						<div class="mr-[6px] rounded-sm bg-gray-200 px-[8px] py-[5px]">
-							<p class="text-xs text-gray-950">설문조사</p>
+		{#each available_researches as research}
+			<div class="mx-5 mt-5">
+				<article class="flex h-[153px] rounded-[14px] bg-white p-5">
+					{#if research.images.length > 0}
+						<img
+							src={research.images[0].uri}
+							alt={research.category}
+							class="mr-5 h-[102px] w-[102px] flex-shrink-0 rounded-xl object-cover"
+						/>
+					{:else}
+						<img
+							src={research.category === "설문조사" ? research_category_png : etc_category_png}
+							alt={research.category}
+							class="mr-5 h-[102px] w-[102px] flex-shrink-0 rounded-xl object-cover"
+						/>
+					{/if}
+
+					<div class="flex flex-1 flex-col overflow-hidden overflow-ellipsis">
+						<div class="flex items-center">
+							<div class="mr-1.5">
+								<Chip name={research.category} />
+							</div>
+
+							<p class="rounded-sm bg-gray-200 px-2 py-1 text-xs text-gray-950">
+								{research.expected_time}분
+							</p>
 						</div>
-						<div class="rounded-sm bg-gray-200 px-[8px] py-[5px]">
-							<p class="text-xs text-gray-950">5분</p>
+
+						<p class="mt-2 line-clamp-2 h-9 text-sm font-semibold">
+							{#if research.screening_research.length > 0}
+								{research.screening_research[0].questions[0].question}
+							{:else}
+								{research.title}
+							{/if}
+						</p>
+
+						<p class="mt-2.5 font-bold text-primary">{comma(research.price)}원</p>
+
+						<div class="mt-1.5 h-1 w-full rounded-full bg-gray-300 dark:bg-gray-300">
+							<div
+								class="h-1 rounded-full bg-primary"
+								style={`width: ${(research.participant_num / research.recruitment_num) * 100}%`}
+							/>
 						</div>
 					</div>
+				</article>
+			</div>
+		{/each}
 
-					<p class="mt-2 line-clamp-2 h-9 text-sm">
-						두피반영구 (두피미세생소요법 SMP)에 대한 실태조사입니다 그렇습니다 반갑습니다
-					</p>
+		<div id="infinite_scroll" />
 
-					<p class="mt-2 font-bold text-primary">1000원</p>
-
-					<div class="mt-1.5 h-1 w-full rounded-full bg-gray-300 dark:bg-gray-300">
-						<div class="h-1 rounded-full bg-primary" style={`width: ${30}%`} />
-					</div>
-				</div>
-			</article>
-		</div>
-
-		<button class="btn" on:click={() => {}}>open modal</button>
-
-		<Modal bind:is_modal_open={isModalOpen} modal_position="bottom">
-			<h3 class="font-bold">현재 직업을 선택해 주세요</h3>
+		<div class="flex justify-center py-4">
 			<div
-				class="mt-[23px] flex items-center rounded-lg border border-primary bg-[#e9f0ff] py-4 pl-5"
-			>
-				<button
-					class="mr-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary font-bold text-white"
-				>
-					<div class="h-2 w-2 rounded-full bg-white"></div>
-				</button>
-
-				<p>학생</p>
-			</div>
-
-			<div class="mt-[8px] flex items-center rounded-lg bg-gray-50 py-4 pl-5">
-				<button
-					class="mr-3 flex h-5 w-5 items-center justify-center rounded-full bg-gray-700 font-bold text-white"
-				>
-					<div class="h-4 w-4 rounded-full bg-white"></div>
-				</button>
-
-				<p>주부</p>
-			</div>
-			<button class="btn btn-primary mt-[46px] w-full rounded-xl text-white">다음</button>
-		</Modal>
-
-		<Bottom_nav />
+				class={`h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-primary ${
+					is_infinite_loading === false ? "hidden" : ""
+				}`}
+			/>
+		</div>
 	</main>
 </div>
+
+<Bottom_nav />

@@ -141,7 +141,7 @@
 		<p class="font-semibold">성별</p>
 		<div class="flex items-center justify-center">
 			<p class="pr-4 text-gray-900">
-				{gender === "all" ? "모두" : gender === "male" ? "남자" : "여자"}
+				{gender}
 			</p>
 
 			<svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -283,18 +283,18 @@
 
 		<div class="mt-6 flex w-full justify-around gap-2 px-8">
 			<button
-				on:click={() => (gender = gender === "all" ? "" : "all")}
-				class={`btn flex-1 border-none  ${gender === "all" ? "btn-primary" : "bg-gray-50"}`}
+				on:click={() => (gender = gender === "모두" ? "" : "모두")}
+				class={`btn flex-1 border-none  ${gender === "모두" ? "btn-primary" : "bg-gray-50"}`}
 				>모두
 			</button>
 			<button
-				on:click={() => (gender = gender === "male" ? "" : "male")}
-				class={`btn flex-1 border-none  ${gender === "male" ? "btn-primary" : "bg-gray-50"}`}
+				on:click={() => (gender = gender === "남자" ? "" : "남자")}
+				class={`btn flex-1 border-none  ${gender === "남자" ? "btn-primary" : "bg-gray-50"}`}
 				>남자
 			</button>
 			<button
-				on:click={() => (gender = gender === "female" ? "" : "female")}
-				class={`btn flex-1 border-none  ${gender === "female" ? "btn-primary" : "bg-gray-50"}`}
+				on:click={() => (gender = gender === "여자" ? "" : "여자")}
+				class={`btn flex-1 border-none  ${gender === "여자" ? "btn-primary" : "bg-gray-50"}`}
 				>여자
 			</button>
 		</div>

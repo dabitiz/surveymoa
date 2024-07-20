@@ -1,22 +1,24 @@
 export const load = async ({ params, locals: { supabase } }) => {
-	const api_select_research__research_payment = async () => {
+	const api_select_research = async () => {
 		const { data, error } = await supabase
 			.from("research")
 			.select(
 				`id,
 					category,
 					images,
+					form_link,
 					title, 
+					explanation,
 					start_date, 
 					end_date, 
+					participant_num,
 					recruitment_num, 
 					min_age, 
 					max_age, 
 					gender,
 					expected_time,
 					price,
-					status,
-					research_payment(amount, payment_method, bank_name, account_num)`
+					status`
 			)
 			.eq("id", params.research_id)
 			.single();
@@ -25,7 +27,7 @@ export const load = async ({ params, locals: { supabase } }) => {
 		return data ?? [];
 	};
 
-	const research__research_payment = await api_select_research__research_payment();
+	const research = await api_select_research();
 
-	return { research__research_payment };
+	return { research };
 };
