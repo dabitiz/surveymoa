@@ -26,8 +26,6 @@
 	onMount(() => {
 		available_researches = filtering_research(available_research);
 
-		console.log("available_researches", available_researches);
-
 		last_research_id = available_researches[available_researches.length - 1]?.id || "";
 		infinite_scroll();
 	});
@@ -223,7 +221,7 @@
 
 		{#each available_researches as research}
 			<div class="mx-5 mt-5">
-				<article class="flex h-[153px] rounded-[14px] bg-white p-5">
+				<a href="/research_info/{research.id}" class="flex h-[153px] rounded-[14px] bg-white p-5">
 					{#if research.images.length > 0}
 						<img
 							src={research.images[0].uri}
@@ -266,7 +264,7 @@
 							/>
 						</div>
 					</div>
-				</article>
+				</a>
 			</div>
 		{/each}
 

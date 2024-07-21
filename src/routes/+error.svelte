@@ -26,10 +26,10 @@
 		<p>고객센터로 문의해주시기 바랍니다.</p>
 	</div>
 
-	<div class="pb-safe fixed bottom-3.5 left-0 right-0 mx-4 flex justify-center">
+	<!-- <div class="pb-safe fixed bottom-3.5 left-0 right-0 mx-4 flex justify-center">
 		<button
 			class="btn btn-primary w-full text-white md:w-1/2"
 			on:click={() => (location.href = "/")}>홈으로 돌아가기</button
 		>
-	</div>
+	</div> -->
 </main>

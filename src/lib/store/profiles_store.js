@@ -3,7 +3,7 @@ import { writable } from "svelte/store";
 export const username = writable("");
 export const avatar_url = writable("");
 export const gender = writable("");
-export const year_of_birth = writable(2000);
+export const year_of_birth = writable("2000-09-20");
 export const rating = writable(0);
 
 const property_map_obj = {

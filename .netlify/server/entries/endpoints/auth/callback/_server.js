@@ -6,13 +6,11 @@ const GET = async (event) => {
   } = event;
   const code = url.searchParams.get("code");
   const next = url.searchParams.get("next") ?? "/";
-  try {
+  if (code) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       throw redirect(303, `/${next.slice(1)}`);
     }
-  } catch (error) {
-    console.log("error", error);
   }
   throw redirect(303, "/auth/auth-code-error");
 };

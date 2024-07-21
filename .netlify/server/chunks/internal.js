@@ -1,4 +1,4 @@
-import { c as create_ssr_component, a as setContext, v as validate_component, m as missing_component } from "./ssr.js";
+import { c as create_ssr_component, s as setContext, v as validate_component, m as missing_component } from "./ssr.js";
 let base = "";
 let assets = base;
 const initial = { base, assets };
@@ -39,6 +39,7 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { form } = $$props;
   let { data_0 = null } = $$props;
   let { data_1 = null } = $$props;
+  let { data_2 = null } = $$props;
   {
     setContext("__svelte__", stores);
   }
@@ -57,6 +58,8 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.data_0(data_0);
   if ($$props.data_1 === void 0 && $$bindings.data_1 && data_1 !== void 0)
     $$bindings.data_1(data_1);
+  if ($$props.data_2 === void 0 && $$bindings.data_2 && data_2 !== void 0)
+    $$bindings.data_2(data_2);
   let $$settled;
   let $$rendered;
   let previous_head = $$result.head;
@@ -77,7 +80,31 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       },
       {
         default: () => {
-          return `${validate_component(constructors[1] || missing_component, "svelte:component").$$render(
+          return `${constructors[2] ? `${validate_component(constructors[1] || missing_component, "svelte:component").$$render(
+            $$result,
+            { data: data_1, this: components[1] },
+            {
+              this: ($$value) => {
+                components[1] = $$value;
+                $$settled = false;
+              }
+            },
+            {
+              default: () => {
+                return `${validate_component(constructors[2] || missing_component, "svelte:component").$$render(
+                  $$result,
+                  { data: data_2, form, this: components[2] },
+                  {
+                    this: ($$value) => {
+                      components[2] = $$value;
+                      $$settled = false;
+                    }
+                  },
+                  {}
+                )}`;
+              }
+            }
+          )}` : `${validate_component(constructors[1] || missing_component, "svelte:component").$$render(
             $$result,
             { data: data_1, form, this: components[1] },
             {
@@ -87,7 +114,7 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               }
             },
             {}
-          )}`;
+          )}`}`;
         }
       }
     )}` : `${validate_component(constructors[0] || missing_component, "svelte:component").$$render(
@@ -122,79 +149,10 @@ const options = {
   root: Root,
   service_worker: false,
   templates: {
-    app: ({ head, body, assets: assets2, nonce, env }) => '<!doctype html>\n<!-- daisy ui theme light -->\n<html lang="ko" data-theme="light">\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="' + assets2 + '/favicon.png" />\n		<meta\n			name="viewport"\n			content="viewport-fit=cover, height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"\n		/>\n		' + head + '\n\n		<!-- kakao login initialize -->\n		<script\n			src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"\n			integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"\n			crossorigin="anonymous"\n		><\/script>\n		<script>\n			Kakao.init("62e185766ed5d558bcb248e5a551341a"); // 사용하려는 앱의 JavaScript 키 입력\n		<\/script>\n		<!-- kakao login initialize end -->\n	</head>\n	<body data-sveltekit-preload-data="hover">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
-    error: ({ status, message }) => '<!doctype html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<title>' + message + `</title>
-
-		<style>
-			body {
-				--bg: white;
-				--fg: #222;
-				--divider: #ccc;
-				background: var(--bg);
-				color: var(--fg);
-				font-family:
-					system-ui,
-					-apple-system,
-					BlinkMacSystemFont,
-					'Segoe UI',
-					Roboto,
-					Oxygen,
-					Ubuntu,
-					Cantarell,
-					'Open Sans',
-					'Helvetica Neue',
-					sans-serif;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				height: 100vh;
-				margin: 0;
-			}
-
-			.error {
-				display: flex;
-				align-items: center;
-				max-width: 32rem;
-				margin: 0 1rem;
-			}
-
-			.status {
-				font-weight: 200;
-				font-size: 3rem;
-				line-height: 1;
-				position: relative;
-				top: -0.05rem;
-			}
-
-			.message {
-				border-left: 1px solid var(--divider);
-				padding: 0 0 0 1rem;
-				margin: 0 0 0 1rem;
-				min-height: 2.5rem;
-				display: flex;
-				align-items: center;
-			}
-
-			.message h1 {
-				font-weight: 400;
-				font-size: 1em;
-				margin: 0;
-			}
-
-			@media (prefers-color-scheme: dark) {
-				body {
-					--bg: #222;
-					--fg: #ddd;
-					--divider: #666;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<div class="error">
-			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
+    app: ({ head, body, assets: assets2, nonce, env }) => '<!doctype html>\n<!-- daisy ui theme light -->\n<html lang="ko" data-theme="light">\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="' + assets2 + '/favicon.png" />\n		<meta\n			name="viewport"\n			content="viewport-fit=cover, height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"\n		/>\n		' + head + '\n	</head>\n	<body data-sveltekit-preload-data="hover">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
+    error: ({ status, message }) => '<!doctype html>\n<html>\n	<head>\n		<meta charset="UTF-8" />\n		<meta name="viewport" content="width=device-width, initial-scale=1.0" />\n		<style>\n			/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\n			html,\n			body,\n			div,\n			span,\n			applet,\n			object,\n			iframe,\n			h1,\n			h2,\n			h3,\n			h4,\n			h5,\n			h6,\n			p,\n			blockquote,\n			pre,\n			a,\n			abbr,\n			acronym,\n			address,\n			big,\n			cite,\n			code,\n			del,\n			dfn,\n			em,\n			img,\n			ins,\n			kbd,\n			q,\n			s,\n			samp,\n			small,\n			strike,\n			strong,\n			sub,\n			sup,\n			tt,\n			var,\n			b,\n			u,\n			i,\n			center,\n			dl,\n			dt,\n			dd,\n			ol,\n			ul,\n			li,\n			fieldset,\n			form,\n			label,\n			legend,\n			table,\n			caption,\n			tbody,\n			tfoot,\n			thead,\n			tr,\n			th,\n			td,\n			article,\n			aside,\n			canvas,\n			details,\n			embed,\n			figure,\n			figcaption,\n			footer,\n			header,\n			hgroup,\n			menu,\n			nav,\n			output,\n			ruby,\n			section,\n			summary,\n			time,\n			mark,\n			audio,\n			video {\n				margin: 0;\n				padding: 0;\n				border: 0;\n				font-size: 100%;\n				font: inherit;\n				vertical-align: baseline;\n			}\n			/* HTML5 display-role reset for older browsers */\n			article,\n			aside,\n			details,\n			figcaption,\n			figure,\n			footer,\n			header,\n			hgroup,\n			menu,\n			nav,\n			section {\n				display: block;\n			}\n			body {\n				line-height: 1;\n			}\n			ol,\n			ul {\n				list-style: none;\n			}\n			blockquote,\n			q {\n				quotes: none;\n			}\n			blockquote:before,\n			blockquote:after,\n			q:before,\n			q:after {\n				content: "";\n				content: none;\n			}\n			table {\n				border-collapse: collapse;\n				border-spacing: 0;\n			}\n		</style>\n\n		<style>\n			main {\n				height: 100vh;\n				display: flex;\n				flex-direction: column;\n				justify-content: center;\n				align-items: center;\n			}\n\n			.circle {\n				height: 82px;\n				width: 82px;\n				background-color: red;\n				border-radius: 100%;\n				display: flex;\n				align-items: center;\n				justify-content: center;\n			}\n\n			h1 {\n				margin-top: 27px;\n				color: #237bf8;\n				font-size: 30px;\n				font-weight: 900;\n				font-size: 30px;\n			}\n			h2 {\n				margin-top: 16px;\n				margin-bottom: 0;\n				font-weight: 600;\n				font-size: 16px;\n			}\n		</style>\n	</head>\n	<body>\n		<main>\n			<span class="circle">\n				<svg\n					width="10"\n					height="42"\n					viewBox="0 0 10 42"\n					fill="none"\n					xmlns="http://www.w3.org/2000/svg"\n				>\n					<path\n						fill-rule="evenodd"\n						clip-rule="evenodd"\n						d="M5.00039 0.5C7.26476 0.5 9.10039 2.33563 9.10039 4.6V25.1C9.10039 27.3644 7.26476 29.2 5.00039 29.2C2.73602 29.2 0.900391 27.3644 0.900391 25.1V4.6C0.900391 2.33563 2.73602 0.5 5.00039 0.5Z"\n						fill="white"\n					/>\n					<path\n						d="M5.00039 41.4998C7.26476 41.4998 9.10039 39.6642 9.10039 37.3998C9.10039 35.1354 7.26476 33.2998 5.00039 33.2998C2.73602 33.2998 0.900391 35.1354 0.900391 37.3998C0.900391 39.6642 2.73602 41.4998 5.00039 41.4998Z"\n						fill="white"\n					/>\n				</svg>\n			</span>\n\n			<h1>코드오류 ' + status + "</h1>\n\n			<h2>" + message + '</h2>\n			<div\n				class="mt-2 text-center text-sm text-gray-900"\n				style="margin-top: 8px; text-align: center; font-size: 14px; color: gray"\n			>\n				<p>동일한 문제가 지속적으로 발생하는 경우</p>\n				<p>고객센터로 문의해주시기 바랍니다.</p>\n			</div>\n		</main>\n	</body>\n</html>\n'
   },
-  version_hash: "mp1vi2"
+  version_hash: "2irbln"
 };
 async function get_hooks() {
   return {

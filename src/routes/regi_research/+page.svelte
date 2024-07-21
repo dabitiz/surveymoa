@@ -236,13 +236,15 @@
 		/>
 	{/if}
 
-	<div class="pb-safe fixed bottom-3.5 left-0 right-0 mx-4 flex justify-center">
-		<button
-			class="btn btn-primary w-full md:w-1/2"
-			on:click={go_next}
-			disabled={is_next_btn_disabled(page_count, research_info, research_payment_info, account)}
-			>{page_count === 6 ? `${comma(research_payment_info.amount)}원 결제하기` : "다음"}</button
-		>
+	<div class="fixed bottom-0 mx-auto w-full bg-white px-5 py-3.5 md:w-1/2">
+		<div class="pb-safe">
+			<button
+				on:click={go_next}
+				disabled={is_next_btn_disabled(page_count, research_info, research_payment_info, account)}
+				class="btn btn-primary w-full"
+				>{page_count === 6 ? `${comma(research_payment_info.amount)}원 결제하기` : "다음"}</button
+			>
+		</div>
 	</div>
 </main>
 

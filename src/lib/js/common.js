@@ -157,3 +157,12 @@ export const error_handling = (fn) => {
 		}
 	};
 };
+/**
+ * 현재 환경이 모바일 앱인지 검사
+ * @param {*} platform
+ * @param {*} operating_system
+ * @returns {boolean}
+ */
+export const is_mobile_app = (platform, operating_system) => {
+	return platform !== "web" && operating_system === "ios" && operating_system === "android";
+};

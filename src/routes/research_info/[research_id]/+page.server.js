@@ -4,6 +4,7 @@ export const load = async ({ params, locals: { supabase } }) => {
 			.from("research")
 			.select(
 				`id,
+					status,
 					category,
 					images,
 					form_link,
@@ -18,7 +19,10 @@ export const load = async ({ params, locals: { supabase } }) => {
 					gender,
 					expected_time,
 					price,
-					status`
+					user_id,
+					screening_research(id, questions),
+					screening_user(user_id, status),
+					participant_research(user_id)`
 			)
 			.eq("id", params.research_id)
 			.single();

@@ -1,10 +1,10 @@
-import * as server from '../entries/pages/_page.server.js';
+import * as server from '../entries/pages/admin/_layout.server.js';
 
 export const index = 2;
 let component_cache;
-export const component = async () => component_cache ??= (await import('../entries/pages/_page.svelte.js')).default;
+export const component = async () => component_cache ??= (await import('../entries/pages/admin/_layout.svelte.js')).default;
 export { server };
-export const server_id = "src/routes/+page.server.js";
-export const imports = ["_app/immutable/nodes/2.Cnn1zGJ5.js","_app/immutable/chunks/2.DXQGzXea.js","_app/immutable/chunks/scheduler.uydcz5af.js","_app/immutable/chunks/index.asQ9-pSt.js","_app/immutable/chunks/preload-helper.D6kgxu3v.js"];
-export const stylesheets = [];
+export const server_id = "src/routes/admin/+layout.server.js";
+export const imports = ["_app/immutable/nodes/2.GAl347vn.js","_app/immutable/chunks/scheduler.BdKJy1iV.js","_app/immutable/chunks/index.B7N7XBR8.js","_app/immutable/chunks/entry.CBBBRXsa.js","_app/immutable/chunks/index.C3Zqiqcy.js","_app/immutable/chunks/common.BB09VNl6.js"];
+export const stylesheets = ["_app/immutable/assets/2.DpGJakd2.css","_app/immutable/assets/common.DbLvtVfH.css"];
 export const fonts = [];
