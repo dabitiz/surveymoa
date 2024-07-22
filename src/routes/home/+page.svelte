@@ -4,6 +4,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 
+	import { point } from "$lib/store/profiles_store.js";
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";
 	import Banner from "@/lib/components/Banner/+page.svelte";
@@ -114,7 +115,7 @@
 									fill="white"
 								/>
 							</svg>인터뷰</span
-						><span class="font-semibold">18개</span>
+						><span class="font-semibold">0개</span>
 					</p>
 				</div>
 			</div>
@@ -127,12 +128,13 @@
 		</div>
 
 		<div class="mx-4 mt-4 flex items-center justify-center">
-			<div
+			<a
+				href="/point"
 				class="flex h-[81px] w-full items-center justify-between rounded-[14px] bg-gradient-to-r from-blue-500 to-sky-500 px-7"
 			>
 				<p class="font-bold text-white">설문모아 포인트</p>
 				<p class="flex items-center text-xl font-bold text-white">
-					<span>1000 P</span>
+					<span>{$point} P</span>
 
 					<svg
 						class="ml-2 inline-block"
@@ -152,7 +154,7 @@
 						/>
 					</svg>
 				</p>
-			</div>
+			</a>
 		</div>
 
 		<div class="mx-4 mt-4 flex items-center justify-center gap-4">

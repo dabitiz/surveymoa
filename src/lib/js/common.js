@@ -22,7 +22,7 @@ export const uncomma = (num) => {
 /**
  *  날짜 형시 포맷
  * @param {Date|string} get_date
- * @return {string} 'YYYY. MM. DD'
+ * @return {string} 'YY. MM. DD'
  */
 export const format_date = (get_date) => {
 	const date = new Date(get_date);

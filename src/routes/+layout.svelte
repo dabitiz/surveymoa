@@ -37,7 +37,6 @@
 		save_device_store();
 
 		is_initialize = true;
-
 		return () => {
 			data.subscription.unsubscribe();
 			window.removeEventListener("error", handle_error);
@@ -50,6 +49,7 @@
 		update_profiles_store("avatar_url", profiles.avatar_url);
 		update_profiles_store("gender", profiles.gender);
 		update_profiles_store("year_of_birth", profiles.year_of_birth);
+		update_profiles_store("point", profiles.point);
 		update_profiles_store("rating", profiles.rating);
 	};
 

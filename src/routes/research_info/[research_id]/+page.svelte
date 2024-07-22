@@ -3,8 +3,13 @@
 	import { InAppBrowser } from "@capgo/inappbrowser";
 
 	import { PUBLIC_CLIENT_URL } from "$env/static/public";
+	import {
+		gender,
+		year_of_birth,
+		point,
+		update_profiles_store
+	} from "$lib/store/profiles_store.js";
 	import { comma, calculate_d_day, calculate_age, is_mobile_app } from "@/lib/js/common.js";
-	import { gender, year_of_birth } from "$lib/store/profiles_store.js";
 	import { operating_system, platform } from "@/lib/store/device_store";
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Modal from "@/lib/components/ui/Modal/+page.svelte";
@@ -55,7 +60,11 @@
 		is_admin = session.user.id === research.user_id ? true : false;
 		research_status = check_research_status(research_info);
 
-		if (research_status === "참여 하기" && research_info.screening_research.length > 0) {
+		if (
+			research_status === "참여 하기" &&
+			research_info.screening_research.length > 0 &&
+			!is_admin
+		) {
 			const is_screening_participation = research_info.screening_user.some(
 				(user) => user.user_id === session.user.id
 			);
@@ -157,8 +166,10 @@
 				research_info = { ...research_info, participant_research };
 				research_status = check_research_status(research_info);
 
-				await InAppBrowser.close();
+				await api_insert_point_change_history("설문보상");
+				update_profiles_store("point", $point + research_info.price);
 
+				await InAppBrowser.close();
 				show_toast("success", "설문에 참여해주셔서 감사합니다.");
 			}
 		});
@@ -197,6 +208,20 @@
 
 		if (error) throw new Error(`Failed to api_insert_participant_research: ${error.message}`);
 		return data || [];
+	};
+
+	const api_insert_point_change_history = async (category) => {
+		const { error } = await supabase.from([
+			{
+				category,
+				behavior: research_info.title,
+				old_point: $point,
+				new_point: $point + research_info.price,
+				user_id: session.user.id
+			}
+		]);
+
+		if (error) throw new Error(`Failed to api_insert_participant_research: ${error.message}`);
 	};
 </script>
 

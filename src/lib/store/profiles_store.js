@@ -4,6 +4,7 @@ export const username = writable("");
 export const avatar_url = writable("");
 export const gender = writable("");
 export const year_of_birth = writable("2000-09-20");
+export const point = writable(0);
 export const rating = writable(0);
 
 const property_map_obj = {
@@ -11,6 +12,7 @@ const property_map_obj = {
 	avatar_url,
 	gender,
 	year_of_birth,
+	point,
 	rating
 };
 

@@ -50,7 +50,7 @@ export const set_supabase = async ({ event, resolve }) => {
 
 		const { data, error } = await event.locals.supabase
 			.from("profiles")
-			.select(`id, username, gender, year_of_birth, rating, point`)
+			.select(`id, username, gender, year_of_birth, point, rating`)
 			.eq("id", user.id)
 			.single();
 
