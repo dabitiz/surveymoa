@@ -9,8 +9,6 @@
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
 	export let data;
-
-	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
 	let logout_modal = false;

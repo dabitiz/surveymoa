@@ -7,7 +7,6 @@
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
 	export let data;
-	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 </script>
 
@@ -29,7 +28,7 @@
 			>
 		</div>
 	</div>
-	<div class="divider h-2 bg-gray-300" />
+	<div class=" mt-5 h-2 bg-gray-300" />
 
 	<div class="mx-5 mt-5">
 		<p class="font-semibold">포인트</p>
@@ -38,5 +37,5 @@
 			<a href="admin/point/withdrawal_approval" class="ml-4 mt-7 flex items-center">출금 승인</a>
 		</div>
 	</div>
-	<div class="divider h-2 bg-gray-300" />
+	<div class=" mt-5 h-2 bg-gray-300" />
 </main>

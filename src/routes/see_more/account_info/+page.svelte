@@ -4,9 +4,10 @@
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Account from "@/lib/components/Account/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
+	import { onMount } from "svelte";
 
 	export let data;
-	let { supabase, session, account } = data;
+	let { account } = data;
 	$: ({ supabase, session } = data);
 </script>
 

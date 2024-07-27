@@ -4,52 +4,8 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 
-	import { comma } from "@/lib/js/common.js";
-	import { show_toast } from "@/lib/js/common.js";
+	import { comma, copy_to_clipboard } from "@/lib/js/common.js";
 	import Header from "@/lib/components/ui/Header/+page.svelte";
-
-	const copy_to_clipboard = (text) => {
-		if (navigator.clipboard && navigator.clipboard.writeText) {
-			// Modern browsers
-			navigator.clipboard
-				.writeText(text)
-				.then(() => {
-					show_toast("success", "계좌번호가 클립보드에 복사되었습니다.");
-				})
-				.catch((err) => {
-					console.error("클립보드 복사 실패:", err);
-					fall_back_copy_text_to_clipboard(text);
-				});
-		} else {
-			// Fallback for older browsers
-			fall_back_copy_text_to_clipboard(text);
-		}
-	};
-
-	const fall_back_copy_text_to_clipboard = (text) => {
-		const textArea = document.createElement("textarea");
-		textArea.value = text;
-
-		// Avoid scrolling to bottom
-		textArea.style.top = "0";
-		textArea.style.left = "0";
-		textArea.style.position = "fixed";
-
-		document.body.appendChild(textArea);
-		textArea.focus();
-		textArea.select();
-
-		try {
-			const successful = document.execCommand("copy");
-			const msg = successful ? "성공" : "실패";
-			console.log("Fallback: 클립보드 복사 " + msg);
-			show_toast("success", "계좌번호가 클립보드에 복사되었습니다.");
-		} catch (err) {
-			console.error("Fallback: 클립보드 복사 실패", err);
-		}
-
-		document.body.removeChild(textArea);
-	};
 </script>
 
 <svelte:head>

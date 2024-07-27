@@ -5,16 +5,14 @@
 	import { createGrid } from "ag-grid-community";
 	import { goto } from "$app/navigation";
 
-	import Research_api from "@/lib/api/research_api.js";
 	import colors from "@/lib/js/colors.js";
 	import { date_formatter } from "@/lib/ag_grid/grid_common.js";
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
 	export let data;
-	let { supabase, session, research_payment_info } = data;
-	$: ({ supabase, session } = data);
-	const research_api = new Research_api(supabase, session);
+	let { research_payment } = data;
+	$: ({ supabase } = data);
 
 	let grid_researches;
 	let grid_researches_api;
@@ -22,7 +20,7 @@
 	onMount(() => {
 		researchs_grid_options_init();
 
-		grid_researches_api.setGridOption("rowData", research_payment_info);
+		grid_researches_api.setGridOption("rowData", research_payment);
 	});
 
 	const change_research_status = async (params) => {
@@ -32,7 +30,7 @@
 		const should_change = window.confirm("값을 변경하시겠습니까?");
 
 		if (should_change) {
-			await research_api.update_research_status(params.data.id, new_val);
+			await update_research_status(params.data.id, new_val);
 
 			alert("값이 수정되었습니다.");
 		} else {
@@ -62,14 +60,15 @@
 				},
 				{
 					headerName: "결제정보",
-					field: "research_payment_info.0.payment_method",
+					field: "research_payment.0.payment_method",
 					valueFormatter: (params) => (params.value === "bank_deposit" ? "무통장 입금" : "")
 				},
 				{
 					headerName: "은행 이름",
-					field: "research_payment_info.0.bank_name"
+					field: "research_payment.0.bank_name"
 				},
-				{ headerName: "계좌 번호", field: "research_payment_info.0.account_num" },
+				{ headerName: "입금예정 금액", field: "research_payment.0.amount" },
+				{ headerName: "계좌 번호", field: "research_payment.0.account_num" },
 				{ headerName: "생성일", field: "created_at", valueFormatter: date_formatter },
 				{ headerName: "카테고리", field: "category" },
 				{ headerName: "폼링크", field: "form_link" },
@@ -85,7 +84,9 @@
 					field: "gender"
 				},
 				{ headerName: "예상 소요시간", field: "expected_time" },
-				{ headerName: "참고사항", field: "remarks" }
+				{ headerName: "참고사항", field: "remarks" },
+				{ headerName: "연락처", field: "contact" },
+				{ headerName: "조사 가격", field: "price" }
 			],
 			defaultColDef: {
 				filter: true
@@ -98,6 +99,12 @@
 		};
 
 		grid_researches_api = createGrid(grid_researches, grid_options);
+	};
+
+	const update_research_status = async (id, status) => {
+		const { error } = await supabase.from("research").update({ status }).eq("id", id);
+
+		if (error) throw new Error(`Failed to update_research_status: ${error.message}`);
 	};
 </script>
 

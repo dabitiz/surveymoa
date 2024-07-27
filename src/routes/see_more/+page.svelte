@@ -1,8 +1,6 @@
 <script>
 	import { goto } from "$app/navigation";
 
-	import colors from "$lib/js/colors";
-
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
@@ -15,7 +13,7 @@
 	<meta name="description" content={TITLE} />
 </svelte:head>
 
-<Header>
+<Header nav_class="bg-white">
 	<h1 class="text-xl font-bold text-gray-950" slot="left">{TITLE}</h1>
 
 	<button slot="right" on:click={() => goto("/alarm")} class="flex items-center">
@@ -59,7 +57,7 @@
 			</svg><span>내 계좌 정보</span>
 		</a>
 	</div>
-	<div class="divider h-2 bg-gray-300" />
+	<div class="mt-5 h-2 bg-gray-300" />
 
 	<div class="mx-5 mt-5">
 		<p class="font-semibold">나의 설문조사</p>
@@ -118,7 +116,7 @@
 			</svg><span>의뢰한 조사</span>
 		</a>
 	</div>
-	<div class="divider h-2 bg-gray-300" />
+	<div class="mt-5 h-2 bg-gray-300" />
 
 	<div class="mx-5 mt-5">
 		<a href="see_more/notice" class="mt-7">공지사항</a>
@@ -127,13 +125,13 @@
 		<a href="see_more/open_source_license" class="mt-7 block">오픈소스 라이센스</a>
 		<p class="mt-7 flex justify-between">버전정보 <span class="text-primary">V.0.1</span></p>
 	</div>
-	<div class="divider h-2 bg-gray-300" />
+	<div class="mt-5 h-2 bg-gray-300" />
 
 	<div class="mx-5 mt-5">
 		<p class="font-semibold">문의 및 지원</p>
-		<p class="mt-7 flex items-center gap-4">
+		<a class="mt-7 flex items-center gap-4" href="https://open.kakao.com/o/sHRqCkFg">
 			<span>카카오톡 문의</span>
-		</p>
+		</a>
 	</div>
 </main>
 

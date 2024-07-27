@@ -19,7 +19,7 @@
 	import { show_toast } from "$lib/js/common.js";
 
 	export let data;
-	let { supabase, session, research } = data;
+	let { research } = data;
 	$: ({ session, supabase } = data);
 
 	const TITLE = research.category;
@@ -78,7 +78,7 @@
 
 	const check_research_status = (research_info) => {
 		const is_participate = research_info.participant_research.some(
-			(rch) => research.user_id === session.user.id
+			(research) => research.user_id === session.user.id
 		);
 		if (is_participate) return "참여 완료";
 
@@ -162,11 +162,11 @@
 														location.href = "${PUBLIC_CLIENT_URL}/research_info/${research.id}";}`
 			});
 			if (event.url === `${PUBLIC_CLIENT_URL}/research_info/${research.id}`) {
-				const participant_research = await api_insert_participant_research();
+				const participant_research = await insert_participant_research();
 				research_info = { ...research_info, participant_research };
 				research_status = check_research_status(research_info);
 
-				await api_insert_point_change_history("설문보상");
+				await insert_point_change_history("설문보상");
 				update_profiles_store("point", $point + research_info.price);
 
 				await InAppBrowser.close();
@@ -179,7 +179,7 @@
 	};
 
 	const update_screening = async (status) => {
-		const screening_user = await api_insert_screening_user_status(status);
+		const screening_user = await insert_screening_user_status(status);
 		research_info = { ...research_info, screening_user };
 		research_status = check_research_status(research_info);
 
@@ -188,30 +188,30 @@
 		screening_info.is_modal = false;
 	};
 
-	const api_insert_screening_user_status = async (status) => {
+	const insert_screening_user_status = async (status) => {
 		const { data, error } = await supabase
 			.from("screening_user")
 			.insert([{ status: status, user_id: session.user.id, research_id: research_info.id }])
 			.select("*")
 			.eq("research_id", research_info.id);
 
-		if (error) throw new Error(`Failed to api_insert_screening_user_status: ${error.message}`);
+		if (error) throw new Error(`Failed to insert_screening_user_status: ${error.message}`);
 		return data || [];
 	};
 
-	const api_insert_participant_research = async () => {
+	const insert_participant_research = async () => {
 		const { data, error } = await supabase
 			.from("participant_research")
 			.insert([{ user_id: session.user.id, research_id: research_info.id }])
 			.select("*")
 			.eq("research_id", research_info.id);
 
-		if (error) throw new Error(`Failed to api_insert_participant_research: ${error.message}`);
+		if (error) throw new Error(`Failed to insert_participant_research: ${error.message}`);
 		return data || [];
 	};
 
-	const api_insert_point_change_history = async (category) => {
-		const { error } = await supabase.from([
+	const insert_point_change_history = async (category) => {
+		const { error } = await supabase.from("point_change_history").insert([
 			{
 				category,
 				behavior: research_info.title,
@@ -221,7 +221,7 @@
 			}
 		]);
 
-		if (error) throw new Error(`Failed to api_insert_participant_research: ${error.message}`);
+		if (error) throw new Error(`Failed to insert_point_change_history: ${error.message}`);
 	};
 </script>
 

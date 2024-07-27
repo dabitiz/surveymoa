@@ -7,7 +7,6 @@
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 
 	export let data;
-	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
 	const withdrawal_account = () => {

@@ -55,7 +55,7 @@
 						{/if}
 
 						<div class="mt-0.5 flex flex-1 flex-col">
-							<p class="line-clamp-2 text-sm font-semibold">
+							<p class="line-clamp-2 h-10 text-sm font-semibold">
 								{research.title}
 							</p>
 
@@ -86,12 +86,17 @@
 
 					<div class="mt-3.5 flex border">
 						<a
-							href={`/see_more/comissioned_research/${research.id}/order_detail`}
+							href={`comissioned_research/order_detail/${research.id}`}
 							class="w-[30%] border-r py-2.5 text-center text-sm"
 						>
 							주문 상세
 						</a>
-						<a href={``} class="w-[70%] py-2.5 text-center text-sm text-primary"> 별점 주기 </a>
+						<a
+							href={`comissioned_research/rating_user/${research.id}`}
+							class="w-[70%] py-2.5 text-center text-sm text-primary"
+						>
+							별점 주기
+						</a>
 					</div>
 				</div>
 			</div>

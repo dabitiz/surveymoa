@@ -10,17 +10,21 @@
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
 	export let data;
-	let { supabase, session, account_user } = data;
+	let { account } = data;
 	$: ({ supabase, session } = data);
 
 	let withdrawal_amount = "";
 
-	const api_input_withdrawal_request = async () => {
-		const { data, error } = await supabase
-			.from("withdrawal_request")
-			.insert([{ amount: withdrawal_amount, user_id: session.user.id }]);
-
-		if (error) throw new Error(`Failed to api_input_withdrawal_request: ${error.message}`);
+	const insert_withdrawal_request = async () => {
+		const { error } = await supabase.from("withdrawal_request").insert([
+			{
+				amount: withdrawal_amount,
+				user_id: session.user.id,
+				bank_name: account.bank_name,
+				account_num: account.account_num
+			}
+		]);
+		if (error) throw new Error(`Failed to insert_withdrawal_request: ${error.message}`);
 	};
 </script>
 
@@ -72,7 +76,7 @@
 
 	<div class="mx-5 mt-10">
 		<p class="mb-3.5 font-semibold">계좌 정보</p>
-		<Account {supabase} {session} account={account_user} />
+		<Account {supabase} {session} {account} />
 	</div>
 
 	<div class="fixed bottom-0 mx-auto w-full bg-white px-5 py-3.5 md:w-1/2">
@@ -89,7 +93,7 @@
 						return;
 					}
 
-					await api_input_withdrawal_request();
+					await insert_withdrawal_request();
 					goto("/point");
 					show_toast("success", "출금신청이 완료되었습니다.");
 				}}

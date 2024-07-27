@@ -4,15 +4,12 @@
 	import { goto } from "$app/navigation";
 
 	import { PUBLIC_CLIENT_URL } from "$env/static/public";
-	import Profiles_api from "@/lib/api/profiles_api.js";
 	import apple_login_png from "@/lib/img/partials/login/apple_login.png";
 	import kakao_login_png from "@/lib/img/partials/login/kakao_login.png";
 	import phone_login_png from "@/lib/img/partials/login/phone_login.png";
 
 	export let data;
-	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
-	const profiles_api = new Profiles_api(supabase, session);
 
 	/**
 	 * supabase oauth 로그인
@@ -45,9 +42,9 @@
 	 * 자동 로그인
 	 */
 	const auto_login = async () => {
-		const profiles = await profiles_api.get_profile_info();
+		const profiles = await get_profiles();
 
-		if (profiles.username) {
+		if (profiles.gender) {
 			goto("/home");
 		} else {
 			goto("/setting");
@@ -59,6 +56,16 @@
 	 */
 	const phone_login = () => {
 		alert("휴대폰 번호로 로그인");
+	};
+
+	const get_profiles = async () => {
+		const { data, error } = await supabase
+			.from("profiles")
+			.select(`gender`)
+			.eq("id", session.user.id);
+
+		if (error) throw new Error(`Failed to get_profiles: ${error.message}`);
+		return data[0] || [];
 	};
 </script>
 

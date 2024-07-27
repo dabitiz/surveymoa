@@ -15,13 +15,12 @@
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Account from "@/lib/components/Account/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
-	import Chip from "@/lib/components/ui/Chip/+page.svelte";
 	import Modal from "@/lib/components/ui/Modal/+page.svelte";
 	import research_category_png from "@/lib/img/common/research_category/research_category.png";
 	import etc_category_png from "@/lib/img/common/research_category/etc_category.png";
 
 	export let data;
-	let { supabase, session, research__research_payment } = data;
+	let { research_payment } = data;
 	$: ({ supabase, session } = data);
 
 	let is_cancel_research_modal = false;
@@ -29,7 +28,7 @@
 	const cancel_research = async () => {
 		update_global_store("loading", true);
 		try {
-			await api_update_research("결제취소");
+			await update_research("결제취소");
 			research.status = "결제취소";
 			is_cancel_research_modal = false;
 
@@ -39,10 +38,10 @@
 		}
 	};
 
-	const api_update_research = async (status) => {
+	const update_research = async (status) => {
 		const { error } = await supabase.from("research").update({ status }).eq("id", research.id);
 
-		if (error) throw new Error(`Failed to api_update_research: ${error.message}`);
+		if (error) throw new Error(`Failed to update_research: ${error.message}`);
 	};
 </script>
 
@@ -61,10 +60,8 @@
 	<p class="text-sm font-semibold">주문번호 {$page.params.research_id}</p>
 
 	<div class="mt-1.5 flex items-center justify-between">
-		<p
-			class={`font-bold ${research__research_payment.status === "결제취소" ? "text-gray-900" : ""}`}
-		>
-			{research__research_payment.status}
+		<p class={`font-bold ${research_payment.status === "결제취소" ? "text-gray-900" : ""}`}>
+			{research_payment.status}
 		</p>
 
 		<button on:click={() => copy_to_clipboard("10430104503406")}>
@@ -78,30 +75,28 @@
 
 <div class="mx-6 py-6">
 	<div class=" flex items-center justify-between">
-		<!-- <Chip name={research__research_payment.category === "설문조사" ? "설문조사" : ""} /> -->
+		<p class="mr-1.5 inline-block rounded-[4px] bg-gray-200 px-1 py-0.5 text-[11px]">
+			{research_payment.category}
+		</p>
 
 		<p class="text-sm text-gray-800">
-			{format_date(research__research_payment.start_date)} ~ {format_date(
-				research__research_payment.end_date
-			)}
+			{format_date(research_payment.start_date)} ~ {format_date(research_payment.end_date)}
 		</p>
 	</div>
 
-	<p class="mt-3.5 line-clamp-2 font-semibold">{research__research_payment.title}</p>
+	<p class="mt-3.5 line-clamp-2 font-semibold">{research_payment.title}</p>
 
 	<div class="mt-4 flex">
-		{#if research__research_payment.images.length > 0}
+		{#if research_payment.images.length > 0}
 			<img
-				src={research__research_payment.images[0].uri}
-				alt={research__research_payment.category}
+				src={research_payment.images[0].uri}
+				alt={research_payment.category}
 				class="mr-5 h-20 w-20 flex-shrink-0 rounded-xl object-cover"
 			/>
 		{:else}
 			<img
-				src={research__research_payment.category === "설문조사"
-					? research_category_png
-					: etc_category_png}
-				alt={research__research_payment.category}
+				src={research_payment.category === "설문조사" ? research_category_png : etc_category_png}
+				alt={research_payment.category}
 				class="mr-5 h-20 w-20 flex-shrink-0 rounded-xl object-cover"
 			/>
 		{/if}
@@ -114,14 +109,14 @@
 				<p class="font-semibold text-gray-800">모집 정보</p>
 			</div>
 			<div class="flex flex-col justify-between">
-				<p class="text-base font-bold text-primary">{comma(research__research_payment.price)}원</p>
-				<p>{research__research_payment.expected_time}분</p>
-				<p>D - {calculate_d_day(research__research_payment.end_date)}</p>
+				<p class="text-base font-bold text-primary">{comma(research_payment.price)}원</p>
+				<p>{research_payment.expected_time}분</p>
+				<p>D - {calculate_d_day(research_payment.end_date)}</p>
 				<p>
-					{research__research_payment.min_age} ~ {research__research_payment.max_age}세 성별
-					{research__research_payment.gender}
+					{research_payment.min_age} ~ {research_payment.max_age}세 성별
+					{research_payment.gender}
 
-					{research__research_payment.recruitment_num}명
+					{research_payment.recruitment_num}명
 				</p>
 			</div>
 		</div>
@@ -136,7 +131,7 @@
 	<Account
 		{supabase}
 		{session}
-		account={research__research_payment.research_payment[0]}
+		account={research_payment.research_payment[0]}
 		is_modify_enabled={false}
 	/>
 </div>
@@ -149,7 +144,7 @@
 	<div class="mt-4 flex items-center justify-between">
 		<p class="font-semibold">총 결제 금액</p>
 		<p class="text-lg font-bold text-primary">
-			{comma(research__research_payment.research_payment[0].amount)}0원
+			{comma(research_payment.research_payment[0].amount)}0원
 		</p>
 	</div>
 
@@ -166,7 +161,7 @@
 	</div>
 </div>
 
-{#if research__research_payment.status === "결제대기"}
+{#if research_payment.status === "결제대기"}
 	<div class="mx-5  pb-safe mb-3.5 mt-8">
 		<button
 			on:click={() => (is_cancel_research_modal = true)}

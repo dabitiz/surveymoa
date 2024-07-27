@@ -1,7 +1,6 @@
 <script>
-	import Account from "@/lib/components/Account/+page.svelte";
 	import { comma } from "$lib/js/common";
-	import Chip from "@/lib/components/ui/Chip/+page.svelte";
+	import Account from "@/lib/components/Account/+page.svelte";
 	import research_category_png from "@/lib/img/common/research_category/research_category.png";
 	import etc_category_png from "@/lib/img/common/research_category/etc_category.png";
 
@@ -64,7 +63,9 @@
 <div class="mx-4 mt-6">
 	<p class="font-semibold">조사 정보</p>
 	<div class="mt-4 flex items-center justify-between">
-		<Chip name={category} />
+		<p class="inline-block rounded-[4px] bg-gray-200 px-1 py-0.5 text-[11px]">
+			{category}
+		</p>
 
 		<p class="text-sm text-gray-900">
 			{format_date(start_date)} ~ {format_date(end_date)}

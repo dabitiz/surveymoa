@@ -1,7 +1,6 @@
 <script>
 	const TITLE = "설문모아 가이드";
 
-	import { goto } from "$app/navigation";
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 	import participant_guide_png from "@/lib/img/partials/guide/participant_guide.png";
@@ -15,23 +14,23 @@
 	<meta name="description" content={`${TITLE}`} />
 </svelte:head>
 
-<Header nav_class="border-0 bg-white">
-	<button slot="left" class="flex items-center" on:click={() => goto("/home")}>
+<Header>
+	<a href="/home" slot="left">
 		<Icon name="left_arrow" />
-	</button>
+	</a>
 	<h1 slot="center" class="font-semibold">{TITLE}</h1>
 </Header>
 
-<div class="flex justify-center border-b-2">
+<div class="mt-5 flex justify-center">
 	<button
 		on:click={() => (selected_category = "참여자용")}
-		class={`border-b-2 px-4 py-2  text-sm ${
+		class={`border-b-2 px-4 py-2  ${
 			selected_category === "참여자용" ? "border-primary text-primary" : ""
 		}`}>참여자용</button
 	>
 	<button
 		on:click={() => (selected_category = "조사자용")}
-		class={`border-b-2 px-4 py-2 text-sm ${
+		class={`border-b-2 px-4 py-2 ${
 			selected_category === "조사자용" ? "border-primary text-primary" : ""
 		}`}>조사자용</button
 	>

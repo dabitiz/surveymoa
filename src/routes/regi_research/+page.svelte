@@ -17,7 +17,7 @@
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
 	export let data;
-	let { supabase, session, account } = data;
+	let { account } = data;
 	$: ({ supabase, session } = data);
 
 	let page_count = 1;
@@ -113,10 +113,10 @@
 		try {
 			const saved_images = await upload_images(research_info.images);
 
-			const inserted_research = await api_insert_research(saved_images);
+			const inserted_research = await insert_research(saved_images);
 			const inserted_research_id = inserted_research.id;
 
-			await api_insert_research_payment(inserted_research_id);
+			await insert_research_payment(inserted_research_id);
 
 			goto("regi_research/completed_paying", { state: { amount: research_payment_info.amount } });
 			show_toast("success", "조사가 신청되었습니다.");
@@ -148,7 +148,7 @@
 		if (error) throw new Error(`Failed to upload_research_url: ${error.message}`);
 	};
 
-	const api_insert_research = async (saved_images) => {
+	const insert_research = async (saved_images) => {
 		const { data, error } = await supabase
 			.from("research")
 			.insert([{ ...research_info, images: saved_images, user_id: session.user.id }])
@@ -158,7 +158,7 @@
 		return data[0] ?? [];
 	};
 
-	const api_insert_research_payment = async (research_id) => {
+	const insert_research_payment = async (research_id) => {
 		const { error } = await supabase.from("research_payment").insert([
 			{
 				amount: research_payment_info.amount,

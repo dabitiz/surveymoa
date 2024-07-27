@@ -1,10 +1,32 @@
-import Research_api from "@/lib/api/research_api.js";
+export const load = async ({ locals: { supabase } }) => {
+	const select_research_payment = async () => {
+		const { data, error } = await supabase.from("research").select(
+			`id,
+      created_at, 
+      category,
+			images,
+      form_link, 
+      title, 
+      explanation, 
+      start_date, 
+      end_date, 
+      recruitment_num, 
+      min_age, 
+      max_age, 
+      gender,
+      expected_time,
+      remarks,
+			contact, 
+			price,
+      status,
+      research_payment(amount, payment_method, bank_name, account_num)`
+		);
 
-export const load = async ({ locals: { supabase, safe_get_session } }) => {
-	const { session } = await safe_get_session();
-	const research_api = new Research_api(supabase, session);
+		if (error) throw new Error(`Failed to select_research_payment: ${error.message}`);
+		return data ?? [];
+	};
 
-	const research_payment_info = await research_api.select_research__research_payment_info();
+	const research_payment = await select_research_payment();
 
-	return { research_payment_info };
+	return { research_payment };
 };

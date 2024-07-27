@@ -1,8 +1,6 @@
 <script>
-	import Account_user_api from "@/lib/api/account_user_api.js";
 	import { update_global_store } from "@/lib/store/global_store";
 	import { show_toast } from "@/lib/js/common.js";
-
 	import Modal from "@/lib/components/ui/Modal/+page.svelte";
 	import 카카오뱅크 from "@/lib/img/common/banks/카카오뱅크.png";
 	import 농협은행 from "@/lib/img/common/banks/농협은행.png";
@@ -30,7 +28,6 @@
 		session,
 		account,
 		is_modify_enabled = true;
-	const account_user_api = new Account_user_api(supabase, session);
 
 	let bank_name = account?.bank_name;
 	let account_num = account?.account_num;
@@ -77,7 +74,7 @@
 	const save_account = async () => {
 		update_global_store("loading", true);
 		try {
-			const inserted_account = await account_user_api.insert_account(bank_name, account_num);
+			const inserted_account = await insert_account(bank_name, account_num);
 			account = { ...inserted_account };
 
 			is_account_num_modal = false;
@@ -90,11 +87,7 @@
 	const modify_account = async () => {
 		update_global_store("loading", true);
 		try {
-			const upserted_account = await account_user_api.upsert_account(
-				account.id,
-				bank_name,
-				account_num
-			);
+			const upserted_account = await update_account(account.id, bank_name, account_num);
 			account = { ...upserted_account };
 
 			is_account_num_modal = false;
@@ -102,6 +95,27 @@
 		} finally {
 			update_global_store("loading", false);
 		}
+	};
+
+	const insert_account = async (bank_name, account_num) => {
+		const { data, error } = await supabase
+			.from("account")
+			.insert([{ bank_name, account_num, user_id: session.user.id }])
+			.select(`id, bank_name, account_num`);
+
+		if (error) throw new Error(`Failed to insert_account: ${error.message}`);
+		return data[0] ?? [];
+	};
+
+	const update_account = async (account_id, bank_name, account_num) => {
+		const { data, error } = await supabase
+			.from("account")
+			.update({ bank_name, account_num })
+			.select(`id, bank_name, account_num`)
+			.eq("id", account_id);
+
+		if (error) throw new Error(`Failed to update_account: ${error.message}`);
+		return data[0] ?? {};
 	};
 </script>
 
@@ -179,7 +193,7 @@
 	on:modal_close={bank_modal_initialize}
 >
 	<div class="flex flex-col items-center p-4">
-		<div class="divider h-1 w-10 self-center bg-gray-300" />
+		<div class=" h-1 w-10 self-center bg-gray-300" />
 		<h3 class="mt-10 text-lg font-bold">
 			{Object.keys(account).length > 0 ? "계좌 수정하기" : "계좌 등록하기"}
 		</h3>
@@ -209,7 +223,7 @@
 	on:modal_close={bank_modal_initialize}
 >
 	<div class="flex flex-col items-center p-4">
-		<div class="divider h-1 w-10 self-center bg-gray-300" />
+		<div class=" h-1 w-10 self-center bg-gray-300" />
 		<h3 class="mt-10 text-lg font-bold">계좌 등록하기</h3>
 
 		<div class="mt-6 flex w-full flex-col">

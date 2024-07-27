@@ -1,10 +1,17 @@
-import Screening_research_api from "@/lib/api/screening_research_api.js";
+export const load = async ({ locals: { supabase } }) => {
+	const select_screening_research = async () => {
+		const { data, error } = await supabase.from("research").select(`
+		id,
+		title,
+		remarks,
+		screening_research(id, questions)
+	`);
 
-export const load = async ({ locals: { supabase, safe_get_session } }) => {
-	const { session } = await safe_get_session();
-	const screening_research_api = new Screening_research_api(supabase, session);
+		if (error) throw new Error(`Failed to select_screening_research: ${error.message}`);
+		return data || [];
+	};
 
-	const screening_researchs = await screening_research_api.select_screening_research();
+	const screening_researchs = await select_screening_research();
 
 	return { screening_researchs };
 };

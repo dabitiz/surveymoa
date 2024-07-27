@@ -91,13 +91,13 @@
 				<div class="mt-2.5 flex items-center justify-between">
 					<p class="mr-9 truncate">{history.behavior}</p>
 
-					{#if history.new_point < history.old_point}
+					{#if history.old_point < history.new_point}
 						<p class="flex-shrink-0 font-semibold text-primary">
-							+ {history.old_point - history.new_point}원
+							+{history.new_point - history.old_point}원
 						</p>
 					{:else}
 						<p class="flex-shrink-0 font-semibold text-gray-900">
-							- {history.new_point - history.old_point}원
+							{history.new_point - history.old_point}원
 						</p>
 					{/if}
 				</div>

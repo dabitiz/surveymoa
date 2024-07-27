@@ -1,4 +1,4 @@
-export default class Account_user_api {
+export default class Account_api {
 	constructor(supabase, session) {
 		this.supabase = supabase;
 		this.session = session;
@@ -6,7 +6,7 @@ export default class Account_user_api {
 
 	async select_account() {
 		const { data, error } = await this.supabase
-			.from("account_user")
+			.from("account")
 			.select(`id, bank_name, account_num`)
 			.eq("user_id", this.session.user.id);
 
@@ -16,7 +16,7 @@ export default class Account_user_api {
 
 	async insert_account(bank_name, account_num) {
 		const { data, error } = await this.supabase
-			.from("account_user")
+			.from("account")
 			.insert([{ bank_name, account_num, user_id: this.session.user.id }])
 			.select(`id, bank_name, account_num`);
 
@@ -26,7 +26,7 @@ export default class Account_user_api {
 
 	async upsert_account(account_id, bank_name, account_num) {
 		const { data, error } = await this.supabase
-			.from("account_user")
+			.from("account")
 			.upsert({ id: account_id, bank_name, account_num, updated_at: new Date() })
 			.select(`id, bank_name, account_num`);
 

@@ -17,22 +17,14 @@ export const load = async ({ locals: { supabase, safe_get_session } }) => {
 		let query = supabase
 			.from("available_research")
 			.select(
-				`id, 
-        title, 
-        category, 
-        images,
-        participant_num,
-        recruitment_num,
-        expected_time,
-        price,
-        screening_research(id, questions),
-        screening_user(user_id, status),
-        participant_research(user_id)`
+				`id,
+	      category,
+	      screening_user(user_id, status),
+	      participant_research(user_id)`
 			)
 			.order("id", { ascending: false })
 			.lte("min_age", age)
-			.gte("max_age", age)
-			.limit(10);
+			.gte("max_age", age);
 
 		gender === "남자"
 			? (query = query.neq("gender", "여자"))
@@ -40,13 +32,24 @@ export const load = async ({ locals: { supabase, safe_get_session } }) => {
 
 		const { data, error } = await query;
 
-		if (error) throw new Error(`Failed to get_age_from_year_of_birth: ${error.message}`);
+		if (error) throw new Error(`Failed to select_available_research_filtering: ${error.message}`);
 		return data ?? [];
+	};
+
+	const select_research_comissioned_length = async () => {
+		const { error, count } = await supabase
+			.from("research")
+			.select("*", { count: "exact" })
+			.eq("user_id", session.user.id);
+
+		if (error) throw new Error(`Failed to select_research_comissioned_length: ${error.message}`);
+		return count;
 	};
 
 	const profiles = await select_profiles();
 	const age = calculate_age(profiles.year_of_birth);
 	const available_research = await select_available_research_filtering(profiles.gender, age);
+	const research_comissioned_length = await select_research_comissioned_length();
 
-	return { available_research };
+	return { available_research, research_comissioned_length };
 };

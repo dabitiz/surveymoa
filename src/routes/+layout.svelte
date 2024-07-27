@@ -6,17 +6,13 @@
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
 
-	import Profiles_api from "@/lib/api/profiles_api.js";
 	import { is_mobile_app } from "@/lib/js/common.js";
 	import { update_profiles_store } from "@/lib/store/profiles_store";
 	import { operating_system, platform, update_device_store } from "@/lib/store/device_store";
 	import { loading } from "@/lib/store/global_store";
 
 	export let data;
-	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
-
-	const profiles_api = new Profiles_api(supabase, session);
 
 	let is_initialize = false;
 
@@ -31,7 +27,7 @@
 		window.addEventListener("unhandledrejection", handle_unhandled_rejection);
 
 		if (session) {
-			const profiles = await profiles_api.get_profile_info();
+			const profiles = await get_profiles();
 			await save_profiles_store(profiles);
 		}
 		save_device_store();
@@ -70,15 +66,25 @@
 		alert(`에러: ${event.error.message}`);
 	};
 
-	const is_url_admin = () => {
-		return $page.url.pathname.startsWith("/admin");
+	const is_url_admin = (page) => {
+		return page.url.pathname.startsWith("/admin");
+	};
+
+	const get_profiles = async () => {
+		const { data, error } = await supabase
+			.from("profiles")
+			.select(`username, avatar_url, gender, year_of_birth, point, rating`)
+			.eq("id", session.user.id);
+
+		if (error) throw new Error(`Failed to get_profiles: ${error.message}`);
+		return data[0] || [];
 	};
 </script>
 
 {#if is_initialize}
 	<div class="bg-gray-200">
 		<div
-			class:md-w-half={!is_mobile_app($platform, $operating_system) && !is_url_admin()}
+			class:md-w-half={!is_mobile_app($platform, $operating_system) && !is_url_admin($page)}
 			class="mx-auto"
 		>
 			<div class="min-h-screen bg-white">

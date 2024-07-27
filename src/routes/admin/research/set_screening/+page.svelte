@@ -5,7 +5,6 @@
 	import { createGrid } from "ag-grid-community";
 	import { goto } from "$app/navigation";
 
-	import Screening_research_api from "@/lib/api/screening_research_api.js";
 	import { grid_button_renderer_class } from "@/lib/ag_grid/grid_class.js";
 	import { show_toast } from "@/lib/js/common.js";
 	import Header from "@/lib/components/ui/Header/+page.svelte";
@@ -13,9 +12,8 @@
 	import Modal from "@/lib/components/ui/Modal/+page.svelte";
 
 	export let data;
-	let { supabase, session, screening_researchs } = data;
+	let { screening_researchs } = data;
 	$: ({ supabase, session } = data);
-	const screening_research_api = new Screening_research_api(supabase, session);
 
 	let grid_screening_research;
 	let grid_screening_research_api;
@@ -60,15 +58,15 @@
 
 	const save_screening_questions = async () => {
 		if (screening_research.id === "") {
-			await screening_research_api.insert_questions(screening_research.questions, research.id);
+			await insert_screening_research_questions(screening_research.questions, research.id);
 		} else {
-			await screening_research_api.update_questions(
+			await update_screening_research_questions(
 				screening_research.questions,
 				screening_research.id
 			);
 		}
 
-		screening_researchs = await screening_research_api.select_screening_research();
+		screening_researchs = await select_screening_research();
 		grid_screening_research_api.setGridOption("rowData", screening_researchs);
 
 		is_screening_research_modal = false;
@@ -81,12 +79,14 @@
 	 * 조사 사전검증 삭제
 	 */
 	const delete_screening_research = async (params) => {
-		await screening_research_api.delete_screening_research(params.screening_research[0].id);
+		if (window.confirm("삭제하시겠습니꺼?")) {
+			await delete_screening_research_questions(params.screening_research[0].id);
 
-		screening_researchs = await screening_research_api.select_screening_research();
-		grid_screening_research_api.setGridOption("rowData", screening_researchs);
+			screening_researchs = await select_screening_research();
+			grid_screening_research_api.setGridOption("rowData", screening_researchs);
 
-		show_toast("success", "삭제되었습니다.");
+			show_toast("success", "삭제되었습니다.");
+		}
 	};
 
 	const screening_research_grid_option_init = () => {
@@ -147,6 +147,44 @@
 		};
 
 		grid_screening_research_api = createGrid(grid_screening_research, grid_options);
+	};
+
+	const insert_screening_research_questions = async (questions, research_id) => {
+		const { error } = await supabase
+			.from("screening_research")
+			.insert([{ questions, research_id }]);
+
+		if (error) throw new Error(`Failed to insert_screening_research_questions: ${error.message}`);
+	};
+
+	const select_screening_research = async () => {
+		const { data, error } = await supabase.from("research").select(`
+			id,
+			title,
+			remarks,
+			screening_research(id, questions)
+		`);
+
+		if (error) throw new Error(`Failed to select_screening_research: ${error.message}`);
+		return data || [];
+	};
+
+	const update_screening_research_questions = async (questions, screening_research_id) => {
+		const { error } = await supabase
+			.from("screening_research")
+			.update([{ questions }])
+			.eq("id", screening_research_id);
+
+		if (error) throw new Error(`Failed to update_questions: ${error.message}`);
+	};
+
+	const delete_screening_research_questions = async (screening_research_id) => {
+		const { error } = await supabase
+			.from("screening_research")
+			.delete()
+			.eq("id", screening_research_id);
+
+		if (error) throw new Error(`Failed to delete_screening: ${error.message}`);
 	};
 </script>
 

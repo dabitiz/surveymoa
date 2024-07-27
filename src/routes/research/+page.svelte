@@ -9,13 +9,13 @@
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Bottom_nav from "@/lib/components/ui/Bottom_nav/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
-	import Chip from "@/lib/components/ui/Chip/+page.svelte";
+
 	import research_category_png from "@/lib/img/common/research_category/research_category.png";
 	import etc_category_png from "@/lib/img/common/research_category/etc_category.png";
 
 	export let data;
 
-	let { supabase, session, available_research } = data;
+	let { available_research } = data;
 	$: ({ supabase, session } = data);
 
 	let available_researches = [];
@@ -238,9 +238,9 @@
 
 					<div class="flex flex-1 flex-col overflow-hidden overflow-ellipsis">
 						<div class="flex items-center">
-							<div class="mr-1.5">
-								<Chip name={research.category} />
-							</div>
+							<p class="mr-1.5 inline-block rounded-[4px] bg-gray-200 px-1 py-0.5 text-[11px]">
+								{research.category}
+							</p>
 
 							<p class="rounded-sm bg-gray-200 px-2 py-1 text-xs text-gray-950">
 								{research.expected_time}분

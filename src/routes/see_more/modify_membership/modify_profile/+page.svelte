@@ -1,8 +1,6 @@
 <script>
 	const TITLE = "프로필 정보 수정";
 
-	import Profiles_api from "@/lib/api/profiles_api.js";
-	import Bucket_avatar_api from "@/lib/api/bucket_avatar_api.js";
 	import {
 		avatar_url,
 		username,
@@ -18,12 +16,7 @@
 	import user_profile_png from "@/lib/img/common/user/profile.png";
 
 	export let data;
-
-	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
-
-	const profiles_api = new Profiles_api(supabase, session);
-	const bucket_avatar_api = new Bucket_avatar_api(supabase, session);
 
 	$: new_username = $username;
 
@@ -36,10 +29,10 @@
 			const file_ext = selected_img.name.split(".").pop();
 			const file_path = `${session.user.id}/${Date.now()}.${file_ext}`;
 
-			await bucket_avatar_api.upload_avatar_url(file_path, selected_img);
+			await upload_avatar_url(file_path, selected_img);
 			const img_url = `https://glamuiwujgrlmauesueb.supabase.co/storage/v1/object/public/avatar/${file_path}`;
 
-			await profiles_api.upsert_avatar_url(img_url);
+			await update_avatar_url(img_url);
 			update_profiles_store("avatar_url", selected_img.uri);
 
 			show_toast("success", "수정이 완료되었습니다.");
@@ -51,20 +44,59 @@
 	const save_username = async () => {
 		update_global_store("loading", true);
 		try {
-			const duplicate_username = await profiles_api.check_duplicate_username(new_username);
+			const duplicate_username = await select_profiles_check_duplicate_username(new_username);
 
 			if (duplicate_username.length > 0) {
 				show_toast("error", "중복된 닉네임입니다.");
 				return;
 			}
 
-			await profiles_api.upsert_username(new_username);
+			await update_profiles_username(new_username);
 			update_profiles_store("username", new_username);
 
 			show_toast("success", "수정이 완료되었습니다.");
 		} finally {
 			update_global_store("loading", false);
 		}
+	};
+
+	const upload_avatar_url = async (file_path, avatar_url) => {
+		const { error } = await supabase.storage.from("avatar").upload(file_path, avatar_url);
+
+		if (error) throw new Error(`Failed to upload_avatar_url: ${error.message}`);
+	};
+
+	const update_avatar_url = async (img_url) => {
+		const { error } = await supabase
+			.from("profiles")
+			.update({
+				avatar_url: img_url
+			})
+			.eq("id", session.user.id);
+
+		if (error) throw new Error(`Failed to update_avatar_url: ${error.message}`);
+	};
+
+	const select_profiles_check_duplicate_username = async (new_username) => {
+		const { data, error } = await supabase
+			.from("profiles")
+			.select("username")
+			.eq("username", new_username);
+
+		if (error)
+			throw new Error(`Failed to select_profiles_check_duplicate_username: ${error.message}`);
+		return data || [];
+	};
+
+	const update_profiles_username = async (new_username) => {
+		const { error } = await supabase
+			.from("profiles")
+			.update({
+				username: new_username
+			})
+			.eq("id", session.user.id);
+
+		if (error) throw new Error(`Failed to update_profiles_username: ${error.message}`);
 	};
 </script>
 
