@@ -36,7 +36,7 @@
 			supabase.auth.signInWithOAuth({
 				provider,
 				options: {
-					redirectTo: `${PUBLIC_CLIENT_URL}/auth/callback`
+					redirectTo: `com.svelte.surveymoa://auth/callback`
 				}
 			});
 		}
