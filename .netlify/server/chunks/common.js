@@ -34,8 +34,8 @@ const calculate_age = (get_birth_date) => {
   return age;
 };
 export {
-  calculate_age as a,
+  comma as a,
   calculate_d_day as b,
-  comma as c,
+  calculate_age as c,
   format_date as f
 };

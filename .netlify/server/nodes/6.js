@@ -5,6 +5,6 @@ let component_cache;
 export const component = async () => component_cache ??= (await import('../entries/pages/admin/research/approval/_page.svelte.js')).default;
 export { server };
 export const server_id = "src/routes/admin/research/approval/+page.server.js";
-export const imports = ["_app/immutable/nodes/6.CdYWO2en.js","_app/immutable/chunks/scheduler.BdKJy1iV.js","_app/immutable/chunks/index.B7N7XBR8.js","_app/immutable/chunks/main.esm.DVwBeDfz.js","_app/immutable/chunks/entry.CBBBRXsa.js","_app/immutable/chunks/index.C3Zqiqcy.js","_app/immutable/chunks/colors.DxZykO8C.js","_app/immutable/chunks/_page.B1zd66na.js","_app/immutable/chunks/_page.gcB43EUZ.js"];
+export const imports = ["_app/immutable/nodes/6.DytYw-cc.js","_app/immutable/chunks/scheduler.DqnwxzbK.js","_app/immutable/chunks/index.DSZo6Pln.js","_app/immutable/chunks/main.esm.DVwBeDfz.js","_app/immutable/chunks/entry.CHl6i2kH.js","_app/immutable/chunks/index.Cynp7HaE.js","_app/immutable/chunks/colors.DxZykO8C.js","_app/immutable/chunks/grid_common.fuePIJLb.js","_app/immutable/chunks/_page.CyRuFnKg.js","_app/immutable/chunks/_page.qfh_XgTh.js"];
 export const stylesheets = [];
 export const fonts = [];

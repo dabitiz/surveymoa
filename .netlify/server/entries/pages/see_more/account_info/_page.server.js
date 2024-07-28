@@ -1,8 +1,12 @@
-import { A as Account_user_api } from "../../../../chunks/account_user_api.js";
 const load = async ({ locals: { supabase, safe_get_session } }) => {
   const { session } = await safe_get_session();
-  const account_user_api = new Account_user_api(supabase, session);
-  const account = await account_user_api.select_account();
+  const select_account = async () => {
+    const { data, error } = await supabase.from("account").select(`id, bank_name, account_num`).eq("user_id", session.user.id);
+    if (error)
+      throw new Error(`Failed to select_account: ${error.message}`);
+    return data[0] ?? [];
+  };
+  const account = await select_account();
   return { account };
 };
 export {

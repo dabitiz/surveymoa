@@ -1,8 +1,10 @@
-
+import * as server from '../entries/pages/rating/_page.server.js';
 
 export const index = 14;
 let component_cache;
-export const component = async () => component_cache ??= (await import('../entries/pages/regi_research/completed_paying/_page.svelte.js')).default;
-export const imports = ["_app/immutable/nodes/14.-MJ04DKz.js","_app/immutable/chunks/scheduler.BdKJy1iV.js","_app/immutable/chunks/index.B7N7XBR8.js","_app/immutable/chunks/globals.D0QH3NT1.js","_app/immutable/chunks/entry.CBBBRXsa.js","_app/immutable/chunks/index.C3Zqiqcy.js","_app/immutable/chunks/stores.D2GFkmfH.js","_app/immutable/chunks/common.BB09VNl6.js","_app/immutable/chunks/_page.B1zd66na.js"];
-export const stylesheets = ["_app/immutable/assets/common.DbLvtVfH.css"];
+export const component = async () => component_cache ??= (await import('../entries/pages/rating/_page.svelte.js')).default;
+export { server };
+export const server_id = "src/routes/rating/+page.server.js";
+export const imports = ["_app/immutable/nodes/14.C54O2N1Q.js","_app/immutable/chunks/scheduler.DqnwxzbK.js","_app/immutable/chunks/index.DSZo6Pln.js","_app/immutable/chunks/each.D8er-mL6.js","_app/immutable/chunks/dayjs.min.lVgWzJct.js","_app/immutable/chunks/_commonjsHelpers.Cpj98o6Y.js","_app/immutable/chunks/_page.qfh_XgTh.js","_app/immutable/chunks/_page.CyRuFnKg.js","_app/immutable/chunks/profile.DYtYZlb9.js"];
+export const stylesheets = [];
 export const fonts = [];

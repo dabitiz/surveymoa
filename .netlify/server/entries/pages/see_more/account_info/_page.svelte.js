@@ -4,8 +4,10 @@ import { P as Page$3 } from "../../../../chunks/_page5.js";
 import { P as Page$2 } from "../../../../chunks/_page2.js";
 const TITLE = "계좌 정보";
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let supabase;
+  let session;
   let { data } = $$props;
-  let { supabase, session, account } = data;
+  let { account } = data;
   if ($$props.data === void 0 && $$bindings.data && data !== void 0)
     $$bindings.data(data);
   let $$settled;

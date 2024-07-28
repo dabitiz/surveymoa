@@ -21,6 +21,13 @@ const page = {
     return store.subscribe(fn);
   }
 };
+const navigating = {
+  subscribe(fn) {
+    const store = getStores().navigating;
+    return store.subscribe(fn);
+  }
+};
 export {
+  navigating as n,
   page as p
 };

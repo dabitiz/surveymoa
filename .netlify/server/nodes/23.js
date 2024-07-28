@@ -1,8 +1,10 @@
-
+import * as server from '../entries/pages/see_more/comissioned_research/rating_user/_research_id_/_page.server.js';
 
 export const index = 23;
 let component_cache;
-export const component = async () => component_cache ??= (await import('../entries/pages/see_more/modify_membership/withdrawal_member/_page.svelte.js')).default;
-export const imports = ["_app/immutable/nodes/23.B42CX8EO.js","_app/immutable/chunks/scheduler.BdKJy1iV.js","_app/immutable/chunks/index.B7N7XBR8.js","_app/immutable/chunks/profiles_store.BE39v8xg.js","_app/immutable/chunks/index.C3Zqiqcy.js","_app/immutable/chunks/_page.gcB43EUZ.js","_app/immutable/chunks/_page.B1zd66na.js"];
+export const component = async () => component_cache ??= (await import('../entries/pages/see_more/comissioned_research/rating_user/_research_id_/_page.svelte.js')).default;
+export { server };
+export const server_id = "src/routes/see_more/comissioned_research/rating_user/[research_id]/+page.server.js";
+export const imports = ["_app/immutable/nodes/23.CF6tlp27.js","_app/immutable/chunks/scheduler.DqnwxzbK.js","_app/immutable/chunks/index.DSZo6Pln.js","_app/immutable/chunks/each.D8er-mL6.js","_app/immutable/chunks/stores.BZFVIumn.js","_app/immutable/chunks/entry.CHl6i2kH.js","_app/immutable/chunks/index.Cynp7HaE.js","_app/immutable/chunks/_page.qfh_XgTh.js","_app/immutable/chunks/_page.CyRuFnKg.js","_app/immutable/chunks/profile.DYtYZlb9.js"];
 export const stylesheets = [];
 export const fonts = [];

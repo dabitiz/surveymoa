@@ -1,8 +1,8 @@
-<script>
+<!-- <script>
 	import "../app.css";
 	import { SvelteToast } from "@zerodevx/svelte-toast";
 	import { Device } from "@capacitor/device";
-	import { page } from "$app/stores";
+	import { page, navigating } from "$app/stores";
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
 
@@ -94,7 +94,7 @@
 	</div>
 {/if}
 
-{#if $loading || !is_initialize}
+{#if $loading || $navigating || !is_initialize}
 	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
 		<div class="h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-primary"></div>
 	</div>
@@ -118,4 +118,83 @@
 		--toastBorderRadius: 0.5rem;
 		font-size: 0.875rem;
 	}
-</style>
+</style> -->
+
+<!-- 
+<script>
+	import { onMount } from "svelte";
+
+	function loginWithKakao() {
+		Kakao.Auth.authorize({
+			redirectUri: "http://172.20.0.125:5173"
+		});
+	}
+
+	onMount(() => {
+		// 아래는 데모를 위한 UI 코드입니다.
+		displayToken();
+	});
+	function displayToken() {
+		var token = getCookie("authorize-access-token");
+
+		if (token) {
+			Kakao.Auth.setAccessToken(token);
+			Kakao.Auth.getStatusInfo()
+				.then(function (res) {
+					if (res.status === "connected") {
+						document.getElementById("token-result").innerText =
+							"login success, token: " + Kakao.Auth.getAccessToken();
+					}
+				})
+				.catch(function (err) {
+					Kakao.Auth.setAccessToken(null);
+				});
+		}
+	}
+
+	function getCookie(name) {
+		var parts = document.cookie.split(name + "=");
+		if (parts.length === 2) {
+			return parts[1].split(";")[0];
+		}
+	}
+</script>
+
+<div class="h-40 w-full bg-red-500">qwer</div>
+<div class="h-40 w-full bg-red-500">qwer</div>
+<div class="h-40 w-full bg-red-500">qwer</div>
+<div class="h-40 w-full bg-red-500">qwer</div>
+<div class="h-40 w-full bg-red-500">qwer</div>
+<div class="h-40 w-full bg-red-500">qwer</div>
+<div class="h-40 w-full bg-red-500">qwer</div>
+<div class="mb-20">
+	<a id="kakao-login-btn" on:click={loginWithKakao}>
+		<img
+			src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
+			width="222"
+			alt="카카오 로그인 버튼"
+		/>
+	</a>
+	<p id="token-result"></p>
+</div> -->
+
+<!-- src/routes/+layout.svelte -->
+<script>
+	import { onMount } from "svelte";
+	import { App } from "@capacitor/app";
+
+	onMount(() => {
+		App.addListener("appUrlOpen", (data) => {
+			const domain = "https://172.20.0.125:5173";
+			const path_array = data.url.split(domain);
+
+			const app_path = path_array.pop();
+
+			// URL 경로에 따라 페이지로 이동
+			if (app_path) {
+				// SvelteKit의 navigate 함수를 사용하여 페이지 이동
+				window.location.href = app_path;
+			}
+		});
+	});
+</script>

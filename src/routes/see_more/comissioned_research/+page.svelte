@@ -20,7 +20,7 @@
 
 <div class="min-h-screen bg-gray-200">
 	<Header>
-		<button slot="left" class="flex items-center" on:click={() => goto("/see_more")}>
+		<button slot="left" class="flex items-center" on:click={() => goto("/home")}>
 			<Icon name="left_arrow" />
 		</button>
 		<h1 slot="center" class="font-semibold">{TITLE}</h1>

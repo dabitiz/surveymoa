@@ -1,32 +1,6 @@
-class Research_api {
-  constructor(supabase, session) {
-    this.supabase = supabase;
-    this.session = session;
-  }
-  async insert_research(research_info) {
-    const { data, error } = await this.supabase.from("research").insert([{ ...research_info, user_id: this.session.user.id }]).select(`id`);
-    if (error)
-      throw new Error(`Failed to insert_research: ${error.message}`);
-    return data[0] ?? [];
-  }
-  async select_research(params) {
-    const { data, error } = await this.supabase.from("research").select(params);
-    if (error)
-      throw new Error(`Failed to select_research: ${error.message}`);
-    return data ?? [];
-  }
-  async select_preverification_research() {
-    const { data, error } = await this.supabase.from("research").select(`
-    id,
-    title,
-    preverification_research(category, questions)
-  `);
-    if (error)
-      throw new Error(`Failed to select_preverification_research: ${error.message}`);
-    return data ?? [];
-  }
-  async select_research__research_payment_info() {
-    const { data, error } = await this.supabase.from("research").select(
+const load = async ({ locals: { supabase } }) => {
+  const select_research_payment = async () => {
+    const { data, error } = await supabase.from("research").select(
       `id,
       created_at, 
       category,
@@ -42,24 +16,17 @@ class Research_api {
       gender,
       expected_time,
       remarks,
+			contact, 
+			price,
       status,
-      research_payment_info(payment_method, bank_name, account_num)`
+      research_payment(amount, payment_method, bank_name, account_num)`
     );
     if (error)
-      throw new Error(`Failed to select_research__research_payment_info: ${error.message}`);
+      throw new Error(`Failed to select_research_payment: ${error.message}`);
     return data ?? [];
-  }
-  async update_research_status(id, status) {
-    const { error } = await this.supabase.from("research").update({ status }).eq("id", id);
-    if (error)
-      throw new Error(`Failed to update_research_status: ${error.message}`);
-  }
-}
-const load = async ({ locals: { supabase, safe_get_session } }) => {
-  const { session } = await safe_get_session();
-  const research_api = new Research_api(supabase, session);
-  const research_payment_info = await research_api.select_research__research_payment_info();
-  return { research_payment_info };
+  };
+  const research_payment = await select_research_payment();
+  return { research_payment };
 };
 export {
   load

@@ -14,7 +14,7 @@ const Page$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 const TITLE = "조사 등록";
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { data } = $$props;
-  let { supabase, session, account } = data;
+  let { account } = data;
   let page_count = 1;
   let is_back_modal = false;
   let research_info = {
@@ -61,7 +61,6 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   do {
     $$settled = true;
     $$result.head = previous_head;
-    ({ supabase, session } = data);
     research_info.price = research_info.expected_time * 100;
     research_payment_info.amount = research_info.expected_time * 100 * research_info.recruitment_num * 1.2;
     $$rendered = `${$$result.head += `<!-- HEAD_svelte-1lyn9uj_START -->${$$result.title = `<title>${escape(TITLE)} | 설문모아</title>`, ""}<meta name="description"${add_attribute("content", TITLE, 0)}><!-- HEAD_svelte-1lyn9uj_END -->`, ""} ${validate_component(Page$2, "Header").$$render($$result, { nav_class: "bg-white" }, {}, {

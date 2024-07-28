@@ -13,7 +13,7 @@ const load = async ({ locals: { supabase, safe_get_session } }) => {
 					status,
 					price,
 					research_payment(amount)`
-    ).eq("user_id", session.user.id);
+    ).order("id", { ascending: false }).eq("user_id", session.user.id);
     if (error)
       throw new Error(`Failed to api_select_research__research_payment: ${error.message}`);
     return data ?? [];

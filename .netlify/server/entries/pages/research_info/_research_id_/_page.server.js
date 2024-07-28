@@ -1,5 +1,5 @@
 const load = async ({ params, locals: { supabase } }) => {
-  const api_select_research = async () => {
+  const select_research = async () => {
     const { data, error } = await supabase.from("research").select(
       `id,
 					status,
@@ -21,12 +21,12 @@ const load = async ({ params, locals: { supabase } }) => {
 					screening_research(id, questions),
 					screening_user(user_id, status),
 					participant_research(user_id)`
-    ).eq("id", params.research_id).single();
+    ).eq("id", params.research_id);
     if (error)
-      throw new Error(`Failed to api_select_research: ${error.message}`);
-    return data ?? [];
+      throw new Error(`Failed to select_research: ${error.message}`);
+    return data[0] ?? [];
   };
-  const research = await api_select_research();
+  const research = await select_research();
   return { research };
 };
 export {

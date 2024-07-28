@@ -2,7 +2,7 @@ import { s as subscribe } from "../../../../chunks/utils.js";
 import { c as create_ssr_component, b as escape, a as add_attribute, v as validate_component } from "../../../../chunks/ssr.js";
 import "../../../../chunks/client.js";
 import { p as page } from "../../../../chunks/stores.js";
-import { c as comma } from "../../../../chunks/common.js";
+import { a as comma } from "../../../../chunks/common.js";
 import { P as Page$1 } from "../../../../chunks/_page.js";
 const TITLE = "결제요청 완료";
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
