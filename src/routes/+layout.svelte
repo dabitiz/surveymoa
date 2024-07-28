@@ -26,15 +26,7 @@
 		});
 
 		App.addListener("appUrlOpen", (data) => {
-			console.log("data", data);
-			const slug = data.url.split("guide")[1];
-			// if (slug) {
-			// location.href = "/guide";
-			// Here, handle the OAuth response
-			// You might want to call supabase.auth.getSession() here
-			// to retrieve and store the session
-			// }
-			location.href = "/guide";
+			location.href = "/auth/callback";
 		});
 
 		window.addEventListener("error", handle_error);
