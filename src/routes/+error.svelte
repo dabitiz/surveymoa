@@ -3,16 +3,14 @@
 </script>
 
 <main class="pt-safe flex h-screen flex-col items-center justify-center">
-	<span class={`flex h-20 w-20 items-center justify-center rounded-full bg-error`}>
-		<svg width="10" height="42" viewBox="0 0 10 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<span class={`flex h-20 w-20 items-center justify-center rounded-full bg-error drop-shadow-lg`}>
+		<svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
-				d="M5.00039 0.5C7.26476 0.5 9.10039 2.33563 9.10039 4.6V25.1C9.10039 27.3644 7.26476 29.2 5.00039 29.2C2.73602 29.2 0.900391 27.3644 0.900391 25.1V4.6C0.900391 2.33563 2.73602 0.5 5.00039 0.5Z"
+				d="M3.22127 9.66365C1.44221 7.88459 1.44221 5.00017 3.22126 3.22112C5.00032 1.44206 7.88474 1.44206 9.66379 3.22112L35.4339 28.9912C37.213 30.7703 37.213 33.6547 35.4339 35.4338C33.6548 37.2128 30.7704 37.2128 28.9914 35.4338L3.22127 9.66365Z"
 				fill="white"
 			/>
 			<path
-				d="M5.00039 41.4998C7.26476 41.4998 9.10039 39.6642 9.10039 37.3998C9.10039 35.1354 7.26476 33.2998 5.00039 33.2998C2.73602 33.2998 0.900391 35.1354 0.900391 37.3998C0.900391 39.6642 2.73602 41.4998 5.00039 41.4998Z"
+				d="M9.66463 35.436C7.88557 37.215 5.00115 37.215 3.2221 35.436C1.44304 33.6569 1.44304 30.7725 3.2221 28.9934L28.9922 3.22332C30.7713 1.44427 33.6557 1.44427 35.4347 3.22332C37.2138 5.00238 37.2138 7.8868 35.4347 9.66585L9.66463 35.436Z"
 				fill="white"
 			/>
 		</svg>
@@ -26,10 +24,11 @@
 		<p>고객센터로 문의해주시기 바랍니다.</p>
 	</div>
 
-	<div class="pb-safe fixed bottom-3.5 left-0 right-0 mx-4 flex justify-center">
-		<button
-			class="btn btn-primary w-full text-white md:w-1/2"
-			on:click={() => (location.href = "/")}>홈으로 돌아가기</button
-		>
+	<div class="fixed bottom-0 mx-auto w-full bg-white px-5 py-3.5 md:w-1/2">
+		<div class="pb-safe">
+			<button on:click={() => (location.href = "/")} class="btn btn-primary w-full"
+				>홈으로 돌아가기</button
+			>
+		</div>
 	</div>
 </main>

@@ -20,7 +20,7 @@ export const set_supabase = async ({ event, resolve }) => {
 			data: { session }
 		} = await event.locals.supabase.auth.getSession();
 		if (!session) {
-			return { session: null };
+			return { session: { user: null } };
 		}
 
 		const {
@@ -29,7 +29,7 @@ export const set_supabase = async ({ event, resolve }) => {
 		} = await event.locals.supabase.auth.getUser();
 		if (error) {
 			// JWT validation has failed
-			return { session: null };
+			return { session: { user: null } };
 		}
 
 		//세션 사용시 에러 메시지를 제거.

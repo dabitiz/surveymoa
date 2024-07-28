@@ -1,9 +1,9 @@
 {
-	"appId": "com.dabitiz.surveymoa",
+	"appId": "com.svelte.surveymoa",
 	"appName": "설문모아",
 	"webDir": "build",
 	"server": {
-		"url": "http://172.20.0.125:5173",
+		"url": "https://172.20.0.125:5173",
 		"cleartext": true
 	}
 }

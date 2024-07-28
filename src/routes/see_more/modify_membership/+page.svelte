@@ -9,8 +9,6 @@
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
 
 	export let data;
-
-	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
 	let logout_modal = false;
@@ -31,7 +29,7 @@
 
 <Header>
 	<button slot="left" class="flex items-center" on:click={() => history.back()}>
-		<Icon name="back" />
+		<Icon name="left_arrow" />
 	</button>
 	<h1 slot="center" class="font-semibold">{TITLE}</h1>
 </Header>
@@ -79,17 +77,11 @@
 
 	<Modal bind:is_modal_open={logout_modal} modal_position="center">
 		<div class="p-5">
-			<h3 class="text-lg font-semibold">로그아웃 하시겠어요?</h3>
+			<h3 class=" font-semibold">로그아웃 하시겠어요?</h3>
 
-			<div class="mt-12 flex gap-2">
-				<button
-					class="btn flex-1 border-gray-300 bg-gray-300"
-					on:click={() => {
-						logout_modal = false;
-					}}>취소</button
-				>
-
-				<button on:click={logout} class="btn btn-primary flex-1 text-white">로그아웃</button>
+			<div class="mt-8 flex justify-end gap-3">
+				<button on:click={() => (logout_modal = false)} class="btn btn-sm">닫기</button>
+				<button on:click={logout} class="btn btn-error btn-sm text-white">로그아웃</button>
 			</div>
 		</div>
 	</Modal>

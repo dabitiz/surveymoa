@@ -1,8 +1,6 @@
 <script>
 	const TITLE = "프로필 정보 수정";
 
-	import Profiles_api from "@/lib/api/profiles_api.js";
-	import Avatar_api from "@/lib/api/avatar_api.js";
 	import {
 		avatar_url,
 		username,
@@ -15,15 +13,10 @@
 
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
-	import user_profile_png from "@/lib/img/user_profile.png";
+	import user_profile_png from "@/lib/img/common/user/profile.png";
 
 	export let data;
-
-	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
-
-	const profiles_api = new Profiles_api(supabase, session);
-	const avatar_api = new Avatar_api(supabase, session);
 
 	$: new_username = $username;
 
@@ -36,10 +29,10 @@
 			const file_ext = selected_img.name.split(".").pop();
 			const file_path = `${session.user.id}/${Date.now()}.${file_ext}`;
 
-			await avatar_api.upload_avatar_url(file_path, selected_img);
+			await upload_avatar_url(file_path, selected_img);
 			const img_url = `https://glamuiwujgrlmauesueb.supabase.co/storage/v1/object/public/avatar/${file_path}`;
 
-			await profiles_api.upsert_avatar_url(img_url);
+			await update_avatar_url(img_url);
 			update_profiles_store("avatar_url", selected_img.uri);
 
 			show_toast("success", "수정이 완료되었습니다.");
@@ -51,20 +44,59 @@
 	const save_username = async () => {
 		update_global_store("loading", true);
 		try {
-			const duplicate_username = await profiles_api.check_duplicate_username(new_username);
+			const duplicate_username = await select_profiles_check_duplicate_username(new_username);
 
 			if (duplicate_username.length > 0) {
 				show_toast("error", "중복된 닉네임입니다.");
 				return;
 			}
 
-			await profiles_api.upsert_username(new_username);
+			await update_profiles_username(new_username);
 			update_profiles_store("username", new_username);
 
 			show_toast("success", "수정이 완료되었습니다.");
 		} finally {
 			update_global_store("loading", false);
 		}
+	};
+
+	const upload_avatar_url = async (file_path, avatar_url) => {
+		const { error } = await supabase.storage.from("avatar").upload(file_path, avatar_url);
+
+		if (error) throw new Error(`Failed to upload_avatar_url: ${error.message}`);
+	};
+
+	const update_avatar_url = async (img_url) => {
+		const { error } = await supabase
+			.from("profiles")
+			.update({
+				avatar_url: img_url
+			})
+			.eq("id", session.user.id);
+
+		if (error) throw new Error(`Failed to update_avatar_url: ${error.message}`);
+	};
+
+	const select_profiles_check_duplicate_username = async (new_username) => {
+		const { data, error } = await supabase
+			.from("profiles")
+			.select("username")
+			.eq("username", new_username);
+
+		if (error)
+			throw new Error(`Failed to select_profiles_check_duplicate_username: ${error.message}`);
+		return data || [];
+	};
+
+	const update_profiles_username = async (new_username) => {
+		const { error } = await supabase
+			.from("profiles")
+			.update({
+				username: new_username
+			})
+			.eq("id", session.user.id);
+
+		if (error) throw new Error(`Failed to update_profiles_username: ${error.message}`);
 	};
 </script>
 
@@ -75,7 +107,7 @@
 
 <Header>
 	<button slot="left" class="flex items-center" on:click={() => history.back()}>
-		<Icon name="back" />
+		<Icon name="left_arrow" />
 	</button>
 	<h1 slot="center" class="font-semibold">{TITLE}</h1>
 </Header>
@@ -125,7 +157,7 @@
 		</div>
 		<div class="mt-4">
 			<p class="font-semibold">성별</p>
-			<p class="mt-4">{$gender === "male" ? "남자" : "여자"}</p>
+			<p class="mt-4">{$gender}</p>
 		</div>
 	</div>
 
@@ -170,11 +202,13 @@
 		</label>
 	</div>
 
-	<div class="pb-safe fixed bottom-3.5 left-0 right-0 mx-4 flex justify-center">
-		<button
-			class="btn btn-primary w-full text-white md:w-1/2"
-			disabled={new_username === "" || new_username === $username}
-			on:click={save_username}>수정 완료</button
-		>
+	<div class="fixed bottom-0 mx-auto w-full bg-white px-5 py-3.5 md:w-1/2">
+		<div class="pb-safe">
+			<button
+				disabled={new_username === "" || new_username === $username}
+				on:click={save_username}
+				class="btn btn-primary w-full">수정 완료</button
+			>
+		</div>
 	</div>
 </main>

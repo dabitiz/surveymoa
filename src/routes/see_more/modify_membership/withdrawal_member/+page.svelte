@@ -7,7 +7,6 @@
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 
 	export let data;
-	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
 	const withdrawal_account = () => {
@@ -26,7 +25,7 @@
 
 <Header>
 	<button slot="left" class="flex items-center" on:click={() => history.back()}>
-		<Icon name="back" />
+		<Icon name="left_arrow" />
 	</button>
 	<h1 slot="center" class="font-semibold">{TITLE}</h1>
 </Header>
@@ -48,9 +47,9 @@
 		</div>
 	</div>
 
-	<div class="pb-safe fixed bottom-3.5 left-0 right-0 mx-4 flex justify-center">
-		<button class="btn btn-primary w-full text-white md:w-1/2" on:click={withdrawal_account}
-			>회원 탈퇴</button
-		>
+	<div class="fixed bottom-0 mx-auto w-full bg-white px-5 py-3.5 md:w-1/2">
+		<div class="pb-safe">
+			<button on:click={withdrawal_account} class="btn btn-primary w-full">회원 탈퇴</button>
+		</div>
 	</div>
 </main>
