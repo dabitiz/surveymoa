@@ -4,6 +4,12 @@
 	"webDir": "build",
 	"server": {
 		"url": "http://localhost:5173",
-		"cleartext": true
-	}
+		"cleartext": true,
+		"androidScheme": "https"
+	},
+	"plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
 }

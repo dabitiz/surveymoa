@@ -12,6 +12,12 @@
 	export let data;
 	$: ({ supabase, session } = data);
 
+	export const KAKAO_AUTH_URL =
+		"https://kauth.kakao.com/oauth/authorize?" +
+		"response_type=code&" +
+		"client_id=e6e8757e36c31c971cdf71d7dad048a6&" +
+		`redirect_uri=${PUBLIC_CLIENT_URL}/auth/callback&`;
+
 	/**
 	 * supabase oauth 로그인
 	 * @param {import("@supabase/supabase-js").Provider} provider
@@ -27,7 +33,7 @@
 				}
 			});
 		} else {
-			const { data, error } = await supabase.auth.signInWithOAuth({
+			supabase.auth.signInWithOAuth({
 				provider,
 				options: {
 					redirectTo: `${PUBLIC_CLIENT_URL}/auth/callback`

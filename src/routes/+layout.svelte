@@ -5,6 +5,7 @@
 	import { page, navigating } from "$app/stores";
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
+	import { App } from "@capacitor/app";
 
 	import { is_mobile_app } from "@/lib/js/common.js";
 	import { update_profiles_store } from "@/lib/store/profiles_store";
@@ -22,6 +23,18 @@
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate("supabase:auth");
 			}
+		});
+
+		App.addListener("appUrlOpen", (data) => {
+			console.log("data", data);
+			const slug = data.url.split("guide")[1];
+			// if (slug) {
+			// location.href = "/guide";
+			// Here, handle the OAuth response
+			// You might want to call supabase.auth.getSession() here
+			// to retrieve and store the session
+			// }
+			location.href = "/guide";
 		});
 
 		window.addEventListener("error", handle_error);
