@@ -2,7 +2,6 @@
 	import { Device } from "@capacitor/device";
 	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
-	import { InAppBrowser } from "@capgo/inappbrowser";
 
 	import { show_toast } from "$lib/js/common.js";
 	import { PUBLIC_CLIENT_URL } from "$env/static/public";
@@ -10,14 +9,14 @@
 	import kakao_login_png from "@/lib/img/partials/login/kakao_login.png";
 	import phone_login_png from "@/lib/img/partials/login/phone_login.png";
 
-	const KAKAO_AUTH_URL =
+	export let data;
+	$: ({ supabase, session } = data);
+
+	export const KAKAO_AUTH_URL =
 		"https://kauth.kakao.com/oauth/authorize?" +
 		"response_type=code&" +
 		"client_id=e6e8757e36c31c971cdf71d7dad048a6&" +
-		`redirect_uri=https://glamuiwujgrlmauesueb.supabase.co/auth/v1/callback&`;
-
-	export let data;
-	$: ({ supabase, session } = data);
+		`redirect_uri=${PUBLIC_CLIENT_URL}/auth/callback&`;
 
 	/**
 	 * supabase oauth 로그인
@@ -27,36 +26,28 @@
 		const info = await Device.getInfo();
 
 		if (info.platform === "web") {
-			await supabase.auth.signInWithOAuth({
+			supabase.auth.signInWithOAuth({
 				provider,
 				options: {
-					redirectTo: `https://glamuiwujgrlmauesueb.supabase.co/auth/v1/callback`
+					redirectTo: `${PUBLIC_CLIENT_URL}/auth/callback`
 				}
 			});
 		} else {
-			await InAppBrowser.openWebView({
-				url: KAKAO_AUTH_URL,
-				//if true, the browser will be presented after the page is loaded, if false, the browser will be presented immediately.
-				//isPresentAfterPageLoad가 있어야 구글폼에서 InAppBrowser.executeScript가 동작
-				isPresentAfterPageLoad: true,
-				closeModal: true,
-				closeModalTitle: "응답을 그만두시겠습니까?",
-				closeModalDescription: "",
-				closeModalCancel: "이어하기",
-				closeModalOk: "그만두기"
+			supabase.auth.signInWithOAuth({
+				provider,
+				options: {
+					redirectTo: `${PUBLIC_CLIENT_URL}/auth/callback`
+				}
 			});
 		}
 	};
 
 	onMount(() => {
-		// if (session) {
-		// 	auto_login();
-		// }
+		if (session) {
+			auto_login();
+		}
 	});
 
-	/**
-	 * 자동 로그인
-	 */
 	const auto_login = async () => {
 		const profiles = await get_profiles();
 
@@ -65,6 +56,16 @@
 		} else {
 			goto("/setting");
 		}
+	};
+
+	const get_profiles = async () => {
+		const { data, error } = await supabase
+			.from("profiles")
+			.select(`gender`)
+			.eq("id", session.user.id);
+
+		if (error) throw new Error(`Failed to get_profiles: ${error.message}`);
+		return data[0] || [];
 	};
 </script>
 

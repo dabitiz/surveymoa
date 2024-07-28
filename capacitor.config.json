@@ -3,7 +3,13 @@
 	"appName": "설문모아",
 	"webDir": "build",
 	"server": {
-		"url": "https://172.20.0.125:5173",
-		"cleartext": true
-	}
+		"url": "http://localhost:5173",
+		"cleartext": true,
+		"androidScheme": "https"
+	},
+	"plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
 }
