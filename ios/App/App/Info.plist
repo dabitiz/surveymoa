@@ -17,6 +17,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>WKAppBoundDomains</key>
+<array>
+  <string>http://localhost:5173</string>
+  <string>https://surveymoa.com</string>
+</array>
+
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
