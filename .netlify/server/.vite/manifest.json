@@ -260,7 +260,16 @@
     "imports": [
       "_ssr.js",
       "_client.js",
-      "_index.js"
+      "_SvelteToast.svelte_svelte_type_style_lang.js"
+    ]
+  },
+  "src/routes/about/+page.svelte": {
+    "file": "entries/pages/about/_page.svelte.js",
+    "name": "entries/pages/about/_page.svelte",
+    "src": "src/routes/about/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js"
     ]
   },
   "src/routes/admin/+layout.server.js": {

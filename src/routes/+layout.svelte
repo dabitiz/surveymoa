@@ -25,8 +25,13 @@
 			}
 		});
 
-		App.addListener("appUrlOpen", (data) => {
-			location.href = "/auth/callback";
+		App.addListener("appUrlOpen", (event) => {
+			const slug = event.url.split(".app").pop();
+
+			if (slug) {
+				const auth_url = slug.replace(/^[^:]+:\/\//, "/");
+				location.href = auth_url;
+			}
 		});
 
 		window.addEventListener("error", handle_error);
