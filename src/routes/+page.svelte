@@ -7,16 +7,9 @@
 	import { PUBLIC_CLIENT_URL } from "$env/static/public";
 	import apple_login_png from "@/lib/img/partials/login/apple_login.png";
 	import kakao_login_png from "@/lib/img/partials/login/kakao_login.png";
-	import phone_login_png from "@/lib/img/partials/login/phone_login.png";
 
 	export let data;
 	$: ({ supabase, session } = data);
-
-	export const KAKAO_AUTH_URL =
-		"https://kauth.kakao.com/oauth/authorize?" +
-		"response_type=code&" +
-		"client_id=e6e8757e36c31c971cdf71d7dad048a6&" +
-		`redirect_uri=${PUBLIC_CLIENT_URL}/auth/callback&`;
 
 	/**
 	 * supabase oauth 로그인
