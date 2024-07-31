@@ -42,6 +42,7 @@
 		"@capacitor/core": "^6.0.0",
 		"@capacitor/device": "^6.0.0",
 		"@capacitor/ios": "^6.0.0",
+		"@capacitor/preferences": "^6.0.1",
 		"@capgo/inappbrowser": "6.0.19",
 		"@supabase/ssr": "^0.3.0",
 		"@supabase/supabase-js": "^2.43.4",

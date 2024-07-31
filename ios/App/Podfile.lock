@@ -8,6 +8,8 @@ PODS:
   - CapacitorCordova (6.0.0)
   - CapacitorDevice (6.0.0):
     - Capacitor
+  - CapacitorPreferences (6.0.1):
+    - Capacitor
   - CapgoInappbrowser (6.0.19):
     - Capacitor
 
@@ -17,6 +19,7 @@ DEPENDENCIES:
   - "CapacitorBrowser (from `../../node_modules/@capacitor/browser`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
+  - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
   - "CapgoInappbrowser (from `../../node_modules/@capgo/inappbrowser`)"
 
 EXTERNAL SOURCES:
@@ -30,6 +33,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorDevice:
     :path: "../../node_modules/@capacitor/device"
+  CapacitorPreferences:
+    :path: "../../node_modules/@capacitor/preferences"
   CapgoInappbrowser:
     :path: "../../node_modules/@capgo/inappbrowser"
 
@@ -39,8 +44,9 @@ SPEC CHECKSUMS:
   CapacitorBrowser: 473c7fd70ddbe541608ff09ec1be14da0078279e
   CapacitorCordova: 8c4bfdf69368512e85b1d8b724dd7546abeb30af
   CapacitorDevice: f8fd88f9edd1261c55a109f32015b09bbbfdc4a0
+  CapacitorPreferences: 72909b165bc7807103778ddbb86d5d8ce06abf71
   CapgoInappbrowser: 2893b05d2ff8f9784495305213b9c17a70258877
 
-PODFILE CHECKSUM: 7a0ac5472ccd2bc2d10021e7cb55a02a47397510
+PODFILE CHECKSUM: 73a0ee96482af084a9afb9d496e3948d696f1d93
 
 COCOAPODS: 1.15.2
