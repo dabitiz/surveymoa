@@ -46,6 +46,10 @@ main{
 	padding-bottom: constant(safe-area-inset-bottom);
 }
 
+.btn-primary {
+	@apply text-white
+}
+
 .btn:disabled {
 	@apply bg-gray-200 text-gray-900
 }
@@ -63,10 +67,6 @@ main{
 .scrollbar-hide {
 	-ms-overflow-style: none;  /* IE and Edge */
 	scrollbar-width: none;  /* Firefox */
-}
-
-.btn-primary {
-	@apply text-white
 }
 
 .line-clamp-2 {

@@ -1,15 +1,14 @@
 <script>
 	import "../app.css";
 	import { SvelteToast } from "@zerodevx/svelte-toast";
-	import { Device } from "@capacitor/device";
+
 	import { page, navigating } from "$app/stores";
-	import { invalidate } from "$app/navigation";
+	import { goto, invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
 	import { App } from "@capacitor/app";
+	import { Capacitor } from "@capacitor/core";
 
-	import { is_mobile_app } from "@/lib/js/common.js";
 	import { update_profiles_store } from "@/lib/store/profiles_store";
-	import { operating_system, platform, update_device_store } from "@/lib/store/device_store";
 	import { loading } from "@/lib/store/global_store";
 
 	export let data;
@@ -25,12 +24,26 @@
 			}
 		});
 
-		App.addListener("appUrlOpen", (event) => {
+		App.addListener("appUrlOpen", async (event) => {
 			const slug = event.url.split(".app").pop();
 
 			if (slug) {
 				const auth_url = slug.replace(/^[^:]+:\/\//, "/");
-				location.href = auth_url;
+				const response = await fetch(auth_url);
+
+				if (response.ok) {
+					const code = response.searchParams.get("code");
+					await supabase.auth.exchangeCodeForSession(code);
+					if (!error) {
+						const profiles = await get_profiles(data.session.user.id);
+						console.log("profiles", profiels);
+						if (profiles.gender) {
+							goto(`/home`);
+						} else {
+							goto(`/setting`);
+						}
+					}
+				}
 			}
 		});
 
@@ -42,7 +55,6 @@
 
 			await save_profiles_store(profiles);
 		}
-		await save_device_store();
 
 		is_initialize = true;
 		return () => {
@@ -60,13 +72,6 @@
 		await update_profiles_store("year_of_birth", profiles.year_of_birth);
 		await update_profiles_store("point", profiles.point);
 		await update_profiles_store("rating", profiles.rating);
-	};
-
-	const save_device_store = async () => {
-		const device_info = await Device.getInfo();
-
-		await update_device_store("operating_system", device_info.operatingSystem);
-		await update_device_store("platform", device_info.platform);
 	};
 
 	const handle_error = (event) => {
@@ -96,10 +101,7 @@
 
 {#if is_initialize}
 	<div class="bg-gray-200">
-		<div
-			class:md-w-half={!is_mobile_app($platform, $operating_system) && !is_url_admin($page)}
-			class="mx-auto"
-		>
+		<div class:md-w-half={!Capacitor.isNativePlatform() && !is_url_admin($page)} class="mx-auto">
 			<div class="min-h-screen bg-white">
 				<slot />
 			</div>

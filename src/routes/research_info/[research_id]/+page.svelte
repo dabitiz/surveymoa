@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from "svelte";
 	import { InAppBrowser } from "@capgo/inappbrowser";
+	import { Capacitor } from "@capacitor/core";
 
 	import { PUBLIC_CLIENT_URL } from "$env/static/public";
 	import {
@@ -9,8 +10,8 @@
 		point,
 		update_profiles_store
 	} from "$lib/store/profiles_store.js";
-	import { comma, calculate_d_day, calculate_age, is_mobile_app } from "@/lib/js/common.js";
-	import { operating_system, platform } from "@/lib/store/device_store";
+	import { comma, calculate_d_day, calculate_age } from "@/lib/js/common.js";
+
 	import Header from "@/lib/components/ui/Header/+page.svelte";
 	import Modal from "@/lib/components/ui/Modal/+page.svelte";
 	import Icon from "@/lib/components/ui/Icon/+page.svelte";
@@ -307,7 +308,7 @@
 						if (screening_info.selected_questions.length > 0) {
 							screening_info.is_modal = true;
 						} else {
-							if (is_mobile_app($platform, $operating_system)) {
+							if (Capacitor.isNativePlatform()) {
 								participate_research(research.form_link);
 							} else {
 								show_toast("info", "앱에서만 참여 가능한 조사에요!");

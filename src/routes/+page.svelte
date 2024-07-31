@@ -22,14 +22,14 @@
 			supabase.auth.signInWithOAuth({
 				provider,
 				options: {
-					redirectTo: `${PUBLIC_CLIENT_URL}/auth/callback`
+					redirectTo: `${PUBLIC_CLIENT_URL}/auth/callback/web`
 				}
 			});
 		} else {
 			supabase.auth.signInWithOAuth({
 				provider,
 				options: {
-					redirectTo: `com.svelte.surveymoa://auth/callback`
+					redirectTo: `com.svelte.surveymoa://auth/callback/mobile`
 				}
 			});
 		}
