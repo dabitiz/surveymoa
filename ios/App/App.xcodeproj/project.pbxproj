@@ -16,6 +16,7 @@
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		A084ECDBA7D38E1E42DFC39D /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */; };
 		DEABDA662C584076000C2660 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = DEABDA652C584076000C2660 /* PrivacyInfo.xcprivacy */; };
+		DEABDA672C5AFC6F000C2660 /* App.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = DE449CAC2C551AB400B29244 /* App.entitlements */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +163,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEABDA672C5AFC6F000C2660 /* App.entitlements in Resources */,
 				504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */,
 				DEABDA662C584076000C2660 /* PrivacyInfo.xcprivacy in Resources */,
 				50B271D11FEDC1A000F3C39B /* public in Resources */,

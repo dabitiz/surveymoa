@@ -33,9 +33,10 @@
 
 				if (response.ok) {
 					const code = await response.json();
-					const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-					if (!error) {
-						const profiles = await get_profiles(data.session.user.id);
+					const { data } = await supabase.auth.exchangeCodeForSession(code);
+
+					if (data) {
+						const profiles = await get_profiles_gender(data.user.id);
 						if (profiles.gender) {
 							goto(`/home`);
 						} else {
@@ -49,11 +50,11 @@
 		window.addEventListener("error", handle_error);
 		window.addEventListener("unhandledrejection", handle_unhandled_rejection);
 
-		if (session) {
-			const profiles = await get_profiles();
+		// if (session) {
+		// 	const profiles = await get_profiles();
 
-			await save_profiles_store(profiles);
-		}
+		// 	await save_profiles_store(profiles);
+		// }
 
 		is_initialize = true;
 		return () => {
@@ -86,15 +87,16 @@
 		return page.url.pathname.startsWith("/admin");
 	};
 
-	const get_profiles = async () => {
-		const { data, error } = await supabase
-			.from("profiles")
-			.select(`username, avatar_url, gender, year_of_birth, point, rating`)
-			.eq("id", session.user.id);
+	const get_profiles_gender = async (user_id) => {
+		const { data, error } = await supabase.from("profiles").select(`gender`).eq("id", user_id);
 
 		if (error) throw new Error(`Failed to get_profiles: ${error.message}`);
 		return data[0] || [];
 	};
+
+	// const get_profiles = async () => {
+
+	// }
 </script>
 
 {#if is_initialize}

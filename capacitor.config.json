@@ -5,7 +5,8 @@
 	"server": {
 		"url": "https://surveymoa.com",
 		"cleartext": true,
-		"androidScheme": "https"
+		"androidScheme": "https",
+		"hostname": "com.svelte.surveymoa"
 	},
 	"plugins": {
     "CapacitorHttp": {
