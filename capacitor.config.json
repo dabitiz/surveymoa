@@ -3,7 +3,7 @@
 	"appName": "설문모아",
 	"webDir": "build",
 	"server": {
-		"url": "http://localhost:5173",
+		"url": "https://surveymoa.com",
 		"cleartext": true,
 		"androidScheme": "https"
 	},

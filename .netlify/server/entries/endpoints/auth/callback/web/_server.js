@@ -1,4 +1,4 @@
-import { r as redirect } from "../../../../chunks/index.js";
+import { r as redirect } from "../../../../../chunks/index.js";
 const GET = async (event) => {
   const {
     url,
