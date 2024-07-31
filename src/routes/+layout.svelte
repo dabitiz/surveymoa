@@ -32,11 +32,10 @@
 				const response = await fetch(auth_url);
 
 				if (response.ok) {
-					const code = response.searchParams.get("code");
-					await supabase.auth.exchangeCodeForSession(code);
+					const code = await response.json();
+					const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 					if (!error) {
 						const profiles = await get_profiles(data.session.user.id);
-						console.log("profiles", profiels);
 						if (profiles.gender) {
 							goto(`/home`);
 						} else {
@@ -61,7 +60,6 @@
 			data.subscription.unsubscribe();
 			window.removeEventListener("error", handle_error);
 			window.removeEventListener("unhandledrejection", handle_unhandled_rejection);
-			listener.remove();
 		};
 	});
 
