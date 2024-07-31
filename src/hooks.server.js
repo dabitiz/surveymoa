@@ -7,10 +7,10 @@ export const set_supabase = async ({ event, resolve }) => {
 		cookies: {
 			get: (key) => event.cookies.get(key),
 			set: (key, value, options) => {
-				event.cookies.set(key, value, { ...options, path: "https://surveymoa.com" });
+				event.cookies.set(key, value, { ...options, path: "/", secure: false });
 			},
 			remove: (key, options) => {
-				event.cookies.delete(key, { ...options, path: "https://surveymoa.com" });
+				event.cookies.delete(key, { ...options, path: "/", secure: false });
 			}
 		}
 	});
