@@ -77,13 +77,6 @@
       "_SvelteToast.svelte_svelte_type_style_lang.js"
     ]
   },
-  "_device_store.js": {
-    "file": "chunks/device_store.js",
-    "name": "device_store",
-    "imports": [
-      "_index2.js"
-    ]
-  },
   "_etc_category.js": {
     "file": "chunks/etc_category.js",
     "name": "etc_category",
@@ -245,11 +238,10 @@
       "_SvelteToast.svelte_svelte_type_style_lang.js",
       "_index2.js",
       "_stores.js",
-      "_client.js",
-      "_device_store.js"
+      "_client.js"
     ],
     "css": [
-      "_app/immutable/assets/_layout.iPP8Pr3q.css"
+      "_app/immutable/assets/_layout.bz3pjJDx.css"
     ]
   },
   "src/routes/+page.svelte": {
@@ -381,10 +373,19 @@
       "_ssr.js"
     ]
   },
-  "src/routes/auth/callback/+server.js": {
-    "file": "entries/endpoints/auth/callback/_server.js",
-    "name": "entries/endpoints/auth/callback/_server",
-    "src": "src/routes/auth/callback/+server.js",
+  "src/routes/auth/callback/mobile/+server.js": {
+    "file": "entries/endpoints/auth/callback/mobile/_server.js",
+    "name": "entries/endpoints/auth/callback/mobile/_server",
+    "src": "src/routes/auth/callback/mobile/+server.js",
+    "isEntry": true,
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "src/routes/auth/callback/web/+server.js": {
+    "file": "entries/endpoints/auth/callback/web/_server.js",
+    "name": "entries/endpoints/auth/callback/web/_server",
+    "src": "src/routes/auth/callback/web/+server.js",
     "isEntry": true,
     "imports": [
       "_index.js"
@@ -576,7 +577,6 @@
       "_ssr.js",
       "_profiles_store.js",
       "_common.js",
-      "_device_store.js",
       "__page.js",
       "__page3.js",
       "__page2.js",
