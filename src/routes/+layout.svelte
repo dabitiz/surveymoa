@@ -3,7 +3,7 @@
 	import { SvelteToast } from "@zerodevx/svelte-toast";
 
 	import { page, navigating } from "$app/stores";
-	import { invalidate } from "$app/navigation";
+	import { goto, invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
 	import { App } from "@capacitor/app";
 	import { Capacitor } from "@capacitor/core";
@@ -24,12 +24,26 @@
 			}
 		});
 
-		App.addListener("appUrlOpen", (event) => {
+		App.addListener("appUrlOpen", async (event) => {
 			const slug = event.url.split(".app").pop();
 
 			if (slug) {
 				const auth_url = slug.replace(/^[^:]+:\/\//, "/");
-				location.href = auth_url;
+				const response = await fetch(auth_url);
+
+				if (response.ok) {
+					const code = response.searchParams.get("code");
+					await supabase.auth.exchangeCodeForSession(code);
+					if (!error) {
+						const profiles = await get_profiles(data.session.user.id);
+						console.log("profiles", profiels);
+						if (profiles.gender) {
+							goto(`/home`);
+						} else {
+							goto(`/setting`);
+						}
+					}
+				}
 			}
 		});
 
@@ -87,7 +101,7 @@
 
 {#if is_initialize}
 	<div class="bg-gray-200">
-		<div class:md-w-half={Capacitor.isNativePlatform() && !is_url_admin($page)} class="mx-auto">
+		<div class:md-w-half={!Capacitor.isNativePlatform() && !is_url_admin($page)} class="mx-auto">
 			<div class="min-h-screen bg-white">
 				<slot />
 			</div>

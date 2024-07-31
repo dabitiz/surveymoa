@@ -21,6 +21,7 @@
 <array>
   <string>http://localhost:5173</string>
   <string>https://surveymoa.com</string>
+	<string>http://172.20.0.125:5173</string>
 </array>
 
 	<key>CFBundleExecutable</key>
