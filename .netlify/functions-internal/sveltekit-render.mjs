@@ -9,10 +9,10 @@ function __memo(fn) {
 return {
 	appDir: "_app",
 	appPath: "_app",
-	assets: new Set([".well-known/apple-app-site-association","favicon.png"]),
-	mimeTypes: {".png":"image/png"},
+	assets: new Set([".well-known/apple-app-site-association","favicon.png","logo.png","manifest.json","service-worker.js"]),
+	mimeTypes: {".png":"image/png",".json":"application/json"},
 	_: {
-		client: {"start":"_app/immutable/entry/start.CubfVdAm.js","app":"_app/immutable/entry/app.Db5VVMB8.js","imports":["_app/immutable/entry/start.CubfVdAm.js","_app/immutable/chunks/entry.CJ3DMuXN.js","_app/immutable/chunks/scheduler.DqnwxzbK.js","_app/immutable/chunks/index.Cynp7HaE.js","_app/immutable/entry/app.Db5VVMB8.js","_app/immutable/chunks/preload-helper.D6kgxu3v.js","_app/immutable/chunks/scheduler.DqnwxzbK.js","_app/immutable/chunks/index.DSZo6Pln.js"],"stylesheets":[],"fonts":[],"uses_env_dynamic_public":false},
+		client: {"start":"_app/immutable/entry/start.L-P2GOD6.js","app":"_app/immutable/entry/app.CnhMWGeQ.js","imports":["_app/immutable/entry/start.L-P2GOD6.js","_app/immutable/chunks/entry.DivP5H-G.js","_app/immutable/chunks/scheduler.DqnwxzbK.js","_app/immutable/chunks/index.Cynp7HaE.js","_app/immutable/entry/app.CnhMWGeQ.js","_app/immutable/chunks/preload-helper.D6kgxu3v.js","_app/immutable/chunks/scheduler.DqnwxzbK.js","_app/immutable/chunks/index.DSZo6Pln.js"],"stylesheets":[],"fonts":[],"uses_env_dynamic_public":false},
 		nodes: [
 			__memo(() => import('../server/nodes/0.js')),
 			__memo(() => import('../server/nodes/1.js')),

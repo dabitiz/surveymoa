@@ -1,0 +1,17 @@
+{
+  "short_name": "설문모아",
+  "name": "설문모아",
+  "start_url": "/",
+  "theme_color": "#237BF8",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "description": "세상에 모든 설문은 여기, 설문모아",
+  "icons": [
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
