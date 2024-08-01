@@ -123,6 +123,7 @@
 		<a href="see_more/terms_of_use" class="mt-7 block">이용약관</a>
 		<a href="see_more/privacy_policy" class="mt-7 block">개인정보 처리방침</a>
 		<a href="see_more/open_source_license" class="mt-7 block">오픈소스 라이센스</a>
+		<a href="see_more/company_introduction" class="mt-7 block">회사 소개</a>
 		<p class="mt-7 flex justify-between">버전정보 <span class="text-primary">V.0.1</span></p>
 	</div>
 	<div class="mt-5 h-2 bg-gray-300" />
