@@ -146,6 +146,7 @@
 	};
 
 	const participate_research = async (form_link) => {
+		let is_participate_once = false;
 		await InAppBrowser.openWebView({
 			url: form_link,
 			//if true, the browser will be presented after the page is loaded, if false, the browser will be presented immediately.
@@ -162,7 +163,11 @@
 				code: `if(document.getElementsByClassName('vHW8K').length > 0 === true){
 														location.href = "${PUBLIC_CLIENT_URL}/research_info/${research.id}";}`
 			});
-			if (event.url === `${PUBLIC_CLIENT_URL}/research_info/${research.id}`) {
+			if (
+				event.url === `${PUBLIC_CLIENT_URL}/research_info/${research.id}` &&
+				!is_participate_once
+			) {
+				is_participate_once = true;
 				const participant_research = await insert_participant_research();
 				research_info = { ...research_info, participant_research };
 				research_status = check_research_status(research_info);

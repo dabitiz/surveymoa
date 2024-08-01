@@ -50,11 +50,12 @@
 		window.addEventListener("error", handle_error);
 		window.addEventListener("unhandledrejection", handle_unhandled_rejection);
 
-		// if (session) {
-		// 	const profiles = await get_profiles();
-
-		// 	await save_profiles_store(profiles);
-		// }
+		if (session) {
+			const profiles = await get_profiles();
+			if (profiles.gender) {
+				await save_profiles_store(profiles);
+			}
+		}
 
 		is_initialize = true;
 		return () => {
@@ -90,13 +91,19 @@
 	const get_profiles_gender = async (user_id) => {
 		const { data, error } = await supabase.from("profiles").select(`gender`).eq("id", user_id);
 
-		if (error) throw new Error(`Failed to get_profiles: ${error.message}`);
+		if (error) throw new Error(`Failed to get_profiles_gender: ${error.message}`);
 		return data[0] || [];
 	};
 
-	// const get_profiles = async () => {
+	const get_profiles = async () => {
+		const { data, error } = await supabase
+			.from("profiles")
+			.select("username, avatar_url, gender, year_of_birth, point, rating")
+			.eq("id", session.user.id);
 
-	// }
+		if (error) throw new Error(`Failed to get_profiles: ${error.message}`);
+		return data[0] || [];
+	};
 </script>
 
 {#if is_initialize}
