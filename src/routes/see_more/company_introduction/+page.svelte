@@ -20,17 +20,19 @@
 </Header>
 
 <main>
-	<div class="mx-6 mt-6">
-		<p class="text-[13px] text-[#767676]">대표 : 김도형</p>
-		<p class="mt-1.5 text-[13px] text-[#767676]">부산 부산진구 중앙대로 694 쥬디스태화 9층</p>
-		<p class="mt-1.5 text-[13px] text-[#767676]">사업자등록번호 : 531-78-00406</p>
-		<p class="mt-1.5 text-[13px] text-[#767676]">개인정보보호책임자 : 김도형</p>
-		<p class="mt-1.5 text-[13px] text-[#767676]">이메일: dabitiz@surveymoa.com</p>
-		<p class="mt-8 text-lg font-semibold text-[#111111]">010-2955-8898</p>
+	<div class="mx-6 mt-6 flex flex-col items-center">
+		<div>
+			<p class="text-[13px] text-[#767676]">대표 : 김도형</p>
+			<p class="mt-1.5 text-[13px] text-[#767676]">부산 부산진구 중앙대로 694 쥬디스태화 9층</p>
+			<p class="mt-1.5 text-[13px] text-[#767676]">사업자등록번호 : 531-78-00406</p>
+			<p class="mt-1.5 text-[13px] text-[#767676]">개인정보보호책임자 : 이상민</p>
+			<p class="mt-1.5 text-[13px] text-[#767676]">이메일: dabitiz@surveymoa.com</p>
+			<p class="mt-8 text-lg font-semibold text-[#111111]">070-8098-4659</p>
 
-		<div class="mt-[30px] flex pb-8">
-			<img src={app_store} alt="app_store" class="mr-2 h-11 w-[120px]" />
-			<img src={play_store} alt="play_store" class="h-11 w-[120px]" />
+			<div class="mt-[30px] flex pb-8">
+				<img src={app_store} alt="app_store" class="mr-2 h-11 w-[120px]" />
+				<img src={play_store} alt="play_store" class="h-11 w-[120px]" />
+			</div>
 		</div>
 	</div>
 </main>
