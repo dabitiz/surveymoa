@@ -70,29 +70,6 @@
 	<meta name="description" content="수수료는 낮게, 보상은 크게 : 설문모아" />
 </svelte:head>
 
-<!-- <main class="pb-safe flex h-screen flex-col justify-end">
-	<div class="mt-10 flex h-full flex-col items-center justify-center">
-		<div class="mt-6 h-40 w-40 bg-gray-400" aria-label="앱 로고"></div>
-
-		<h1 class="mt-4 text-xl font-semibold">설문모아</h1>
-		<p class="mt-2">내 의견이 돈이 되는 세상</p>
-	</div>
-
-	<div class="flex flex-col items-center justify-center gap-5 pb-6">
-		<button
-			on:click={() => {
-				show_toast("info", "준비중입니다.");
-			}}
-		>
-			<img class="h-12" src={apple_login_png} alt="애플 로그인 버튼" />
-		</button>
-
-		<button on:click={() => supabase_oauth_login("kakao")}>
-			<img class="h-12" src={kakao_login_png} alt="카카오 로그인 버튼" />
-		</button>
-	</div>
-</main> -->
-
 <main class="pb-safe flex h-screen flex-col justify-end">
 	<div class="mt-10 flex h-full flex-col items-center justify-center">
 		<div class="mt-6 h-40 w-40 bg-gray-400" aria-label="앱 로고"></div>
