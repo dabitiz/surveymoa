@@ -1,28 +1,33 @@
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
-import { createBrowserClient, isBrowser, parse } from "@supabase/ssr";
+import { createBrowserClient, isBrowser, createServerClient } from "@supabase/ssr";
 
 export const load = async ({ fetch, data, depends }) => {
 	depends("supabase:auth");
 
-	const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
-		global: {
-			fetch
-		},
-		cookies: {
-			get(key) {
-				if (!isBrowser()) {
-					return JSON.stringify(data.session);
+	const supabase = isBrowser()
+		? createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+				global: {
+					fetch
 				}
-
-				const cookie = parse(document.cookie);
-				return cookie[key];
-			}
-		}
-	});
+			})
+		: createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+				global: {
+					fetch
+				},
+				cookies: {
+					getAll() {
+						return data.cookies;
+					}
+				}
+			});
 
 	const {
 		data: { session }
 	} = await supabase.auth.getSession();
 
-	return { supabase, session };
+	const {
+		data: { user }
+	} = await supabase.auth.getUser();
+
+	return { supabase, session, user };
 };
