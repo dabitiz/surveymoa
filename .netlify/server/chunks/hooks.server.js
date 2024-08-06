@@ -37,10 +37,16 @@ const set_supabase = async ({ event, resolve }) => {
     cookies: {
       get: (key) => event.cookies.get(key),
       set: (key, value, options) => {
-        event.cookies.set(key, value, { ...options, path: "/", secure: false });
+        event.cookies.set(key, value, { ...options, path: "/" });
       },
       remove: (key, options) => {
-        event.cookies.delete(key, { ...options, path: "/", secure: false });
+        event.cookies.delete(key, { ...options, path: "/" });
+      },
+      getAll: () => event.cookies.getAll(),
+      setAll: (cookiesToSet) => {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          event.cookies.set(name, value, { ...options, path: "/" });
+        });
       }
     }
   });
@@ -49,17 +55,17 @@ const set_supabase = async ({ event, resolve }) => {
       data: { session }
     } = await event.locals.supabase.auth.getSession();
     if (!session) {
-      return { session: { user: null } };
+      return { session: null, user: null };
     }
     const {
       data: { user },
       error
     } = await event.locals.supabase.auth.getUser();
     if (error) {
-      return { session: { user: null } };
+      return { session: null, user: null };
     }
     delete session.user;
-    return { session: Object.assign({}, session, { user }) };
+    return { session: Object.assign({}, session, { user }), user };
   };
   return resolve(event, {
     filterSerializedResponseHeaders(name) {

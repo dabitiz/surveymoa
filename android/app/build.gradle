@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.svelte.surveymoa"
+    namespace "io.dabitiz.surveymoa"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.svelte.surveymoa"
+        applicationId "io.dabitiz.surveymoa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

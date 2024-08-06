@@ -1,4 +1,4 @@
-package com.svelte.surveymoa;
+package io.dabitiz.surveymoa;
 
 import com.getcapacitor.BridgeActivity;
 
