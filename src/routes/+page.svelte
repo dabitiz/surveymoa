@@ -32,7 +32,7 @@
 			supabase.auth.signInWithOAuth({
 				provider,
 				options: {
-					redirectTo: `com.svelte.surveymoa://auth/callback/mobile`
+					redirectTo: `io.dabitiz.surveymoa://auth/callback/mobile`
 				}
 			});
 		}

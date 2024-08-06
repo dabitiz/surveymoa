@@ -110,6 +110,13 @@
       "src/hooks.server.js"
     ]
   },
+  "_play_store.js": {
+    "file": "chunks/play_store.js",
+    "name": "play_store",
+    "assets": [
+      "_app/immutable/assets/play_store.autbuIKb.png"
+    ]
+  },
   "_profile.js": {
     "file": "chunks/profile.js",
     "name": "profile"
@@ -164,6 +171,10 @@
     "imports": [
       "_public.js"
     ]
+  },
+  "src/lib/img/common/app_store/play_store.png": {
+    "file": "_app/immutable/assets/play_store.autbuIKb.png",
+    "src": "src/lib/img/common/app_store/play_store.png"
   },
   "src/lib/img/common/banner/guide.png": {
     "file": "_app/immutable/assets/guide.C_GySchm.png",
@@ -241,7 +252,7 @@
       "_client.js"
     ],
     "css": [
-      "_app/immutable/assets/_layout.Deg7qW7u.css"
+      "_app/immutable/assets/_layout.03B8Hx0o.css"
     ]
   },
   "src/routes/+page.svelte": {
@@ -252,7 +263,8 @@
     "imports": [
       "_ssr.js",
       "_client.js",
-      "_SvelteToast.svelte_svelte_type_style_lang.js"
+      "_SvelteToast.svelte_svelte_type_style_lang.js",
+      "_play_store.js"
     ]
   },
   "src/routes/about/+page.svelte": {
@@ -721,6 +733,18 @@
       "_etc_category.js",
       "_client.js",
       "_SvelteToast.svelte_svelte_type_style_lang.js"
+    ]
+  },
+  "src/routes/see_more/company_introduction/+page.svelte": {
+    "file": "entries/pages/see_more/company_introduction/_page.svelte.js",
+    "name": "entries/pages/see_more/company_introduction/_page.svelte",
+    "src": "src/routes/see_more/company_introduction/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "__page.js",
+      "__page2.js",
+      "_play_store.js"
     ]
   },
   "src/routes/see_more/modify_membership/+page.svelte": {
