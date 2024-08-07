@@ -10,7 +10,7 @@
 	<array>
 		<string>applinks:surveymoa.com</string>
 		<string>applinks:http://172.20.0.125:5173</string>
-		<string>com.svelte.surveymoa://auth/callback/mobile</string>
+		<string>io.dabitiz.surveymoa://auth/callback/mobile</string>
 	</array>
 </dict>
 </plist>
