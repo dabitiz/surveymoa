@@ -12,6 +12,7 @@
 	import play_store from "@/lib/img/common/app_store/play_store.png";
 
 	export let data;
+
 	$: ({ supabase, session } = data);
 
 	/**
