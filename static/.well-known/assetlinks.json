@@ -1,0 +1,9 @@
+[
+  {
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { 
+    "namespace": "android_app", 
+    "package_name": "io.dabitiz.surveymoa",
+    "sha256_cert_fingerprints": ["34:0F:B5:3A:E8:72:4D:BF:0F:89:FC:C7:76:6B:B0:F6:43:60:B7:B2:80:87:DE:D9:21:0B:3D:49:FD:46:4F:B4"] }
+  }
+]

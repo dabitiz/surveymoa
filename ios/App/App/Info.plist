@@ -13,7 +13,7 @@
 			<string>com.getcapacitor.capacitor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.svelte.surveymoa</string>
+				<string>io.dabitiz.surveymoa</string>
 			</array>
 		</dict>
 	</array>

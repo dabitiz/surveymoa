@@ -1,12 +1,12 @@
 {
-	"appId": "com.svelte.surveymoa",
+	"appId": "io.dabitiz.surveymoa",
 	"appName": "설문모아",
 	"webDir": "build",
 	"server": {
-		"url": "https://surveymoa.com",
+		"url": "https://www.surveymoa.com",
 		"cleartext": true,
 		"androidScheme": "https",
-		"hostname": "com.svelte.surveymoa"
+		"hostname": "io.dabitiz.surveymoa"
 	},
 	"plugins": {
     "CapacitorHttp": {
